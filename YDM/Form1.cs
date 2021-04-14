@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using Jurassic;
+using System;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 using System.Windows.Forms;
+using YDM.ConfigurationsString;
+using YDM.ExtendClasses;
+using YDM.Processer;
 
 namespace YDM
 {
@@ -20,24 +18,40 @@ namespace YDM
 
         private void Search_Click(object sender, EventArgs e)
         {
-            try
+            var text = URL.Text;
+
+            var url = UrlAnalyzer.Check(text);
+
+            if (url.Success && url.Exception == null)
             {
-                var text = URL.Text;
+                var responseFromServer = RequestManager.DownloadWebSite(url);
 
-                var url = new Uri(text);
+                var index = (responseFromServer.IndexOf(Configuration.ScriptBegin) + Configuration.ScriptBegin.Length);
+                var responce = responseFromServer[index..];
 
-                var httpClient = new HttpClient();
+                var para = responce.IndexOf(Configuration.ScriptEnd);
 
-                var httpResponce = httpClient.GetAsync(url);
+                var scr = responce.Remove(para);
 
-                var responce = httpResponce.Result.Content.ReadAsStringAsync();
+                var document = JsonDocument.Parse(scr, new JsonDocumentOptions
+                {
+                    MaxDepth = 64,
+                    AllowTrailingCommas = false
+                });
+                var root = document.RootElement;
 
-                Output.Text = responce.Result;
+                var format = root.FindProperty("formats");
+                var adaptiveFormats = root.FindProperty("adaptiveFormats");
+
+                var result = LinkProcesser.GetFormatsStream(format.FirstOrDefault().EnumerateArray());
+                var result1 = LinkProcesser.GetFormatsStream(adaptiveFormats.FirstOrDefault().EnumerateArray());
+
+
+                Output.Text = $"";
+
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            else
+                MessageBox.Show(url.Exception);
         }
     }
 }
