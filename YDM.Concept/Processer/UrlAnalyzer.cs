@@ -1,9 +1,9 @@
-﻿namespace YDM
-{
-    using System;
-    using YDM.ConfigurationsString;
-    using YDM.Models;
+﻿using System;
+using YDM.Concept.ConfigurationsString;
+using YDM.Concept.Models;
 
+namespace YDM.Concept.Helper
+{
     internal static class UrlAnalyzer
     {
         internal static Results<AnalysisReport> Check(string url)
@@ -24,7 +24,7 @@
                 if (path.Host == Configuration.Host)
                     return result;
                 throw new Exception("Invalid Url");
-                
+
             }
             catch (Exception exception)
             {

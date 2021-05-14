@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace YDM.Models
+namespace YDM.Concept.Models
 {
     internal class AnalysisReport
     {
