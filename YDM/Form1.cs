@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YDM.Concept.Models;
 
@@ -14,7 +11,6 @@ namespace YDM
         {
             InitializeComponent();
             _ydm = new Concept.YDM();
-            // _ydm.VideoFound += FoundVideo;
             _ydm.ErrorFound += ErrorFound;
         }
 

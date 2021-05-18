@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using YDM.Concept.ConfigurationsString;
-using YDM.Concept.Models;
 
 namespace YDM.Concept.Helper
 {
@@ -20,7 +19,7 @@ namespace YDM.Concept.Helper
                 {
                     Url = new Uri(string.Concat(Configuration.Scheme, Configuration.Host, "/watch?v=", uri));
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Exception = ex;
                     IsProcessable = false;

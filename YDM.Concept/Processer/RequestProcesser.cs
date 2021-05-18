@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using YDM.Concept.ConfigurationsString;
 using YDM.Concept.Helper;
-using YDM.Concept.Models;
 
 namespace YDM.Concept.Processer
 {
