@@ -30,11 +30,6 @@ namespace YDM.Concept.Helper
             else
                 IsProcessable = false;
 
-            if (Url.Query.Contains("List"))
-                IsList = true;
-            else
-                IsList = false;
-
             var query = Url.Query.Substring(1);
             var queryes = query.Split("&");
             Queryes = new KeyValuePair<string, string>[queryes.Length];
@@ -44,6 +39,10 @@ namespace YDM.Concept.Helper
                 Queryes[i] = new KeyValuePair<string, string>(keyvalue[0], keyvalue[1]);
             }
 
+            if (Queryes[0].Key.ToLower() == "list" )
+                IsList = true;
+            else
+                IsList = false;
         }
 
         public bool IsList { get; set; }

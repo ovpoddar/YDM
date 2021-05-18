@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using YDM.Concept.ConfigurationsString;
 using YDM.Concept.ExtendClasses;
@@ -56,8 +57,8 @@ namespace YDM.Concept.Processer
                     {
                         Uri = info.Uri,
                         FileExtenction = info.TypeOfContent.Split('/')[1],
-                        FileType = info.TypeOfContent.Split('/')[0],
-                        Format = info.Format
+                        Format = info.Format,
+                        FileType = (FileTypeEnum)Enum.Parse(typeof(FileTypeEnum), info.TypeOfContent.Split('/')[0], true)
                     };
                     results.Add(result);
                 }
@@ -66,8 +67,9 @@ namespace YDM.Concept.Processer
                     var result = new VideoInformation
                     {
                         FileExtenction = info.TypeOfContent.Split('/')[1],
-                        FileType = info.TypeOfContent.Split('/')[0],
-                        Uri = YouTubeVideo.Decrypt(info.Uri, js)
+                        Uri = YouTubeVideo.Decrypt(info.Uri, js),
+                        FileType = (FileTypeEnum)Enum.Parse(typeof(FileTypeEnum) ,info.TypeOfContent.Split('/')[0], true),
+                        Format = info.Format
                     };
                     results.Add(result);
                 }

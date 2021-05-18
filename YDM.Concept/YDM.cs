@@ -50,7 +50,8 @@ namespace YDM.Concept
                 if (token.IsCancellationRequested)
                     break;
                 var video = await GetVideoAsync(uri);
-                progress.Report(video);
+                if(video != null)
+                    progress.Report(video);
             }
 
             EndHandler.Raise(this, EventArgs.Empty);

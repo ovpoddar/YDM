@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using YDM.Concept.Models;
 
@@ -30,6 +31,9 @@ namespace YDM
             var text = URL.Text;
             Output.Text = "";
             var ids = await _ydm.GetIDsAsync(text);
+
+            Output.Text = Output.Text + ids.ToList().Count;
+
             var pro = new Progress<VideoModel>();
             pro.ProgressChanged += FoundVideo;
             var videos = _ydm.GetVideos(ids, pro, default);
