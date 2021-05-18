@@ -1,39 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 using YDM.Concept.ConfigurationsString;
 using YDM.Concept.Models;
 
 namespace YDM.Concept.Helper
 {
-    internal static class UrlAnalyzer
+    public class UriAnalyzer
     {
-        internal static Results<AnalysisReport> Check(string url)
+        public UriAnalyzer(string uri)
         {
+            IsProcessable = true;
             try
             {
-                var path = new Uri(url);
-                var result = new Results<AnalysisReport>
-                {
-                    Result = new AnalysisReport
-                    {
-                        IsList = url.Contains("list"),
-                        Url = path
-                    },
-                    Success = true
-                };
-
-                if (path.Host == Configuration.Host)
-                    return result;
-                throw new Exception("Invalid Url");
-
+                Url = new Uri(uri);
             }
-            catch (Exception exception)
+            catch
             {
-                return new Results<AnalysisReport>
+                try
                 {
-                    Exception = exception.Message,
-                    Success = false
-                };
+                    Url = new Uri(string.Concat(Configuration.Scheme, Configuration.Host, "/watch?v=", uri));
+                }
+                catch(Exception ex)
+                {
+                    Exception = ex;
+                    IsProcessable = false;
+                }
             }
+            if (Url.Host == Configuration.Host)
+                IsProcessable = true;
+            else
+                IsProcessable = false;
+
+            if (Url.Query.Contains("List"))
+                IsList = true;
+            else
+                IsList = false;
+
+            var query = Url.Query.Substring(1);
+            var queryes = query.Split("&");
+            Queryes = new KeyValuePair<string, string>[queryes.Length];
+            for (int i = 0; i < queryes.Length; i++)
+            {
+                var keyvalue = queryes[i].Split("=");
+                Queryes[i] = new KeyValuePair<string, string>(keyvalue[0], keyvalue[1]);
+            }
+
         }
+
+        public bool IsList { get; set; }
+        public Uri Url { get; set; }
+        public Exception Exception { get; set; }
+        public bool IsProcessable { get; set; }
+        public KeyValuePair<string, string>[] Queryes { get; set; }
     }
 }

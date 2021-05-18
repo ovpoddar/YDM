@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using YDM.Concept.ConfigurationsString;
 using YDM.Concept.ExtendClasses;
+using YDM.Concept.Helper;
 using YDM.Concept.Models;
 
 namespace YDM.Concept.Processer
@@ -42,28 +43,19 @@ namespace YDM.Concept.Processer
             }
         }
 
-        public List<string> ParseListCode(string sorce)
+        public IEnumerable<UriAnalyzer> ParseListCode(string sorce)
         {
-            try
-            {
-                var playerResponce = GetPlayerResponse(sorce, Configuration.ListScript);
-                var res = playerResponce.RootElement.SelectElement("$..playlistVideoListRenderer.contents");
+            var playerResponce = GetPlayerResponse(sorce, Configuration.ListScript);
+            var res = playerResponce.RootElement.SelectElement("$..playlistVideoListRenderer.contents");
 
-                var arrey = res.Value.EnumerateArray();
-                var result = new List<string>();
-                foreach (var item in arrey)
-                {
-                    var tokens = item.SelectElements("$..videoId").ToList()?.FirstOrDefault();
-                    result.Add(tokens.Value.ToString());
-                }
-
-                return result;
-            }
-            catch(Exception ex)
+            var arrey = res.Value.EnumerateArray();
+            var result = new List<string>();
+            foreach (var item in arrey)
             {
-                Exception = ex;
-                return new List<string>();
+                var tokens = item.SelectElements("$..videoId").ToList()?.FirstOrDefault();
+                yield return new UriAnalyzer(tokens.Value.ToString());
             }
+
         }
 
         private async Task ProcessPlayerResponseAsync(JsonDocument playerResponse, Uri js)

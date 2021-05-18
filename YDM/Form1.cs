@@ -14,13 +14,13 @@ namespace YDM
         {
             InitializeComponent();
             _ydm = new Concept.YDM();
-            _ydm.VideoFound += FoundVideo;
+            // _ydm.VideoFound += FoundVideo;
             _ydm.ErrorFound += ErrorFound;
         }
 
-        private void FoundVideo(object sender, IQueryable<VideoModel> e)
+        private void FoundVideo(object sender, VideoModel e)
         {
-            var str = Output.Text + (string)e.FirstOrDefault().Detais["title"];
+            var str = Output.Text + (string)e.Detais["title"];
             Output.Text = str;
         }
 
@@ -33,7 +33,10 @@ namespace YDM
         {
             var text = URL.Text;
             Output.Text = "";
-            await _ydm.ParseVideoAsync(text);
+            var ids = await _ydm.GetIDsAsync(text);
+            var pro = new Progress<VideoModel>();
+            pro.ProgressChanged += FoundVideo;
+            var videos = _ydm.GetVideos(ids, pro, default);
         }
 
     }

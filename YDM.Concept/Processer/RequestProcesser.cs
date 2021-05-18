@@ -11,7 +11,7 @@ namespace YDM.Concept.Processer
 {
     internal static class RequestProcesser
     {
-        public static async Task<string> DownloadWebSite(Results<AnalysisReport> url)
+        public static async Task<string> DownloadWebSite(Uri url)
         {
             var responseFromServer = string.Empty;
             var Retryes = Configuration.MaxRetries;
@@ -20,7 +20,7 @@ namespace YDM.Concept.Processer
             {
                 try
                 {
-                    var request = WebRequest.Create(url.Result.Url);
+                    var request = WebRequest.Create(url);
                     request.Credentials = CredentialCache.DefaultCredentials;
                     using var response = await request.GetResponseAsync() as HttpWebResponse;
                     using var dataStream = response.GetResponseStream();
