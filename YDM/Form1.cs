@@ -2,17 +2,18 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YDM.Concept;
 using YDM.Concept.Models;
 
 namespace YDM
 {
     public partial class Form1 : Form
     {
-        private Concept.YDM _ydm;
+        private YDMVideoProcesser _ydm;
         public Form1()
         {
             InitializeComponent();
-            _ydm = new Concept.YDM();
+            _ydm = new YDMVideoProcesser();
             _ydm.ErrorFound += ErrorFound;
         }
 

@@ -6,6 +6,7 @@ namespace YDM.Concept.Models
     public class VideoModel
     {
         public Hashtable Detais { get; set; }
-        public List<VideoInformation> Lists { get; set; }
+        public List<FileInformation> Lists { get; set; }
+        public List<Thumbnail> Thumbnails { get; set; }
     }
 }

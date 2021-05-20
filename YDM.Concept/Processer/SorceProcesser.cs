@@ -15,7 +15,8 @@ namespace YDM.Concept.Processer
     public class SorceProcesser
     {
         public Hashtable Details { get; private set; } = new Hashtable();
-        public List<VideoInformation> Streans { get; set; }
+        public List<FileInformation> Streans { get; set; }
+        public List<Thumbnail> Thumbnails { get; set; }
         public Exception Exception { get; set; }
 
         public async ValueTask<bool> ParseVideoCode(string sorce)
@@ -26,6 +27,7 @@ namespace YDM.Concept.Processer
                 var js = GetBaseJS(sorce);
 
                 GetVideoDetails(sorce, playerResponse, Configuration.VideoTitle);
+                GetThumbnails(playerResponse);
 
                 if (!string.IsNullOrWhiteSpace(Details[Configuration.LiveVideo.Path] as string) || Details[Configuration.LiveVideo.Path] as string == "true")
                 {
@@ -43,13 +45,18 @@ namespace YDM.Concept.Processer
             }
         }
 
+        private void GetThumbnails(JsonDocument playerResponse)
+        {
+            var value = playerResponse.RootElement.GetProperty(Configuration.Thumbnails).ToString();
+            Thumbnails = JsonSerializer.Deserialize<List<Thumbnail>>(value);
+        }
+
         public IEnumerable<UriAnalyzer> ParseListCode(string sorce)
         {
             var playerResponce = GetPlayerResponse(sorce, Configuration.ListScript);
-            var res = playerResponce.RootElement.SelectElement("$..playlistVideoListRenderer.contents");
+            var result = playerResponce.RootElement.SelectElement("$..playlistVideoListRenderer.contents");
 
-            var arrey = res.Value.EnumerateArray();
-            var result = new List<string>();
+            var arrey = result.Value.EnumerateArray();
             foreach (var item in arrey)
             {
                 var tokens = item.SelectElements("$..videoId").ToList()?.FirstOrDefault();

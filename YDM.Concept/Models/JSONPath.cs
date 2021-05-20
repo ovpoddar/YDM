@@ -15,7 +15,14 @@
             var elements = path.Split(",");
             Path = elements[^1];
             PathDirectory = elements;
-            DeclearedPath = string.Concat("$..", Path);
+            for (int i = 0; i < elements.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(DeclearedPath))
+                    DeclearedPath += elements[i];
+                else
+                    DeclearedPath += string.Concat(".", elements[i]);
+            }
+            //DeclearedPath = string.Concat("$..", Path);
         }
     }
 }

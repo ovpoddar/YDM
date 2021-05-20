@@ -10,7 +10,7 @@ using YDM.Concept.Processer;
 
 namespace YDM.Concept
 {
-    public class YDM
+    public class YDMVideoProcesser
     {
         public EventHandler<Exception> ErrorFound;
         public EventHandler StartHandler;
@@ -52,7 +52,7 @@ namespace YDM.Concept
                     if (token.IsCancellationRequested)
                         break;
                     var video = await GetVideoAsync(uri);
-                    if (video != null)
+                    if (video.Detais != null)
                         progress.Report(video);
                 }
             });
@@ -70,7 +70,8 @@ namespace YDM.Concept
                 return new VideoModel
                 {
                     Detais = process.Details,
-                    Lists = process.Streans
+                    Lists = process.Streans,
+                    Thumbnails = process.Thumbnails
                 };
             ErrorFound.Raise(this, process.Exception);
             return new VideoModel();

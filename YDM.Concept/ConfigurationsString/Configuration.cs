@@ -16,6 +16,7 @@ namespace YDM.Concept.ConfigurationsString
         public static JSONPath Author = new JSONPath("videoDetails,author");
         public static JSONPath Status = new JSONPath("playabilityStatus,status");
         public static JSONPath LiveVideo = new JSONPath("videoDetails,isLive");
+        public static JSONPath Thumbnails = new JSONPath("videoDetails,thumbnail,thumbnails");
         public static HTMLElementModel VideoTitle = new HTMLElementModel("<title>", "</title>");
         public static HTMLElementModel ListScript = new HTMLElementModel("var ytInitialData =", ";</script><link rel=\"alternate\"");
         public static HTMLElementModel VideoScript = new HTMLElementModel("var ytInitialPlayerResponse =", ";</script><div id=\"player\" class=\"skeleton flexy\">");

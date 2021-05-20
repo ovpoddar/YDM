@@ -1,7 +1,8 @@
 ﻿namespace YDM.Concept.Models
 {
-    public class VideoInformationInternal
+    public class FileInformationInternal
     {
+        public int Id { get; set; }
         public string TypeOfContent { get; set; }
         public string Uri { get; set; }
         public bool IsSecure { get; set; }
