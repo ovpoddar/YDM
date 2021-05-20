@@ -6,5 +6,6 @@
         public string Uri { get; set; }
         public bool IsSecure { get; set; }
         public string Format { get; set; }
+        public string[] Thumbnail { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using YDM.Concept.Models;
 
@@ -36,7 +37,7 @@ namespace YDM
 
             var pro = new Progress<VideoModel>();
             pro.ProgressChanged += FoundVideo;
-            var videos = _ydm.GetVideos(ids, pro, default);
+            _ydm.GetVideos(ids, pro, default);
         }
 
     }

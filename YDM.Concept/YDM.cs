@@ -42,18 +42,20 @@ namespace YDM.Concept
             }
         }
 
-        public async Task GetVideos(IEnumerable<UriAnalyzer> uris, IProgress<VideoModel> progress, CancellationToken token)
+        public void GetVideos(IEnumerable<UriAnalyzer> uris, IProgress<VideoModel> progress, CancellationToken token)
         {
             StartHandler.Raise(this, EventArgs.Empty);
-            foreach (var uri in uris.Where(uri => uri.IsProcessable))
+            Task.Run(async () =>
             {
-                if (token.IsCancellationRequested)
-                    break;
-                var video = await GetVideoAsync(uri);
-                if(video != null)
-                    progress.Report(video);
-            }
-
+                foreach (var uri in uris.Where(uri => uri.IsProcessable))
+                {
+                    if (token.IsCancellationRequested)
+                        break;
+                    var video = await GetVideoAsync(uri);
+                    if (video != null)
+                        progress.Report(video);
+                }
+            });
             EndHandler.Raise(this, EventArgs.Empty);
         }
 

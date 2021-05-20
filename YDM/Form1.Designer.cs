@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace YDM
 {
     partial class Form1
