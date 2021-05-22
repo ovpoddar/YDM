@@ -82,7 +82,9 @@ namespace YDM.Concept.Processer
                 return list;
             });
 
-            var baseJs = await RequestProcesser.DownloadBaseJs(js);
+            var requestProcesser = new RequestProcesser(js);
+
+            var baseJs = await requestProcesser.DownloadString(true);
 
             Streans = LinkProcesser.FilterUrls(Lists, baseJs);
         }

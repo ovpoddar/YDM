@@ -24,7 +24,7 @@ namespace YDM.Concept
                 if (uri.IsList)
                 {
                     var process = new SorceProcesser();
-                    var responseFromServer = await RequestProcesser.DownloadWebSite(uri.Url);
+                    var responseFromServer = await new RequestProcesser(uri.Url).DownloadString(false);
                     return process.ParseListCode(responseFromServer);
                 }
                 else
@@ -63,7 +63,7 @@ namespace YDM.Concept
         {
             var process = new SorceProcesser();
 
-            var responseFromServer = await RequestProcesser.DownloadWebSite(videoUri.Url);
+            var responseFromServer = await new RequestProcesser(videoUri.Url).DownloadString(false);
 
             var result = await process.ParseVideoCode(responseFromServer);
             if (result)
