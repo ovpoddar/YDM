@@ -8,35 +8,22 @@ namespace YDM.Concept.Processer
 {
     public class FileOutputProcesser
     {
-        internal readonly bool candownload;
-        internal readonly long Downloaded;
+        internal readonly bool _isDownload;
+        internal readonly long _downloaded;
         private readonly string _output;
 
-        //private readonly FileStream _information;
-
-        //public FileStream Information => _information;
-
-        //public FileOutputProcesser(string path)
-        //{
-        //    if (!File.Exists(path))
-        //        _information = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
-        //    else
-        //        _information = new FileStream(path, FileMode.Truncate, FileAccess.ReadWrite);
-
-        //    _information.Dispose();
-        //}
         public FileOutputProcesser(string output, long filesize, FileInformation file)
         {
             _output = string.Concat(output, ".", file.FileExtenction.Remove(3));
             try
             {
-                Downloaded = new FileInfo(_output).Length;
+                _downloaded = new FileInfo(_output).Length;
             }
             catch
             {
-                Downloaded = 0;
+                _downloaded = 0;
             }
-            candownload = filesize >= Downloaded;
+            _isDownload = filesize >= _downloaded;
         }
 
 

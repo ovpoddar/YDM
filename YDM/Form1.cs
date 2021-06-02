@@ -11,7 +11,6 @@ namespace YDM
     public partial class Form1 : Form
     {
         private YDMVideoProcesser _ydm;
-        private CancellationTokenSource ct;
 
         public Form1()
         {
@@ -33,17 +32,20 @@ namespace YDM
 
         public async void Search_Click(object sender, EventArgs e)
         {
-            ct = new CancellationTokenSource();
             var text = URL.Text;
             Output.Text = "";
-            var ids = await _ydm.GetIDsAsync(text, ct.Token);
+            var ids = await _ydm.GetIDsAsync(text);
 
             Output.Text = Output.Text + ids.ToList().Count;
 
             var pro = new Progress<VideoModel>();
             pro.ProgressChanged += FoundVideo;
-            _ydm.GetVideos(ids, pro, ct.Token);
+            _ydm.GetVideos(ids, pro);
         }
 
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            _ydm.CancelProcesse();
+        }
     }
 }

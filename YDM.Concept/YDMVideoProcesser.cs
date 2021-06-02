@@ -16,22 +16,27 @@ namespace YDM.Concept
         public EventHandler StartHandler;
         public EventHandler EndHandler;
 
+        private CancellationTokenSource _cancellationTokenSource;
+
         //// TODO: make it better way to flow the application thread
-        public async ValueTask<IEnumerable<UriAnalyzer>> GetIDsAsync(string videoUri, CancellationToken token)
+        public async ValueTask<IEnumerable<UriAnalyzer>> GetIDsAsync(string videoUri)
         {
+            _cancellationTokenSource = new CancellationTokenSource();
             var uri = new UriAnalyzer(videoUri);
             if (uri.IsProcessable || uri.Exception == null)
             {
                 if (!uri.IsList)
+                {
                     return new List<UriAnalyzer>()
                     {
                         uri
                     }.AsEnumerable();
+                }
                 else
                 {
                     try
                     {
-                        var responseFromServer = await new RequestProcesser(uri.Url).DownloadString(false, token);
+                        var responseFromServer = await new RequestProcesser(uri.Url).DownloadString(false, _cancellationTokenSource.Token);
                         var process = new SorceProcesser();
                         return process.ParseListCode(responseFromServer);
                     }
@@ -50,8 +55,10 @@ namespace YDM.Concept
             }
         }
 
-        public void GetVideos(IEnumerable<UriAnalyzer> uris, IProgress<VideoModel> progress, CancellationToken token)
+        public void GetVideos(IEnumerable<UriAnalyzer> uris, IProgress<VideoModel> progress)
         {
+            _cancellationTokenSource = new CancellationTokenSource();
+            var token = _cancellationTokenSource.Token;
             StartHandler.Raise(this, EventArgs.Empty);
             Task.Run(async () =>
             {
@@ -66,6 +73,8 @@ namespace YDM.Concept
             });
             EndHandler.Raise(this, EventArgs.Empty);
         }
+
+        public void CancelProcesse() => _cancellationTokenSource.Cancel();
 
         //// TODO: make it better way to flow the application thread
         private async Task<VideoModel> GetVideoAsync(UriAnalyzer videoUri, CancellationToken token)

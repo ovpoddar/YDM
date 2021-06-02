@@ -56,13 +56,13 @@ namespace YDM.Concept
             {
                 var file = new FileOutputProcesser(_outputFolder, fIleInformation.FileSizes[i], _files[i]);
 
-                if (!file.candownload)
+                if (!file._isDownload)
                     continue;
 
                 try
                 {
-                    var request = Request.CreateHttpRequest(_files[i].Uri, file.Downloaded);
-                    var filesize = file.Downloaded;
+                    var request = Request.CreateHttpRequest(_files[i].Uri, file._downloaded);
+                    var filesize = file._downloaded;
                     var bytesRead = 0;
                     var buffer = new byte[8];
                     using var responce = await request.GetResponseAsync();
