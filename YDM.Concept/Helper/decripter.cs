@@ -8,6 +8,9 @@ namespace YDM.Concept.Helper
 {
     public static class YouTubeVideo
     {
+        public static string Decrypt(Uri uri, string js) =>
+            Decrypt(uri.AbsoluteUri, js);
+
         public static string Decrypt(string uri, string js)
         {
             var signature = string.Empty;

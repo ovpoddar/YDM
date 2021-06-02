@@ -16,23 +16,31 @@ namespace YDM.Concept
         public EventHandler StartHandler;
         public EventHandler EndHandler;
 
-        public async ValueTask<IEnumerable<UriAnalyzer>> GetIDsAsync(string videoUri)
+        //// TODO: make it better way to flow the application thread
+        public async ValueTask<IEnumerable<UriAnalyzer>> GetIDsAsync(string videoUri, CancellationToken token)
         {
             var uri = new UriAnalyzer(videoUri);
             if (uri.IsProcessable || uri.Exception == null)
             {
-                if (uri.IsList)
-                {
-                    var process = new SorceProcesser();
-                    var responseFromServer = await new RequestProcesser(uri.Url).DownloadString(false);
-                    return process.ParseListCode(responseFromServer);
-                }
-                else
-                {
+                if (!uri.IsList)
                     return new List<UriAnalyzer>()
                     {
                         uri
                     }.AsEnumerable();
+                else
+                {
+                    try
+                    {
+                        var responseFromServer = await new RequestProcesser(uri.Url).DownloadString(false, token);
+                        var process = new SorceProcesser();
+                        return process.ParseListCode(responseFromServer);
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorFound.Raise(this, new Exception(ex.Message));
+                        return null;
+                        throw new Exception();
+                    }
                 }
             }
             else
@@ -51,30 +59,39 @@ namespace YDM.Concept
                 {
                     if (token.IsCancellationRequested)
                         break;
-                    var video = await GetVideoAsync(uri);
-                    if (video.Detais != null)
+                    var video = await GetVideoAsync(uri, token);
+                    if (video.Lists.Any())
                         progress.Report(video);
                 }
             });
             EndHandler.Raise(this, EventArgs.Empty);
         }
 
-        private async Task<VideoModel> GetVideoAsync(UriAnalyzer videoUri)
+        //// TODO: make it better way to flow the application thread
+        private async Task<VideoModel> GetVideoAsync(UriAnalyzer videoUri, CancellationToken token)
         {
             var process = new SorceProcesser();
+            try
+            {
+                var responseFromServer = await new RequestProcesser(videoUri.Url).DownloadString(false, token);
 
-            var responseFromServer = await new RequestProcesser(videoUri.Url).DownloadString(false);
-
-            var result = await process.ParseVideoCode(responseFromServer);
-            if (result)
-                return new VideoModel
-                {
-                    Detais = process.Details,
-                    Lists = process.Streans,
-                    Thumbnails = process.Thumbnails
-                };
-            ErrorFound.Raise(this, process.Exception);
-            return new VideoModel();
+                var result = await process.ParseVideoCode(responseFromServer, token);
+                if (result)
+                    return new VideoModel
+                    {
+                        Detais = process.Details,
+                        Lists = process.Streans,
+                        Thumbnails = process.Thumbnails
+                    };
+                ErrorFound.Raise(this, process.Exception);
+                return new VideoModel();
+            }
+            catch (Exception ex)
+            {
+                ErrorFound.Raise(this, ex.Message);
+                return new VideoModel();
+                throw new Exception();
+            }
         }
 
     }

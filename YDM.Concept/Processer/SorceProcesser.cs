@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using YDM.Concept.ConfigurationsString;
 using YDM.Concept.ExtendClasses;
@@ -19,7 +20,7 @@ namespace YDM.Concept.Processer
         public List<Thumbnail> Thumbnails { get; set; }
         public Exception Exception { get; set; }
 
-        public async ValueTask<bool> ParseVideoCode(string sorce)
+        public async ValueTask<bool> ParseVideoCode(string sorce, CancellationToken cancellationToken)
         {
             try
             {
@@ -35,7 +36,7 @@ namespace YDM.Concept.Processer
                     return false;
                 }
 
-                await ProcessPlayerResponseAsync(playerResponse, js);
+                await ProcessPlayerResponseAsync(playerResponse, js, cancellationToken);
                 return true;
             }
             catch (Exception ex)
@@ -65,7 +66,7 @@ namespace YDM.Concept.Processer
 
         }
 
-        private async Task ProcessPlayerResponseAsync(JsonDocument playerResponse, Uri js)
+        private async Task ProcessPlayerResponseAsync(JsonDocument playerResponse, Uri js, CancellationToken cancellationToken)
         {
             var format = playerResponse.RootElement.FindElement(Configuration.Format.Path);
             var adaptiveFormats = playerResponse.RootElement.FindElement(Configuration.AdaptiveFormats.Path);
@@ -84,7 +85,7 @@ namespace YDM.Concept.Processer
 
             var requestProcesser = new RequestProcesser(js);
 
-            var baseJs = await requestProcesser.DownloadString(true);
+            var baseJs = await requestProcesser.DownloadString(true, cancellationToken);
 
             Streans = LinkProcesser.FilterUrls(Lists, baseJs);
         }

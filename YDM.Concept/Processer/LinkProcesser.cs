@@ -57,7 +57,7 @@ namespace YDM.Concept.Processer
                 {
                     var result = new FileInformation
                     {
-                        Uri = info.Uri,
+                        Uri = new Uri(info.Uri),
                         FileExtenction = info.TypeOfContent.Split('/')[1],
                         Format = info.Format,
                         FileType = (FileTypeEnum)Enum.Parse(typeof(FileTypeEnum), info.TypeOfContent.Split('/')[0], true),
@@ -70,7 +70,7 @@ namespace YDM.Concept.Processer
                     var result = new FileInformation
                     {
                         FileExtenction = info.TypeOfContent.Split('/')[1],
-                        Uri = YouTubeVideo.Decrypt(info.Uri, js),
+                        Uri = new Uri(YouTubeVideo.Decrypt(info.Uri, js)),
                         FileType = (FileTypeEnum)Enum.Parse(typeof(FileTypeEnum) ,info.TypeOfContent.Split('/')[0], true),
                         Id = info.Id,
                         Format = info.Format

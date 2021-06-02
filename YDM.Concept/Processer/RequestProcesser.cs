@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using YDM.Concept.ConfigurationsString;
 using YDM.Concept.Helper;
@@ -12,87 +13,24 @@ namespace YDM.Concept.Processer
 {
     internal class RequestProcesser
     {
-        private readonly List<Uri> _uri = new List<Uri>();
+        private readonly Uri _uri;
         public RequestProcesser(Uri uri) =>
-            _uri.Add(uri);
+            _uri = uri ?? throw new ArgumentNullException(nameof(uri));
 
-        public RequestProcesser(List<FileInformation> files, string fileTitle)
-        {
-
-        }
-
-        public RequestProcesser(FileInformation file, string fileTitle)
-        {
-
-        }
-
-        public async ValueTask<string> DownloadString(bool cache)
+        public async ValueTask<string> DownloadString(bool cache, CancellationToken cancelatontoken)
         {
             if (cache)
             {
                 if (string.IsNullOrWhiteSpace(Caching.GetItem("SCRIPT")))
                 {
-                    var response = await BaseDownloadString(_uri[0]);
+                    var response = await Request.BaseDownloadString(_uri, cancelatontoken);
                     Caching.AddItem("SCRIPT", response);
                     return response;
                 }
                 else return Caching.GetItem("SCRIPT");
             }
-            return await BaseDownloadString(_uri[0]);
+            return await Request.BaseDownloadString(_uri, cancelatontoken);
         }
 
-        private async Task<string> BaseDownloadString(Uri url)
-        {
-            var responseFromServer = string.Empty;
-            var retries = Configuration.MaxRetries;
-
-            while (retries > 0)
-            {
-                try
-                {
-                    var request = CreateHttpRequest(url);
-                    using var response = await request.GetResponseAsync() as HttpWebResponse;
-                    using var dataStream = response.GetResponseStream();
-                    using var reader = new StreamReader(dataStream);
-
-                    responseFromServer = await reader.ReadToEndAsync();
-
-                    if (response.StatusCode == HttpStatusCode.OK)
-                        break;
-                    throw new HttpRequestException();
-
-                }
-                catch
-                {
-                    retries--;
-                    if (retries == 0)
-                        throw;
-                }
-            }
-            return responseFromServer;
-        }
-
-        private HttpWebRequest CreateHttpRequest(Uri url)
-        {
-            var request = WebRequest.Create(url) as HttpWebRequest;
-            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18362";
-            request.AllowAutoRedirect = true;
-            request.Method = "GET";
-            request.Timeout = 10000;
-            request.ReadWriteTimeout = 5000;
-            request.KeepAlive = false;
-            return request;
-        }
-
-        private HttpWebRequest CreateHttpRequest(Uri url, long start)
-        {
-            if (start < 0)
-                start = 0;
-
-            var request = CreateHttpRequest(url);
-            request.AddRange(start);
-
-            return request;
-        }
     }
 }
