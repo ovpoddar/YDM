@@ -15,8 +15,6 @@ namespace YDM
         public Form1()
         {
             InitializeComponent();
-            _ydm = new YDMVideoProcesser();
-            _ydm.ErrorFound += ErrorFound;
         }
 
         private void FoundVideo(object sender, VideoModel e)
@@ -34,13 +32,12 @@ namespace YDM
         {
             var text = URL.Text;
             Output.Text = "";
-            var ids = await _ydm.GetIDsAsync(text);
+
+            _ydm = new YDMVideoProcesser(text, FoundVideo, ErrorFound);
+
+            var ids = await _ydm.GetTaskAsync();
 
             Output.Text = Output.Text + ids.ToList().Count;
-
-            var pro = new Progress<VideoModel>();
-            pro.ProgressChanged += FoundVideo;
-            _ydm.GetVideos(ids, pro);
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
