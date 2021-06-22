@@ -12,12 +12,21 @@ namespace YDM.Concept
 {
     public class YDMDownloader
     {
-        public EventHandler PerProcessingStart;
-        public EventHandler<RemoteFIleInformation> PerProcessingEnd;
-        public EventHandler ProcessingStart;
+        public EventHandler<RemoteFIleInformation> PerProcessing;
         public EventHandler<double> processing;
-        public EventHandler ProcessingEnd;
-        public DownloadState DownloadState;
+        public EventHandler<DownloadState> DownloadstateChange;
+
+        private DownloadState _downloadState;
+
+        public DownloadState DownloadState
+        {
+            get => _downloadState;
+            private set
+            {
+                DownloadstateChange.Raise(this, value);
+                _downloadState = value;
+            }
+        }
 
         private List<FileInformation> _files = new List<FileInformation>();
         private readonly string _outputFolder;
@@ -33,6 +42,7 @@ namespace YDM.Concept
             _outputFolder = Path.Combine(output, title);
             _cancellationTokenSorce = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSorce.Token;
+            DownloadState = DownloadState.Initialized;
         }
 
         public YDMDownloader(FileInformation audio, string output, string title)
@@ -41,16 +51,14 @@ namespace YDM.Concept
             _outputFolder = Path.Combine(output, title);
             _cancellationTokenSorce = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSorce.Token;
+            DownloadState = DownloadState.Initialized;
         }
 
         private async Task Processing()
         {
-
-            PerProcessingStart.Raise(this, EventArgs.Empty);
             DownloadState = DownloadState.GettingHeaders;
             var fIleInformation = Request.GetFileDetails(_files);
-            PerProcessingEnd.Raise(this, fIleInformation);
-            ProcessingStart.Raise(this, EventArgs.Empty);
+            PerProcessing.Raise(this, fIleInformation);
 
             for (int i = 0; i < _files.Count; i++)
             {
@@ -74,9 +82,9 @@ namespace YDM.Concept
                         {
                             if (_cancellationToken.IsCancellationRequested)
                             {
-                                responce.Dispose();
-                                responceStream.Dispose();
                                 fileStream.Dispose();
+                                responceStream.Dispose();
+                                responce.Dispose();
 
                                 file.Remove();
 
@@ -87,17 +95,19 @@ namespace YDM.Concept
                             filesize += bytesRead;
                             processing.Raise(this, filesize);
                             DownloadState = DownloadState.Downloading;
-
                         }
                     }
-                    DownloadState = DownloadState.Completed;
+
+                    if (!_canDownload && fIleInformation.FileSizes[i] > filesize)
+                        DownloadState = DownloadState.Paused;
                 }
                 catch (Exception)
                 {
                     DownloadState = DownloadState.Stopped;
                 }
             }
-            ProcessingEnd.Raise(this, EventArgs.Empty);
+            if (!(DownloadState == DownloadState.Paused || _canDownload))
+                DownloadState = DownloadState.Completed;
         }
 
         public void Start()
@@ -112,30 +122,30 @@ namespace YDM.Concept
 
         public void Pause()
         {
-            if (DownloadState != DownloadState.Downloading || DownloadState != DownloadState.Completed && _canDownload == false)
-            {
-                throw new Exception("Can't perform this operation");
-            }
+            if (_downloadState == DownloadState.Stopped || _downloadState == DownloadState.Paused)
+                throw new Exception("Can't perform this method");
             else
-            {
                 _canDownload = false;
-            }
         }
 
         public void Resume()
         {
-            if (DownloadState != DownloadState.Downloading || DownloadState != DownloadState.Completed && _canDownload == false)
+            if (_downloadState == DownloadState.Paused && _canDownload == false && _downloadState != DownloadState.Stopped)
             {
                 _canDownload = true;
                 Start();
             }
             else
-            {
-                throw new Exception("Can't perform this operation");
-            }
+                throw new Exception("Can't perform this method");
         }
 
         public void Stop() =>
             _cancellationTokenSorce.Cancel();
+
+        public void Restart()
+        {
+            Stop();
+            Start();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,21 +11,29 @@ namespace YDM
 {
     public partial class Form1 : Form
     {
-        private YDMVideoProcesser _ydm;
+        private CancellationTokenSource _cancellationTokenSource;
+        private Button _cancellationBtn;
+        private FileInformation[] _files = new FileInformation[2];
+        private Form2 _downloader;
 
         public Form1()
         {
             InitializeComponent();
+            _downloader = new Form2();
         }
 
         private void FoundVideo(object sender, VideoModel e)
         {
             var str = Output.Text + (string)e.Detais["title"];
             Output.Text = str;
+            _files[0] =  (e.Lists[2]);
+            _files[1] = (e.Lists[4]);
         }
 
         private void ErrorFound(object sender, Exception e)
         {
+            _cancellationBtn.Dispose();
+            _cancellationTokenSource.Dispose();
             // Log into some were;
         }
 
@@ -33,16 +42,47 @@ namespace YDM
             var text = URL.Text;
             Output.Text = "";
 
-            _ydm = new YDMVideoProcesser(text, FoundVideo, ErrorFound);
+            var _ydm = new YDMVideoProcesser(text, FoundVideo, ErrorFound);
 
-            var ids = await _ydm.GetTaskAsync();
+            _ydm.StartProcess += starthandler;
+            _cancellationTokenSource = new CancellationTokenSource();
+            var ids = await _ydm.GetTaskAsync(_cancellationTokenSource.Token);
 
+            _ydm.EndProcess += endhandler;
             Output.Text = Output.Text + ids.ToList().Count;
         }
 
-        private void BtnCancel_Click(object sender, EventArgs e)
+        private void endhandler(object sender, EventArgs e)
         {
-            _ydm.CancelProcesse();
+            _cancellationBtn.Dispose();
+            _cancellationTokenSource.Dispose();
+        }
+
+        private void starthandler(object sender, EventArgs e)
+        {
+            _cancellationBtn = new Button()
+            {
+                Text = "Cancel",
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+
+            };
+            _cancellationBtn.Click += CancelBtn_Click;
+            flowLayoutPanel1.Controls.Add(_cancellationBtn);
+        }
+
+        private void CancelBtn_Click(object sender, EventArgs e) =>
+            _cancellationTokenSource.Cancel();
+
+        private void BtnDownload_Click(object sender, EventArgs e)
+        {
+            
+            _downloader.Add(new YDMDownloader(_files[0], _files[1], @"C:\Users\Ayan\Desktop", "test1"));
+            _downloader.Add(new YDMDownloader(_files[0], _files[1], @"C:\Users\Ayan\Desktop", "test2"));
+            _downloader.Add(new YDMDownloader(_files[0], _files[1], @"C:\Users\Ayan\Desktop", "test3"));
+
+            _downloader.Start();
+
+            _downloader.Show();
         }
     }
 }

@@ -91,7 +91,9 @@ namespace YDM.Concept.Helper
                     }
                     else
                     {
-                        throw;
+                        if (ex.GetType().Name == "WebException")
+                            throw new Exception("no Internet");
+                        throw ex;
                     }
                 }
             }

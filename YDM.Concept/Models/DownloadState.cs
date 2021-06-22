@@ -6,10 +6,12 @@ namespace YDM.Concept.Models
 {
     public enum DownloadState
     {
-        Downloading,
-        Completed,
+        Initialized,
         GettingHeaders,
         GettingResponse,
+        Downloading,
+        Paused,
+        Completed,
         Stopped
     }
 }

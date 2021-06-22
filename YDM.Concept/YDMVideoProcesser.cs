@@ -12,10 +12,9 @@ namespace YDM.Concept
 {
     public class YDMVideoProcesser
     {
-        public EventHandler StartHandler;
-        public EventHandler EndHandler;
+        public EventHandler StartProcess;
+        public EventHandler EndProcess;
 
-        private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly string _uri;
         private readonly EventHandler<Exception> _errorFound;
         private readonly EventHandler<VideoModel> _videoFound;
@@ -25,19 +24,15 @@ namespace YDM.Concept
             _uri = uri;
             _videoFound += videoHandler;
             _errorFound += exctptionHandler;
-            _cancellationTokenSource = new CancellationTokenSource();
         }
 
-        public async ValueTask<IEnumerable<UriAnalyzer>> GetTaskAsync()
+        public async ValueTask<IEnumerable<UriAnalyzer>> GetTaskAsync(CancellationToken token)
         {
-            var token = _cancellationTokenSource.Token;
+            StartProcess.Raise(this, EventArgs.Empty);
             var ids = await GetIDsAsync(token);
             GetVideos(ids, token);
             return ids;
         }
-
-        public void CancelProcesse() =>
-            _cancellationTokenSource.Cancel();
 
         private async Task<VideoModel> GetVideoAsync(UriAnalyzer videoUri, CancellationToken token)
         {
@@ -77,7 +72,7 @@ namespace YDM.Concept
                     catch (Exception ex)
                     {
                         _errorFound.Raise(this, new Exception(ex.Message));
-                        return null;
+                        return new List<UriAnalyzer>().AsQueryable();
                         throw new Exception();
                     }
                 }
@@ -91,7 +86,6 @@ namespace YDM.Concept
 
         private void GetVideos(IEnumerable<UriAnalyzer> uris, CancellationToken token)
         {
-            StartHandler.Raise(this, EventArgs.Empty);
             Task.Run(async () =>
             {
                 foreach (var uri in uris.Where(uri => uri.IsProcessable))
@@ -102,8 +96,9 @@ namespace YDM.Concept
                     if (video.Lists.Any())
                         _videoFound.Raise(this, video);
                 }
+
+                EndProcess.Raise(this, EventArgs.Empty);
             });
-            EndHandler.Raise(this, EventArgs.Empty);
         }
 
     }
