@@ -12,8 +12,18 @@ namespace YDM.Concept
 {
     public class YDMDownloader
     {
+        public string Filename { get; set; }
+        public string Storepath { get; set; }
+        private string _fileSize;
+
+        public string FileSize
+        {
+            get => new ProcessingModel(double.Parse(_fileSize), 0).Filesize;
+            set { _fileSize = value; }
+        }
+
         public EventHandler<RemoteFIleInformation> PerProcessing;
-        public EventHandler<double> processing;
+        public EventHandler<ProcessingModel> processing;
         public EventHandler<DownloadState> DownloadstateChange;
 
         private DownloadState _downloadState;
@@ -43,6 +53,8 @@ namespace YDM.Concept
             _cancellationTokenSorce = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSorce.Token;
             DownloadState = DownloadState.Initialized;
+            Filename = string.Concat(title + video.FileExtenction);
+            Storepath = string.Concat(output + Filename);
         }
 
         public YDMDownloader(FileInformation audio, string output, string title)
@@ -52,12 +64,15 @@ namespace YDM.Concept
             _cancellationTokenSorce = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSorce.Token;
             DownloadState = DownloadState.Initialized;
+            Filename = string.Concat(title + audio.FileExtenction);
+            Storepath = string.Concat(output + Filename);
         }
 
         private async Task Processing()
         {
             DownloadState = DownloadState.GettingHeaders;
             var fIleInformation = Request.GetFileDetails(_files);
+            FileSize = fIleInformation.FileSize.ToString();
             PerProcessing.Raise(this, fIleInformation);
 
             for (int i = 0; i < _files.Count; i++)
@@ -72,7 +87,7 @@ namespace YDM.Concept
                     var request = Request.CreateHttpRequest(_files[i].Uri, file._downloaded);
                     var filesize = file._downloaded;
                     var bytesRead = 0;
-                    var buffer = new byte[8];
+                    var buffer = new byte[4*1024];
                     using var responce = await request.GetResponseAsync();
                     using var responceStream = responce.GetResponseStream();
                     DownloadState = DownloadState.GettingResponse;
@@ -93,7 +108,7 @@ namespace YDM.Concept
 
                             await fileStream.WriteAsync(buffer, 0, bytesRead, _cancellationToken);
                             filesize += bytesRead;
-                            processing.Raise(this, filesize);
+                            processing.Raise(this, new ProcessingModel(filesize, fIleInformation.FileSizes[i]));
                             DownloadState = DownloadState.Downloading;
                         }
                     }

@@ -29,5 +29,19 @@ namespace YDM
                     queue[i]._downloader.Pause();
             }
         }
+
+        private void BtnPauseAll_Click(object sender, System.EventArgs e)
+        {
+            var queue = flowLayoutPanel1.Controls.OfType<UserControl1>().ToArray();
+            for (int i = 0; i < queue.Count(); i++)
+            {
+                queue[i]._downloader.Pause();
+            }
+        }
+
+        private void BtnResumeAll_Click(object sender, System.EventArgs e)
+        {
+            Start();
+        }
     }
 }

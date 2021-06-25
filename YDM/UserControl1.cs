@@ -19,12 +19,15 @@ namespace YDM
             InitializeComponent();
             _downloader = downloader;
             _downloader.processing += process;
-
+            label1.Text = _downloader.Filename;
+            label2.Text = _downloader.Storepath;
         }
 
-        private void process(object sender, double e)
+        private void process(object sender, ProcessingModel e)
         {
-            progressBar1.Value = 50;
+            label3.Text = $"{e.Percentage} %";
+            progressBar1.Value = e.Percentage;
+            label4.Text = $"{e.Filesize} / {_downloader.FileSize}";
         }
 
         private UserControl1()
