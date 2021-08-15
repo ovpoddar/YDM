@@ -54,7 +54,7 @@ namespace YDM.Concept
             _cancellationToken = _cancellationTokenSorce.Token;
             DownloadState = DownloadState.Initialized;
             Filename = string.Concat(title + video.FileExtenction);
-            Storepath = string.Concat(output + Filename);
+            Storepath = output;
         }
 
         public YDMDownloader(FileInformation audio, string output, string title)
@@ -65,7 +65,7 @@ namespace YDM.Concept
             _cancellationToken = _cancellationTokenSorce.Token;
             DownloadState = DownloadState.Initialized;
             Filename = string.Concat(title + audio.FileExtenction);
-            Storepath = string.Concat(output + Filename);
+            Storepath = output;
         }
 
         private async Task Processing()
@@ -87,7 +87,7 @@ namespace YDM.Concept
                     var request = Request.CreateHttpRequest(_files[i].Uri, file._downloaded);
                     var filesize = file._downloaded;
                     var bytesRead = 0;
-                    var buffer = new byte[4*1024];
+                    var buffer = new byte[4 * 1024];
                     using var responce = await request.GetResponseAsync();
                     using var responceStream = responce.GetResponseStream();
                     DownloadState = DownloadState.GettingResponse;

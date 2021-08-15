@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -6,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using YDM.Concept;
 using YDM.Concept.Models;
+using YDM.CustomeUserControl;
+using YDM.Pages;
 
 namespace YDM
 {
@@ -14,19 +17,17 @@ namespace YDM
         private CancellationTokenSource _cancellationTokenSource;
         private Button _cancellationBtn;
         private FileInformation[] _files = new FileInformation[2];
-        private Form2 _downloader;
+        //private Form2 _downloader;
 
         public Form1()
         {
             InitializeComponent();
-            _downloader = new Form2();
+
         }
 
         private void FoundVideo(object sender, VideoModel e)
         {
-            var str = Output.Text + (string)e.Detais["title"];
-            Output.Text = str;
-            _files[0] =  (e.Lists[2]);
+            _files[0] = (e.Lists[2]);
             _files[1] = (e.Lists[4]);
         }
 
@@ -40,7 +41,6 @@ namespace YDM
         public async void Search_Click(object sender, EventArgs e)
         {
             var text = URL.Text;
-            Output.Text = "";
 
             var _ydm = new YDMVideoProcesser(text, FoundVideo, ErrorFound);
 
@@ -49,7 +49,6 @@ namespace YDM
             var ids = await _ydm.GetTaskAsync(_cancellationTokenSource.Token);
 
             _ydm.EndProcess += endhandler;
-            Output.Text = Output.Text + ids.ToList().Count;
         }
 
         private void endhandler(object sender, EventArgs e)
@@ -75,14 +74,17 @@ namespace YDM
 
         private void BtnDownload_Click(object sender, EventArgs e)
         {
-            
-            _downloader.Add(new YDMDownloader(_files[0], _files[1], @"C:\Users\Ayan\Desktop", "test1"));
-            _downloader.Add(new YDMDownloader(_files[0], _files[1], @"C:\Users\Ayan\Desktop", "test2"));
-            _downloader.Add(new YDMDownloader(_files[0], _files[1], @"C:\Users\Ayan\Desktop", "test3"));
+        }
 
-            _downloader.Start();
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var downloader = new Download();
+            downloader.Add(new FileDownloadControl(new YDMDownloader(_files[0], _files[1], @"C:\Users\Ayan\Desktop", "test1")));
+            downloader.Add(new FileDownloadControl(new YDMDownloader(_files[0], _files[1], @"C:\Users\Ayan\Desktop", "test2")));
+            downloader.Add(new FileDownloadControl(new YDMDownloader(_files[0], _files[1], @"C:\Users\Ayan\Desktop", "test3")));
+            downloader.BtnResumeAll_Click(this, EventArgs.Empty);
 
-            _downloader.Show();
+            downloader.Show();
         }
     }
 }

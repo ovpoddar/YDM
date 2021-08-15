@@ -1,7 +1,7 @@
 ﻿
-namespace YDM
+namespace YDM.Pages
 {
-    partial class Form2
+    partial class Download
     {
         /// <summary>
         /// Required designer variable.
@@ -38,10 +38,16 @@ namespace YDM
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 41);
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(125, 47);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(800, 409);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(559, 335);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -50,13 +56,14 @@ namespace YDM
             this.panel1.Controls.Add(this.BtnPauseAll);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 42);
+            this.panel1.Size = new System.Drawing.Size(784, 47);
             this.panel1.TabIndex = 1;
             // 
             // BtnPauseAll
             // 
-            this.BtnPauseAll.Location = new System.Drawing.Point(713, 12);
+            this.BtnPauseAll.Location = new System.Drawing.Point(697, 12);
             this.BtnPauseAll.Name = "BtnPauseAll";
             this.BtnPauseAll.Size = new System.Drawing.Size(75, 23);
             this.BtnPauseAll.TabIndex = 0;
@@ -66,23 +73,25 @@ namespace YDM
             // 
             // BtnResumeAll
             // 
-            this.BtnResumeAll.Location = new System.Drawing.Point(626, 13);
+            this.BtnResumeAll.Location = new System.Drawing.Point(587, 12);
             this.BtnResumeAll.Name = "BtnResumeAll";
-            this.BtnResumeAll.Size = new System.Drawing.Size(75, 23);
+            this.BtnResumeAll.Size = new System.Drawing.Size(86, 23);
             this.BtnResumeAll.TabIndex = 1;
             this.BtnResumeAll.Text = "Resume All";
             this.BtnResumeAll.UseVisualStyleBackColor = true;
             this.BtnResumeAll.Click += new System.EventHandler(this.BtnResumeAll_Click);
             // 
-            // Form2
+            // Download
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
+            this.ClientSize = new System.Drawing.Size(784, 376);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Name = "Form2";
-            this.Text = "Form2";
+            this.Name = "Download";
+            this.Text = "Download";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
