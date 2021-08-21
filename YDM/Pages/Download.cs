@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
-using YDM.Concept;
 using YDM.Concept.Models;
 using YDM.CustomeUserControl;
 using YDM.Model;
@@ -50,7 +44,8 @@ namespace YDM.Pages
         {
             for (var i = 0; i < _queue.Count; i++)
             {
-                try { 
+                try
+                {
                     _queue[i].Downloader.Pause();
                     _queue[i].BtnChangeState.Text = "Resume";
                 }

@@ -34,9 +34,13 @@ namespace YDM.Pages
             this.panelSearchResult = new System.Windows.Forms.Panel();
             this.panelSearch = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.BtnStartDownload = new System.Windows.Forms.Button();
             this.panelTextBox.SuspendLayout();
             this.panelSearch.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtSearchBox
@@ -72,9 +76,9 @@ namespace YDM.Pages
             this.panelSearchResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelSearchResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
-            this.panelSearchResult.Location = new System.Drawing.Point(0, 160);
+            this.panelSearchResult.Location = new System.Drawing.Point(0, 196);
             this.panelSearchResult.Name = "panelSearchResult";
-            this.panelSearchResult.Size = new System.Drawing.Size(1208, 320);
+            this.panelSearchResult.Size = new System.Drawing.Size(1208, 252);
             this.panelSearchResult.TabIndex = 3;
             // 
             // panelSearch
@@ -96,12 +100,44 @@ namespace YDM.Pages
             this.panel1.Size = new System.Drawing.Size(989, 37);
             this.panel1.TabIndex = 0;
             // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Location = new System.Drawing.Point(3, 165);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1205, 25);
+            this.panel2.TabIndex = 5;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
+            this.panel3.Controls.Add(this.BtnStartDownload);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 447);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(1208, 33);
+            this.panel3.TabIndex = 6;
+            // 
+            // BtnStartDownload
+            // 
+            this.BtnStartDownload.Location = new System.Drawing.Point(506, 7);
+            this.BtnStartDownload.Name = "BtnStartDownload";
+            this.BtnStartDownload.Size = new System.Drawing.Size(196, 23);
+            this.BtnStartDownload.TabIndex = 0;
+            this.BtnStartDownload.Text = "Download";
+            this.BtnStartDownload.UseVisualStyleBackColor = true;
+            this.BtnStartDownload.Visible = false;
+            this.BtnStartDownload.Click += new System.EventHandler(this.BtnStartDownload_Click);
+            // 
             // Search
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
             this.ClientSize = new System.Drawing.Size(1208, 480);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panelSearch);
             this.Controls.Add(this.panelSearchResult);
             this.Name = "Search";
@@ -111,6 +147,7 @@ namespace YDM.Pages
             this.panelTextBox.PerformLayout();
             this.panelSearch.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -121,6 +158,9 @@ namespace YDM.Pages
         private System.Windows.Forms.Panel panelSearch;
         private System.Windows.Forms.TextBox txtSearchBox;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button BtnStartDownload;
     }
 }
 

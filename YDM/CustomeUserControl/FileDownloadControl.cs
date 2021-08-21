@@ -1,17 +1,10 @@
 ﻿using SHOpenFolderAndSelectItems;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using YDM.Concept;
 using YDM.Concept.Models;
 using YDM.Model;
-using YDM.Properties;
 
 namespace YDM.CustomeUserControl
 {
@@ -35,14 +28,14 @@ namespace YDM.CustomeUserControl
             State = Downloader.DownloadState;
         }
 
-        private void DownloadState_change(object sender, DownloadState e) => 
+        private void DownloadState_change(object sender, DownloadState e) =>
             State = e;
 
         private void OnProcessing(object sender, ProcessingModel e)
         {
             LblPercentage.Text = e.Percentage.ToString() + "%";
             ProgressBar.Value = e.Percentage;
-            LblSizeMoniter.Text = $"{e.Filesize} of {Downloader.FileSize}"; 
+            LblSizeMoniter.Text = $"{e.Filesize} of {Downloader.FileSize}";
         }
 
         private void BtnDispose_Click(object sender, EventArgs e)

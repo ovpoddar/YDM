@@ -39,7 +39,7 @@ namespace YDM.Concept.Helper
                 Queryes[i] = new KeyValuePair<string, string>(keyvalue[0], keyvalue[1]);
             }
 
-            if (Queryes[0].Key.ToLower() == "list" )
+            if (Queryes[0].Key.ToLower() == "list")
                 IsList = true;
             else
                 IsList = false;

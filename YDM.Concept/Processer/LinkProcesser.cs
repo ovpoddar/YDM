@@ -71,7 +71,7 @@ namespace YDM.Concept.Processer
                     {
                         FileExtenction = info.TypeOfContent.Split('/')[1],
                         Uri = new Uri(YouTubeVideo.Decrypt(info.Uri, js)),
-                        FileType = (FileTypeEnum)Enum.Parse(typeof(FileTypeEnum) ,info.TypeOfContent.Split('/')[0], true),
+                        FileType = (FileTypeEnum)Enum.Parse(typeof(FileTypeEnum), info.TypeOfContent.Split('/')[0], true),
                         Id = info.Id,
                         Format = info.Format
                     };

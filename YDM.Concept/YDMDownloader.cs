@@ -38,7 +38,7 @@ namespace YDM.Concept
             }
         }
 
-        private List<FileInformation> _files = new List<FileInformation>();
+        private readonly List<FileInformation> _files = new List<FileInformation>();
         private readonly string _outputFolder;
         private volatile bool _canDownload;
         private Thread _downloadThrade;
@@ -75,7 +75,7 @@ namespace YDM.Concept
             FileSize = fIleInformation.FileSize.ToString();
             PerProcessing.Raise(this, fIleInformation);
 
-            for (int i = 0; i < _files.Count; i++)
+            for (var i = 0; i < _files.Count; i++)
             {
                 var file = new FileOutputProcesser(_outputFolder, fIleInformation.FileSizes[i], _files[i]);
 

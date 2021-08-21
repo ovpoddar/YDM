@@ -1,34 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YDM.Concept;
 using YDM.Concept.Models;
+using YDM.CustomeUserControl;
 
 namespace YDM.Pages
 {
     public partial class Search : Form
     {
-
-        // TODO: need a control to show videos list
         // TODO: fix the issue of resizing if you drag the from a littile bit down then the content are not resizing
 
         private CancellationTokenSource _cancellationTokenSource;
         private Button _cancellationBtn;
-        private FileInformation[] _files = new FileInformation[2];
         public Search()
         {
             InitializeComponent();
+
+
+
+            panelSearchResult.AutoScroll = false;
+
+            panelSearchResult.HorizontalScroll.Enabled = false;
+            panelSearchResult.HorizontalScroll.Visible = false;
+            panelSearchResult.AutoScroll = true;
         }
 
         private void TextBox1_MouseEnter(object sender, EventArgs e)
         {
-            panelTextBox.BackColor = Color.FromArgb(215,36,36);
+            panelTextBox.BackColor = Color.FromArgb(215, 36, 36);
         }
 
         private void TextBox1_MouseLeave(object sender, EventArgs e)
@@ -38,10 +39,12 @@ namespace YDM.Pages
 
         private async void TextBox1_KeyDownAsync(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                panelSearch.Dock=DockStyle.Top;
-                panelSearchResult.Dock=DockStyle.Fill;
+                panelSearch.Dock = DockStyle.Top;
+                panel2.Dock = DockStyle.Top;
+                panel3.Dock = DockStyle.Bottom;
+                panelSearchResult.Dock = DockStyle.Fill;
 
 
                 var text = txtSearchBox.Text;
@@ -58,10 +61,9 @@ namespace YDM.Pages
 
         private void FoundVideo(object sender, VideoModel e)
         {
-            //var str = Output.Text + (string)e.Detais["title"];
-            //Output.Text = str;
-            _files[0] = (e.Lists[2]);
-            _files[1] = (e.Lists[4]);
+            var result = new SearchResultControl(e, 1200);
+            panelSearchResult.Controls.Add(result);
+            BtnStartDownload.Visible = true;
         }
 
         private void ErrorFound(object sender, Exception e)
@@ -93,7 +95,6 @@ namespace YDM.Pages
         private void CancelBtn_Click(object sender, EventArgs e) =>
             _cancellationTokenSource.Cancel();
 
-
         private void Search_Load(object sender, EventArgs e)
         {
             ActiveControl = null;
@@ -108,6 +109,11 @@ namespace YDM.Pages
         private void TxtSearchBox_LostFocus(object sender, EventArgs e)
         {
             txtSearchBox.MouseLeave += TextBox1_MouseLeave;
+        }
+
+        private void BtnStartDownload_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

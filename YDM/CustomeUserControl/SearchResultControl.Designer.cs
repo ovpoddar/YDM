@@ -152,6 +152,7 @@ namespace YDM.CustomeUserControl
             this.PicThumbnail.Location = new System.Drawing.Point(10, 5);
             this.PicThumbnail.Name = "PicThumbnail";
             this.PicThumbnail.Size = new System.Drawing.Size(156, 190);
+            this.PicThumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PicThumbnail.TabIndex = 0;
             this.PicThumbnail.TabStop = false;
             // 
