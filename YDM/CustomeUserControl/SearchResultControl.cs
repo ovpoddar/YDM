@@ -10,27 +10,35 @@ namespace YDM.CustomeUserControl
 {
     public partial class SearchResultControl : UserControl
     {
-        public List<FileInformation> Lists { get; set; }
-        public FileInformation SelectedItem { get; set; } = new FileInformation();
+        public List<FileInformation> VideoLists { get; set; } = new List<FileInformation>();
+        public List<FileInformation> AudioLists { get; set; } = new List<FileInformation>();
+        public FileInformation SelectedVideo { get; set; } = new FileInformation();
+        public FileInformation SelectedAudio { get; set; } = new FileInformation();
 
-        public SearchResultControl(VideoModel videoModel, int width)
+        public SearchResultControl(VideoModel videoModel)
         {
             InitializeComponent();
 
-            // Width = width;
-            LblTitle.Text = (string)videoModel.Detais["title"];
-            LblAuthor.Text = (string)videoModel.Detais["author"];
+            LblTitle.Text = videoModel.Detais["title"].ToString();
+            LblAuthor.Text = videoModel.Detais["author"].ToString();
             if (videoModel.Detais["status"].ToString().ToLower() != "ok")
                 VideoStatus.Visible = true;
 
             SetImage(videoModel.Thumbnails.FirstOrDefault());
 
-            Lists = videoModel.Lists;
             foreach (var item in videoModel.Lists)
             {
-                comboBox1.Items.Add($"{item.Format} {item.FileType} {item.FileExtenction}");
+                if (item.FileType == FileTypeEnum.video)
+                {
+                    comboBox1.Items.Add($"{item.Format} {item.FileExtenction}");
+                    VideoLists.Add(item);
+                }
+                else
+                {
+                    comboBox2.Items.Add($"{item.Format} {item.FileExtenction}");
+                    AudioLists.Add(item);
+                }
             }
-
         }
 
         private void SetImage(Thumbnail thumbnail)
@@ -48,9 +56,17 @@ namespace YDM.CustomeUserControl
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             var val = comboBox1.SelectedIndex > 0 ? 0
-                : comboBox1.SelectedIndex <= Lists.Count ? Lists.Count - 1
+                : comboBox1.SelectedIndex <= VideoLists.Count ? VideoLists.Count - 1
                 : comboBox1.SelectedIndex - 1;
-            SelectedItem = Lists[val];
+            SelectedVideo = VideoLists[val];
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var val = comboBox2.SelectedIndex > 0 ? 0
+                : comboBox2.SelectedIndex <= AudioLists.Count ? AudioLists.Count - 1
+                : comboBox2.SelectedIndex - 1;
+            SelectedAudio = AudioLists[val];
         }
     }
 }

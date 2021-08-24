@@ -31,15 +31,18 @@ namespace YDM.Pages
         {
             this.txtSearchBox = new System.Windows.Forms.TextBox();
             this.panelTextBox = new System.Windows.Forms.Panel();
-            this.panelSearchResult = new System.Windows.Forms.Panel();
+            this.panelSearchResult = new System.Windows.Forms.FlowLayoutPanel();
             this.panelSearch = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.GlobalSelectionAudioFiles = new System.Windows.Forms.ComboBox();
+            this.GlobalSelectionVideoFile = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.BtnStartDownload = new System.Windows.Forms.Button();
             this.panelTextBox.SuspendLayout();
             this.panelSearch.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +56,7 @@ namespace YDM.Pages
             this.txtSearchBox.Margin = new System.Windows.Forms.Padding(0);
             this.txtSearchBox.Name = "txtSearchBox";
             this.txtSearchBox.PlaceholderText = "Enter the Link";
-            this.txtSearchBox.Size = new System.Drawing.Size(893, 32);
+            this.txtSearchBox.Size = new System.Drawing.Size(908, 32);
             this.txtSearchBox.TabIndex = 2;
             this.txtSearchBox.TabStop = false;
             this.txtSearchBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TxtSearchBox_MouseClick);
@@ -68,7 +71,7 @@ namespace YDM.Pages
             this.panelTextBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelTextBox.Location = new System.Drawing.Point(0, 0);
             this.panelTextBox.Name = "panelTextBox";
-            this.panelTextBox.Size = new System.Drawing.Size(893, 37);
+            this.panelTextBox.Size = new System.Drawing.Size(908, 37);
             this.panelTextBox.TabIndex = 2;
             // 
             // panelSearchResult
@@ -78,7 +81,7 @@ namespace YDM.Pages
             this.panelSearchResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
             this.panelSearchResult.Location = new System.Drawing.Point(0, 196);
             this.panelSearchResult.Name = "panelSearchResult";
-            this.panelSearchResult.Size = new System.Drawing.Size(1208, 252);
+            this.panelSearchResult.Size = new System.Drawing.Size(1208, 245);
             this.panelSearchResult.TabIndex = 3;
             // 
             // panelSearch
@@ -104,10 +107,39 @@ namespace YDM.Pages
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
+            this.panel2.Controls.Add(this.GlobalSelectionAudioFiles);
+            this.panel2.Controls.Add(this.GlobalSelectionVideoFile);
             this.panel2.Location = new System.Drawing.Point(3, 165);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0, 0, 0, 23);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1205, 25);
             this.panel2.TabIndex = 5;
+            this.panel2.Visible = false;
+            // 
+            // GlobalSelectionAudioFiles
+            // 
+            this.GlobalSelectionAudioFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
+            this.GlobalSelectionAudioFiles.Dock = System.Windows.Forms.DockStyle.Left;
+            this.GlobalSelectionAudioFiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GlobalSelectionAudioFiles.FormattingEnabled = true;
+            this.GlobalSelectionAudioFiles.Location = new System.Drawing.Point(0, 0);
+            this.GlobalSelectionAudioFiles.Name = "GlobalSelectionAudioFiles";
+            this.GlobalSelectionAudioFiles.Size = new System.Drawing.Size(582, 23);
+            this.GlobalSelectionAudioFiles.TabIndex = 1;
+            this.GlobalSelectionAudioFiles.SelectedIndexChanged += new System.EventHandler(this.GlobalSelectionAudioFiles_SelectedIndexChanged);
+            // 
+            // GlobalSelectionVideoFile
+            // 
+            this.GlobalSelectionVideoFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
+            this.GlobalSelectionVideoFile.Dock = System.Windows.Forms.DockStyle.Right;
+            this.GlobalSelectionVideoFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GlobalSelectionVideoFile.FormattingEnabled = true;
+            this.GlobalSelectionVideoFile.Location = new System.Drawing.Point(623, 0);
+            this.GlobalSelectionVideoFile.Name = "GlobalSelectionVideoFile";
+            this.GlobalSelectionVideoFile.Size = new System.Drawing.Size(582, 23);
+            this.GlobalSelectionVideoFile.TabIndex = 0;
+            this.GlobalSelectionVideoFile.SelectedIndexChanged += new System.EventHandler(this.GlobalSelection_SelectedIndexChanged);
             // 
             // panel3
             // 
@@ -136,10 +168,10 @@ namespace YDM.Pages
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
             this.ClientSize = new System.Drawing.Size(1208, 480);
+            this.Controls.Add(this.panelSearchResult);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panelSearch);
-            this.Controls.Add(this.panelSearchResult);
             this.Name = "Search";
             this.Text = "Search";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -147,6 +179,7 @@ namespace YDM.Pages
             this.panelTextBox.PerformLayout();
             this.panelSearch.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -154,13 +187,15 @@ namespace YDM.Pages
 
         #endregion
         private System.Windows.Forms.Panel panelTextBox;
-        private System.Windows.Forms.Panel panelSearchResult;
         private System.Windows.Forms.Panel panelSearch;
         private System.Windows.Forms.TextBox txtSearchBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.FlowLayoutPanel panelSearchResult;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button BtnStartDownload;
+        private System.Windows.Forms.ComboBox GlobalSelectionVideoFile;
+        private System.Windows.Forms.ComboBox GlobalSelectionAudioFiles;
     }
 }
 

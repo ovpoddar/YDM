@@ -7,7 +7,10 @@ namespace YDM
 {
     public partial class MainForm : Form
     {
+        // TODO: fix the issue of resizing if you drag the from a littile bit down then the content are not resizing
+
         private Form _currentChildForm = new Form();
+        private Form _download = new Download();
         public MainForm()
         {
             InitializeComponent();
@@ -20,7 +23,7 @@ namespace YDM
 
         private void DownloadsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Download());
+            OpenChildForm(_download);
         }
 
         private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)

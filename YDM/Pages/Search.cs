@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using YDM.Concept;
@@ -10,18 +12,13 @@ namespace YDM.Pages
 {
     public partial class Search : Form
     {
-        // TODO: fix the issue of resizing if you drag the from a littile bit down then the content are not resizing
-
         private CancellationTokenSource _cancellationTokenSource;
         private Button _cancellationBtn;
         public Search()
         {
             InitializeComponent();
 
-
-
             panelSearchResult.AutoScroll = false;
-
             panelSearchResult.HorizontalScroll.Enabled = false;
             panelSearchResult.HorizontalScroll.Visible = false;
             panelSearchResult.AutoScroll = true;
@@ -43,8 +40,8 @@ namespace YDM.Pages
             {
                 panelSearch.Dock = DockStyle.Top;
                 panel2.Dock = DockStyle.Top;
-                panel3.Dock = DockStyle.Bottom;
                 panelSearchResult.Dock = DockStyle.Fill;
+                panel3.Dock = DockStyle.Bottom;
 
 
                 var text = txtSearchBox.Text;
@@ -61,9 +58,28 @@ namespace YDM.Pages
 
         private void FoundVideo(object sender, VideoModel e)
         {
-            var result = new SearchResultControl(e, 1200);
+            var result = new SearchResultControl(e);
+
             panelSearchResult.Controls.Add(result);
+
+            PopulateGlobalList(e.Lists);
+
+            panel2.Visible = true;
             BtnStartDownload.Visible = true;
+        }
+
+        private void PopulateGlobalList(List<FileInformation> lists)
+        {
+            foreach (var item in lists)
+            {
+                var name = $"{item.Format} {item.FileType} {item.FileExtenction}";
+                if (GlobalSelectionVideoFile.Items.Contains(name) || GlobalSelectionAudioFiles.Items.Contains(name))
+                    continue;
+                if (item.FileType == FileTypeEnum.video)
+                    GlobalSelectionVideoFile.Items.Add(name);
+                else
+                    GlobalSelectionAudioFiles.Items.Add(name);
+            }
         }
 
         private void ErrorFound(object sender, Exception e)
@@ -72,7 +88,6 @@ namespace YDM.Pages
             _cancellationTokenSource.Dispose();
             // Log into some were;
         }
-
 
         private void Endhandler(object sender, EventArgs e)
         {
@@ -85,8 +100,9 @@ namespace YDM.Pages
             _cancellationBtn = new Button()
             {
                 Text = "Cancel",
-                TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Right,
+                FlatStyle = FlatStyle.Flat
             };
             _cancellationBtn.Click += CancelBtn_Click;
             panel1.Controls.Add(_cancellationBtn);
@@ -112,6 +128,22 @@ namespace YDM.Pages
         }
 
         private void BtnStartDownload_Click(object sender, EventArgs e)
+        {
+            var downloaders = panelSearchResult.Controls.OfType<SearchResultControl>();
+            foreach (var downloader in downloaders)
+            {
+                var item = downloader.SelectedAudio;
+                var item1 = downloader.SelectedVideo;
+            }
+
+        }
+
+        private void GlobalSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GlobalSelectionAudioFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
