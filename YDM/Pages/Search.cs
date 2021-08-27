@@ -128,6 +128,8 @@ namespace YDM.Pages
                 .ToList();
 
             FoundFileToDownload.Raise(this, result);
+
+            panelSearchResult.Controls.Clear();
         }
 
         private void GlobalSelection_SelectedIndexChanged(object sender, EventArgs e)
