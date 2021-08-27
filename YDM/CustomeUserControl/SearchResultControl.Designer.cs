@@ -33,10 +33,10 @@ namespace YDM.CustomeUserControl
             this.PanelDetails = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.AudioComboBox = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.VideoComboBox = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.LblAuthor = new System.Windows.Forms.Label();
             this.VideoStatus = new System.Windows.Forms.Panel();
@@ -77,7 +77,7 @@ namespace YDM.CustomeUserControl
             // panel4
             // 
             this.panel4.Controls.Add(this.label2);
-            this.panel4.Controls.Add(this.comboBox2);
+            this.panel4.Controls.Add(this.AudioComboBox);
             this.panel4.Location = new System.Drawing.Point(10, 108);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(554, 24);
@@ -92,20 +92,20 @@ namespace YDM.CustomeUserControl
             this.label2.TabIndex = 5;
             this.label2.Text = "Select the Audio Quality";
             // 
-            // comboBox2
+            // AudioComboBox
             // 
-            this.comboBox2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(218, 0);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(336, 23);
-            this.comboBox2.TabIndex = 4;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.AudioComboBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.AudioComboBox.FormattingEnabled = true;
+            this.AudioComboBox.Location = new System.Drawing.Point(218, 0);
+            this.AudioComboBox.Name = "AudioComboBox";
+            this.AudioComboBox.Size = new System.Drawing.Size(336, 23);
+            this.AudioComboBox.TabIndex = 4;
+            this.AudioComboBox.SelectedIndexChanged += new System.EventHandler(this.ComboBox2_SelectedIndexChanged);
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.comboBox1);
+            this.panel2.Controls.Add(this.VideoComboBox);
             this.panel2.Location = new System.Drawing.Point(10, 78);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(554, 24);
@@ -120,15 +120,15 @@ namespace YDM.CustomeUserControl
             this.label1.TabIndex = 5;
             this.label1.Text = "Select the video Quality";
             // 
-            // comboBox1
+            // VideoComboBox
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(218, 0);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(336, 23);
-            this.comboBox1.TabIndex = 4;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.VideoComboBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.VideoComboBox.FormattingEnabled = true;
+            this.VideoComboBox.Location = new System.Drawing.Point(218, 0);
+            this.VideoComboBox.Name = "VideoComboBox";
+            this.VideoComboBox.Size = new System.Drawing.Size(336, 23);
+            this.VideoComboBox.TabIndex = 4;
+            this.VideoComboBox.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // panel3
             // 
@@ -219,11 +219,11 @@ namespace YDM.CustomeUserControl
         private System.Windows.Forms.Label LblAuthor;
         private System.Windows.Forms.Panel PanelImage;
         private System.Windows.Forms.PictureBox PicThumbnail;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox VideoComboBox;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox AudioComboBox;
     }
 }

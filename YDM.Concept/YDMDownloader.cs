@@ -53,7 +53,7 @@ namespace YDM.Concept
             _cancellationTokenSorce = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSorce.Token;
             DownloadState = DownloadState.Initialized;
-            Filename = string.Concat(title + video.FileExtenction);
+            Filename = string.Concat(title + '.' + video.FileExtenction.Split(";")[0]);
             Storepath = output;
         }
 
@@ -116,12 +116,12 @@ namespace YDM.Concept
                     if (!_canDownload && fIleInformation.FileSizes[i] > filesize)
                         DownloadState = DownloadState.Paused;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     DownloadState = DownloadState.Stopped;
                 }
             }
-            if (!(DownloadState == DownloadState.Paused || _canDownload))
+            if (DownloadState == DownloadState.Downloading && _canDownload)
                 DownloadState = DownloadState.Completed;
         }
 

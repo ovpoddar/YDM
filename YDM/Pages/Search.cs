@@ -8,12 +8,16 @@ using YDM.Concept;
 using YDM.Concept.Models;
 using YDM.CustomeUserControl;
 
+using System.ComponentModel;
+
 namespace YDM.Pages
 {
     public partial class Search : Form
     {
         private CancellationTokenSource _cancellationTokenSource;
         private Button _cancellationBtn;
+        public EventHandler<List<FileDownloadControl>> FoundFileToDownload;
+
         public Search()
         {
             InitializeComponent();
@@ -24,15 +28,9 @@ namespace YDM.Pages
             panelSearchResult.AutoScroll = true;
         }
 
-        private void TextBox1_MouseEnter(object sender, EventArgs e)
-        {
-            panelTextBox.BackColor = Color.FromArgb(215, 36, 36);
-        }
+        private void TextBox1_MouseEnter(object sender, EventArgs e) => panelTextBox.BackColor = Color.FromArgb(215, 36, 36);
 
-        private void TextBox1_MouseLeave(object sender, EventArgs e)
-        {
-            panelTextBox.BackColor = Color.FromArgb(49, 57, 66);
-        }
+        private void TextBox1_MouseLeave(object sender, EventArgs e) => panelTextBox.BackColor = Color.FromArgb(49, 57, 66);
 
         private async void TextBox1_KeyDownAsync(object sender, KeyEventArgs e)
         {
@@ -111,10 +109,7 @@ namespace YDM.Pages
         private void CancelBtn_Click(object sender, EventArgs e) =>
             _cancellationTokenSource.Cancel();
 
-        private void Search_Load(object sender, EventArgs e)
-        {
-            ActiveControl = null;
-        }
+        private void Search_Load(object sender, EventArgs e) => ActiveControl = null;
 
         private void TxtSearchBox_MouseClick(object sender, MouseEventArgs e)
         {
@@ -122,30 +117,53 @@ namespace YDM.Pages
             txtSearchBox.LostFocus += TxtSearchBox_LostFocus;
         }
 
-        private void TxtSearchBox_LostFocus(object sender, EventArgs e)
-        {
-            txtSearchBox.MouseLeave += TextBox1_MouseLeave;
-        }
+        private void TxtSearchBox_LostFocus(object sender, EventArgs e) => txtSearchBox.MouseLeave += TextBox1_MouseLeave;
 
         private void BtnStartDownload_Click(object sender, EventArgs e)
         {
-            var downloaders = panelSearchResult.Controls.OfType<SearchResultControl>();
-            foreach (var downloader in downloaders)
-            {
-                var item = downloader.SelectedAudio;
-                var item1 = downloader.SelectedVideo;
-            }
+            var result = panelSearchResult
+                .Controls
+                .OfType<SearchResultControl>()
+                .Select(downloader => downloader.DownloadControl)
+                .ToList();
 
+            FoundFileToDownload.Raise(this, result);
         }
 
         private void GlobalSelection_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            foreach (var downloader in panelSearchResult.Controls.OfType<SearchResultControl>())
+            {
+                downloader.SelectVideo(GlobalSelectionVideoFile);
+            }
         }
 
         private void GlobalSelectionAudioFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            foreach (var downloader in panelSearchResult.Controls.OfType<SearchResultControl>())
+            {
+                downloader.SelectAudio(GlobalSelectionAudioFiles);
+            }
+        }
 
+    }
+    static class Entand
+    {
+
+        internal static object Raise(this MulticastDelegate multicastDelegate, object sender, object eventArgs)
+        {
+            if (multicastDelegate == null)
+                return null;
+            object retval = null;
+            foreach (var d in multicastDelegate.GetInvocationList())
+            {
+                var ISynchronizeInvoke = d.Target as ISynchronizeInvoke;
+                if (ISynchronizeInvoke != null && ISynchronizeInvoke.InvokeRequired)
+                    retval = ISynchronizeInvoke.EndInvoke(ISynchronizeInvoke.BeginInvoke(d, new[] { sender, eventArgs }));
+                else
+                    retval = d.DynamicInvoke(new[] { sender, eventArgs });
+            }
+            return retval;
         }
     }
 }

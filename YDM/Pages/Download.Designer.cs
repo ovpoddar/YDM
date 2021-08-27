@@ -31,8 +31,8 @@ namespace YDM.Pages
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.BtnPauseAll = new System.Windows.Forms.Button();
             this.BtnResumeAll = new System.Windows.Forms.Button();
+            this.BtnPauseAll = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,9 +41,9 @@ namespace YDM.Pages
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(125, 47);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -61,16 +61,6 @@ namespace YDM.Pages
             this.panel1.Size = new System.Drawing.Size(784, 47);
             this.panel1.TabIndex = 1;
             // 
-            // BtnPauseAll
-            // 
-            this.BtnPauseAll.Location = new System.Drawing.Point(697, 12);
-            this.BtnPauseAll.Name = "BtnPauseAll";
-            this.BtnPauseAll.Size = new System.Drawing.Size(75, 23);
-            this.BtnPauseAll.TabIndex = 0;
-            this.BtnPauseAll.Text = "Pause All";
-            this.BtnPauseAll.UseVisualStyleBackColor = true;
-            this.BtnPauseAll.Click += new System.EventHandler(this.BtnPauseAll_Click);
-            // 
             // BtnResumeAll
             // 
             this.BtnResumeAll.Location = new System.Drawing.Point(587, 12);
@@ -80,6 +70,16 @@ namespace YDM.Pages
             this.BtnResumeAll.Text = "Resume All";
             this.BtnResumeAll.UseVisualStyleBackColor = true;
             this.BtnResumeAll.Click += new System.EventHandler(this.BtnResumeAll_Click);
+            // 
+            // BtnPauseAll
+            // 
+            this.BtnPauseAll.Location = new System.Drawing.Point(697, 12);
+            this.BtnPauseAll.Name = "BtnPauseAll";
+            this.BtnPauseAll.Size = new System.Drawing.Size(75, 23);
+            this.BtnPauseAll.TabIndex = 0;
+            this.BtnPauseAll.Text = "Pause All";
+            this.BtnPauseAll.UseVisualStyleBackColor = true;
+            this.BtnPauseAll.Click += new System.EventHandler(this.BtnPauseAll_Click);
             // 
             // Download
             // 

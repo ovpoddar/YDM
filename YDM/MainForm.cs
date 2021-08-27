@@ -1,20 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using YDM.CustomeUserControl;
 using YDM.Pages;
 
 namespace YDM
 {
     public partial class MainForm : Form
     {
-        // TODO: fix the issue of resizing if you drag the from a littile bit down then the content are not resizing
+        // TODO: fix the issue of resizing if you drag the from a little bit down then the content are not resizing
 
         private Form _currentChildForm = new Form();
-        private Form _download = new Download();
+        private Download _download = new Download();
         public MainForm()
         {
             InitializeComponent();
+            var DownloadFolderGuid = new Guid("374DE290-123F-4565-9164-39C4925E467B");
+            string downloads;
+            SHGetKnownFolderPath(DownloadFolderGuid, 0, IntPtr.Zero, out downloads);
+
+            Properties.Settings.Default.DownloadPath = downloads;
+            Properties.Settings.Default.Save();
         }
+
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+        static extern int SHGetKnownFolderPath([MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags, IntPtr hToken, out string pszPath);
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -23,7 +34,7 @@ namespace YDM
 
         private void DownloadsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenChildForm(_download);
+            OpenChildForm(_download, false);
         }
 
         private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -33,15 +44,26 @@ namespace YDM
 
         private void HomeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Search());
+            var form = new Search();
+            form.FoundFileToDownload += AddToDownload;
+            OpenChildForm(form, true);
         }
 
-        private void OpenChildForm(Form childForm)
+        private void AddToDownload(object sender, List<FileDownloadControl> e)
         {
+            _download.Add(e);
+        }
+
+        private void OpenChildForm(object form, bool dispose)
+        {
+            var childForm = form as Form;
             //open only form
             if (_currentChildForm != null)
             {
-                _currentChildForm.Close();
+                if (dispose)
+                    _currentChildForm.Close();
+                else
+                    _currentChildForm.Hide();
             }
             _currentChildForm = childForm;
             //End
@@ -68,7 +90,9 @@ namespace YDM
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            OpenChildForm(new Search());
+            var form = new Search();
+            form.FoundFileToDownload += AddToDownload;
+            OpenChildForm(form, true);
         }
     }
 }

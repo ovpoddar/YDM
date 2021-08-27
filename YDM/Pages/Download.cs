@@ -23,7 +23,7 @@ namespace YDM.Pages
         {
             for (var i = 0; i < _queue.Count; i++)
             {
-                if (i < _maxDownload && _queue[i].State != DownloadState.Completed)
+                if (i < _maxDownload && _queue[i].State != DownloadState.Completed && _queue[i].State == DownloadState.Initialized)
                 {
                     _queue[i].Downloader.Start();
                     _queue[i].BtnChangeState.Text = "Paused";
@@ -55,7 +55,7 @@ namespace YDM.Pages
 
         public void Add(FileDownloadControl downloader)
         {
-            downloader.Downloader.DownloadstateChange += DownloadState_Change;
+            downloader.DownloadState_Change_UpperLayer += DownloadState_Change;
             downloader.Interaction_Happend += UserInteraction_Occered;
             _queue.Add(_queue.Count, downloader);
             flowLayoutPanel1.Controls.Add(downloader);
@@ -72,6 +72,8 @@ namespace YDM.Pages
             var i = 0;
             while (i < downloaders.Count)
             {
+                downloaders[i].DownloadState_Change_UpperLayer += DownloadState_Change;
+                downloaders[i].Interaction_Happend += UserInteraction_Occered;
                 _queue.Add(_queue.Count, downloaders[i]);
                 flowLayoutPanel1.Controls.Add(downloaders[i]);
                 i++;

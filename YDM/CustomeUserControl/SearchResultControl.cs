@@ -10,11 +10,22 @@ namespace YDM.CustomeUserControl
 {
     public partial class SearchResultControl : UserControl
     {
-        public List<FileInformation> VideoLists { get; set; } = new List<FileInformation>();
-        public List<FileInformation> AudioLists { get; set; } = new List<FileInformation>();
-        public FileInformation SelectedVideo { get; set; } = new FileInformation();
-        public FileInformation SelectedAudio { get; set; } = new FileInformation();
 
+        private FileInformation[] _selectedItem { get; set; } = new FileInformation[2];
+        private List<FileInformation> _videoLists { get; set; } = new List<FileInformation>();
+        private List<FileInformation> _audioLists { get; set; } = new List<FileInformation>();
+
+        public FileDownloadControl DownloadControl
+        {
+            get
+            {
+                if (_selectedItem[0] == null)
+                    return new FileDownloadControl(new Concept.YDMDownloader(_selectedItem[1], Properties.Settings.Default.DownloadPath, LblTitle.Text));
+                else
+                    return new FileDownloadControl(new Concept.YDMDownloader(_selectedItem[0],_selectedItem[1], Properties.Settings.Default.DownloadPath, LblTitle.Text));
+            }
+
+        }
         public SearchResultControl(VideoModel videoModel)
         {
             InitializeComponent();
@@ -30,13 +41,13 @@ namespace YDM.CustomeUserControl
             {
                 if (item.FileType == FileTypeEnum.video)
                 {
-                    comboBox1.Items.Add($"{item.Format} {item.FileExtenction}");
-                    VideoLists.Add(item);
+                    VideoComboBox.Items.Add($"{item.Format} {item.FileExtenction}");
+                    _videoLists.Add(item);
                 }
                 else
                 {
-                    comboBox2.Items.Add($"{item.Format} {item.FileExtenction}");
-                    AudioLists.Add(item);
+                    AudioComboBox.Items.Add($"{item.Format} {item.FileExtenction}");
+                    _audioLists.Add(item);
                 }
             }
         }
@@ -53,20 +64,62 @@ namespace YDM.CustomeUserControl
             }
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var val = comboBox1.SelectedIndex > 0 ? 0
-                : comboBox1.SelectedIndex <= VideoLists.Count ? VideoLists.Count - 1
-                : comboBox1.SelectedIndex - 1;
-            SelectedVideo = VideoLists[val];
+            var val = VideoComboBox.SelectedIndex < 0 ? 0
+                : VideoComboBox.SelectedIndex >= _videoLists.Count ? _videoLists.Count - 1
+                : VideoComboBox.SelectedIndex;
+            _selectedItem[0] = _videoLists[val];
+
+            if (AudioComboBox.SelectedIndex == -1)
+            {
+                var index = Map(VideoComboBox.SelectedIndex, 0, _videoLists.Count - 1, 0, _audioLists.Count - 1, false);
+                AudioComboBox.SelectedIndex = (int)Math.Round(index, MidpointRounding.AwayFromZero);
+            }
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var val = comboBox2.SelectedIndex > 0 ? 0
-                : comboBox2.SelectedIndex <= AudioLists.Count ? AudioLists.Count - 1
-                : comboBox2.SelectedIndex - 1;
-            SelectedAudio = AudioLists[val];
+            var val = AudioComboBox.SelectedIndex < 0 ? 0
+                : AudioComboBox.SelectedIndex >= _audioLists.Count ? _audioLists.Count - 1
+                : AudioComboBox.SelectedIndex;
+            _selectedItem[1] = _audioLists[val];
         }
+
+        public void SelectAudio(ComboBox element)
+        {
+            var mappedIndex = Map(element.SelectedIndex, 0, element.Items.Count - 1, 0, _audioLists.Count - 1, false);
+            var roundedIndex = (int)Math.Round(mappedIndex, MidpointRounding.AwayFromZero);
+            AudioComboBox.SelectedIndex = roundedIndex;
+        }
+
+        public void SelectVideo(ComboBox element)
+        {
+            var mappedIndex = Map(element.SelectedIndex, 0, element.Items.Count - 1, 0, _videoLists.Count - 1, false);
+            var roundedIndex = (int)Math.Round(mappedIndex, MidpointRounding.AwayFromZero);
+            VideoComboBox.SelectedIndex = roundedIndex;
+        }
+
+        public decimal Map(decimal n, decimal start1, decimal stop1, decimal start2, decimal stop2, bool withinBounds)
+        {
+            var newval = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
+
+            if (!withinBounds)
+            {
+                return newval;
+            }
+            if (start2 < stop2)
+            {
+                return Constrain(newval, start2, stop2);
+            }
+            else
+            {
+                return Constrain(newval, stop2, start2);
+            }
+        }
+
+        private decimal Constrain(decimal n, decimal low, decimal high) => 
+            Math.Max(Math.Min(n, high), low);
     }
 }

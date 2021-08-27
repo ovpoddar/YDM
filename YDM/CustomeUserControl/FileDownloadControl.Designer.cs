@@ -158,7 +158,7 @@ namespace YDM.CustomeUserControl
             this.LblPercentage.Padding = new System.Windows.Forms.Padding(5);
             this.LblPercentage.Size = new System.Drawing.Size(65, 27);
             this.LblPercentage.TabIndex = 2;
-            this.LblPercentage.Text = "100%";
+            this.LblPercentage.Text = "0%";
             // 
             // LblSizeMoniter
             // 
@@ -168,7 +168,7 @@ namespace YDM.CustomeUserControl
             this.LblSizeMoniter.Padding = new System.Windows.Forms.Padding(5);
             this.LblSizeMoniter.Size = new System.Drawing.Size(135, 27);
             this.LblSizeMoniter.TabIndex = 3;
-            this.LblSizeMoniter.Text = "39.7 Mb of 39.7MB";
+            this.LblSizeMoniter.Text = "--.-- Mb of --.--MB";
             // 
             // ProgressBar
             // 

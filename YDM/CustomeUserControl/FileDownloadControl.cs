@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using YDM.Concept;
 using YDM.Concept.Models;
 using YDM.Model;
+using YDM.Pages;
 
 namespace YDM.CustomeUserControl
 {
@@ -14,6 +15,7 @@ namespace YDM.CustomeUserControl
 
         public YDMDownloader Downloader;
         public EventHandler<UserInteraction> Interaction_Happend;
+        public EventHandler<DownloadState> DownloadState_Change_UpperLayer;
 
         public FileDownloadControl(YDMDownloader downloader)
         {
@@ -28,8 +30,18 @@ namespace YDM.CustomeUserControl
             State = Downloader.DownloadState;
         }
 
-        private void DownloadState_change(object sender, DownloadState e) =>
+        private void DownloadState_change(object sender, DownloadState e)
+        {
             State = e;
+
+            if(e == DownloadState.Completed)
+            {
+                BtnCancel.Visible = false;
+                BtnChangeState.Visible = false;
+                BtnOpenFolder.Visible = true;
+            }
+            DownloadState_Change_UpperLayer.Raise(this, e);
+        }
 
         private void OnProcessing(object sender, ProcessingModel e)
         {
@@ -55,17 +67,23 @@ namespace YDM.CustomeUserControl
 
         public void BtnChangeState_Click(object sender, EventArgs e)
         {
-            if (Downloader.DownloadState == DownloadState.Paused)
+            if (Downloader.DownloadState == DownloadState.Paused || Downloader.DownloadState == DownloadState.Downloading || Downloader.DownloadState == DownloadState.GettingHeaders)
             {
                 BtnChangeState.Text = "Resume";
                 Downloader.Resume();
-                Interaction_Happend.Invoke(this, UserInteraction.Resume);
+                Interaction_Happend.Raise(this, UserInteraction.Resume);
+            }
+            else if(Downloader.DownloadState == DownloadState.Initialized)
+            {
+                BtnChangeState.Text = "Resume";
+                Downloader.Start();
+                Interaction_Happend.Raise(this, UserInteraction.Resume);
             }
             else
             {
                 BtnChangeState.Text = "Paused";
                 Downloader.Pause();
-                Interaction_Happend.Invoke(this, UserInteraction.Paused);
+                Interaction_Happend.Raise(this, UserInteraction.Paused);
             }
         }
 
@@ -74,7 +92,7 @@ namespace YDM.CustomeUserControl
             Downloader.Stop();
             BtnCancel.Visible = false;
             BtnStart.Visible = true;
-            Interaction_Happend.Invoke(this, UserInteraction.Stopped);
+            Interaction_Happend.Raise(this, UserInteraction.Stopped);
         }
 
         private void BtnRetry_Click(object sender, EventArgs e)
