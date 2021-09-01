@@ -35,9 +35,9 @@ namespace YDM.Concept.Helper
             return request;
         }
 
-        public static RemoteFIleInformation GetFileDetails(List<FileInformation> files)
+        public static DownloadingFileDetails GetFileDetails(List<FileInformation> files)
         {
-            var result = new RemoteFIleInformation()
+            var result = new DownloadingFileDetails()
             {
                 FileSizes = new List<long>()
             };
@@ -49,6 +49,29 @@ namespace YDM.Concept.Helper
                 {
                     result.FileSize += responce.ContentLength;
                     result.FileSizes.Add(responce.ContentLength);
+                }
+            }
+
+            return result;
+        }
+
+        public static DownloadingFileDetails GetLocalFileDetails(List<string> paths)
+        {
+            var result = new DownloadingFileDetails()
+            {
+                FileSizes = new List<long>()
+            };
+
+            foreach (var path in paths)
+            {
+                try
+                {
+                    result.FileSize += new FileInfo(path).Length;
+                    result.FileSizes.Add(new FileInfo(path).Length);
+                }
+                catch
+                {
+                    continue;
                 }
             }
 

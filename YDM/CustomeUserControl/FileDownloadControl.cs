@@ -21,8 +21,8 @@ namespace YDM.CustomeUserControl
         {
             InitializeComponent();
             Downloader = downloader;
-            LblName.Text = Downloader.Filename;
-            LblInternalPath.Text = Path.Combine(Downloader.Storepath, Downloader.Filename);
+            LblName.Text = Downloader.FinalFileName;
+            LblInternalPath.Text = downloader.FinalFile;
             BtnCancel.Visible = true;
             BtnChangeState.Visible = true;
             Downloader.processing += OnProcessing;
@@ -47,7 +47,7 @@ namespace YDM.CustomeUserControl
         {
             LblPercentage.Text = e.Percentage.ToString() + "%";
             ProgressBar.Value = e.Percentage;
-            LblSizeMoniter.Text = $"{e.Filesize} of {Downloader.FileSize}";
+            LblSizeMoniter.Text = $"{e.Filesize} of {Downloader.RemoteFile.ReadableFileSize}";
         }
 
         private void BtnDispose_Click(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace YDM.CustomeUserControl
 
         private void BtnOpenFolder_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(Downloader.Storepath))
+            if (Directory.Exists(Path.GetDirectoryName(Downloader.FinalFile)))
                 ShowSelectedInExplorer.FilesOrFolders(LblInternalPath.Text);
             else
                 return;

@@ -17,5 +17,19 @@ namespace YDM.Concept.ExtendClasses
 
             return true;
         }
+
+        internal static string HumanReadAbleLong(this string source)
+        {
+            string[] sizes = { "Bytes", "Kb", "Mb", "Gb", "Tb" };
+            int order = 0;
+            double len = double.Parse(source);
+            while (len >= 1024d && order < sizes.Length - 1)
+            {
+                order++;
+                len = len / 1024d;
+            }
+
+            return string.Format("{0:0.##} {1}", len, sizes[order]);
+        }
     }
 }

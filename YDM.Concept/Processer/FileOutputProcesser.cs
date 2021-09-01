@@ -5,24 +5,10 @@ namespace YDM.Concept.Processer
 {
     public class FileOutputProcesser
     {
-        internal readonly bool _isDownload;
-        internal readonly long _downloaded;
         private readonly string _output;
 
-        public FileOutputProcesser(string output, long filesize, FileInformation file)
-        {
-            _output = string.Concat(output, ".", file.FileExtenction.Remove(3));
-            try
-            {
-                _downloaded = new FileInfo(_output).Length;
-            }
-            catch
-            {
-                _downloaded = 0;
-            }
-            _isDownload = filesize >= _downloaded;
-        }
-
+        public FileOutputProcesser(string output) =>
+            _output = output;
 
         internal FileStream GetStream() =>
             File.Exists(_output)
