@@ -42,8 +42,6 @@ namespace YDM.Concept
         private volatile bool _canDownload;
 
 
-        //TODO: fine a better way to store the final file
-        // because after adding the path in the _fileOutputDirectory that can be gone
         public YDMDownloader(FileInformation audio, string output, string title)
         {
             if (!Directory.Exists(output))
