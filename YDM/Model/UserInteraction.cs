@@ -4,6 +4,7 @@
     {
         Paused,
         Resume,
-        Stopped
+        Stopped,
+        Dispose
     }
 }

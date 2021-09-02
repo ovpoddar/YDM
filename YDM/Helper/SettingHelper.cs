@@ -54,5 +54,15 @@ namespace YDM.Helper
             Properties.Settings.Default.Queue = JsonSerializer.Serialize(current);
             Properties.Settings.Default.Save();
         }
+
+        public static void DeleteItem(int index)
+        {
+            var current = _lists;
+
+            current.RemoveAt(index);
+
+            Properties.Settings.Default.Queue = JsonSerializer.Serialize(current);
+            Properties.Settings.Default.Save();
+        }
     }
 }

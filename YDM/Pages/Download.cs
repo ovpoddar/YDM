@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using YDM.Concept.Models;
 using YDM.CustomeUserControl;
@@ -77,6 +78,14 @@ namespace YDM.Pages
         {
             if (e == UserInteraction.Resume)
                 MakeSureTheDownloadStateDousNotExid();
+            else if (e == UserInteraction.Dispose)
+            {
+                SettingHelper.DeleteItem(_queue.FirstOrDefault(a => a.Value == sender).Key);
+                // remove files;
+                var downloade = sender as FileDownloadControl;
+                downloade.Downloader.Dispose();
+                downloade.Dispose();
+            }
         }
 
         public void Add(List<FileDownloadControl> downloaders)

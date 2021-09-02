@@ -4,7 +4,7 @@ namespace YDM.Concept.Models
 {
     public class ProcessingModel
     {
-        public string Filesize { get; private set; }
+        public string ReadableFilesize { get; private set; }
         public int Percentage { get; set; }
         public ProcessingModel(double filesize, double totalFileSize)
         {
@@ -17,7 +17,7 @@ namespace YDM.Concept.Models
                 len = len / 1024d;
             }
 
-            Filesize = string.Format("{0:0.##} {1}", len, sizes[order]);
+            ReadableFilesize = string.Format("{0:0.##} {1}", len, sizes[order]);
             if (totalFileSize == 0 || totalFileSize < filesize)
                 return;
             Percentage = Convert.ToInt16(100 / totalFileSize * filesize);

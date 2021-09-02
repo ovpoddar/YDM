@@ -9,8 +9,6 @@ namespace YDM
 {
     public partial class MainForm : Form
     {
-        // TODO: fix the issue of resizing if you drag the from a little bit down then the content are not resizing
-
         private Form _currentChildForm = new Form();
         private Download _download = new Download();
         public MainForm()

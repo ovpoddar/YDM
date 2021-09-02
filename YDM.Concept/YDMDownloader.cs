@@ -199,7 +199,6 @@ namespace YDM.Concept
                                 responce.Dispose();
 
                                 file.Remove();
-
                                 _cancellationToken.ThrowIfCancellationRequested();
                             }
 
@@ -221,6 +220,21 @@ namespace YDM.Concept
             if (DownloadState == DownloadState.Downloading && _canDownload)
                 DownloadState = DownloadState.Completed;
 
+        }
+
+        public void Dispose()
+        {
+            foreach (var item in _fileOutputDirectory)
+            {
+                try
+                {
+                    if (File.Exists(item))
+                        File.Delete(item);
+                }
+                catch
+                {
+                }
+            }
         }
     }
 }

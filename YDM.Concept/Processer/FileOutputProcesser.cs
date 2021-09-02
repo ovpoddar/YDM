@@ -15,8 +15,11 @@ namespace YDM.Concept.Processer
                 ? new FileStream(_output, FileMode.Append, FileAccess.Write)
                 : new FileStream(_output, FileMode.Create, FileAccess.ReadWrite);
 
-        internal void Remove() =>
-            File.Delete(_output);
+        internal void Remove()
+        {
+            if (File.Exists(_output))
+                File.Delete(_output);
+        }
     }
 
 }

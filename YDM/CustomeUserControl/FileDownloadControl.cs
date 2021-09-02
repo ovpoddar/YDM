@@ -1,6 +1,7 @@
 ﻿using SHOpenFolderAndSelectItems;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using YDM.Concept;
 using YDM.Concept.Models;
@@ -9,7 +10,6 @@ using YDM.Pages;
 
 namespace YDM.CustomeUserControl
 {
-    //TODO: on initialized i know the file size use that
     public partial class FileDownloadControl : UserControl
     {
         public DownloadState State;
@@ -29,13 +29,17 @@ namespace YDM.CustomeUserControl
             Downloader.processing += OnProcessing;
             Downloader.DownloadstateChange += DownloadState_change;
             State = Downloader.DownloadState;
+            LblSizeMoniter.Text = $"{downloader.LocalFile.ReadableFileSize} of {downloader.RemoteFile.ReadableFileSize}";
+            var percentage = Convert.ToInt16(100 / downloader.RemoteFile.FileSize * downloader.LocalFile.FileSize);
+            LblPercentage.Text = percentage.ToString() + "%";
+            ProgressBar.Value = percentage;
         }
 
         private void DownloadState_change(object sender, DownloadState e)
         {
             State = e;
 
-            if(e == DownloadState.Completed)
+            if (e == DownloadState.Completed)
             {
                 BtnCancel.Visible = false;
                 BtnChangeState.Visible = false;
@@ -48,14 +52,15 @@ namespace YDM.CustomeUserControl
         {
             LblPercentage.Text = e.Percentage.ToString() + "%";
             ProgressBar.Value = e.Percentage;
-            LblSizeMoniter.Text = $"{e.Filesize} of {Downloader.RemoteFile.ReadableFileSize}";
+            LblSizeMoniter.Text = $"{e.ReadableFilesize} of {Downloader.RemoteFile.ReadableFileSize}";
         }
 
         private void BtnDispose_Click(object sender, EventArgs e)
         {
             if (Downloader.DownloadState != DownloadState.Stopped)
                 Downloader.Stop();
-            Dispose();
+            else
+                Interaction_Happend.Raise(this, UserInteraction.Dispose);
         }
 
         private void BtnOpenFolder_Click(object sender, EventArgs e)
@@ -68,21 +73,21 @@ namespace YDM.CustomeUserControl
 
         public void BtnChangeState_Click(object sender, EventArgs e)
         {
-            if (Downloader.DownloadState == DownloadState.Paused || Downloader.DownloadState == DownloadState.Downloading || Downloader.DownloadState == DownloadState.GettingHeaders)
+            if (Downloader.DownloadState == DownloadState.Paused || Downloader.DownloadState == DownloadState.GettingHeaders)
             {
-                BtnChangeState.Text = "Resume";
+                BtnChangeState.Text = "Pause";
                 Downloader.Resume();
                 Interaction_Happend.Raise(this, UserInteraction.Resume);
             }
-            else if(Downloader.DownloadState == DownloadState.Initialized)
+            else if (Downloader.DownloadState == DownloadState.Initialized)
             {
-                BtnChangeState.Text = "Resume";
+                BtnChangeState.Text = "Pause";
                 Downloader.Start();
                 Interaction_Happend.Raise(this, UserInteraction.Resume);
             }
             else
             {
-                BtnChangeState.Text = "Paused";
+                BtnChangeState.Text = "Resume";
                 Downloader.Pause();
                 Interaction_Happend.Raise(this, UserInteraction.Paused);
             }
