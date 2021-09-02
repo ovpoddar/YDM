@@ -26,6 +26,7 @@ namespace YDM.CustomeUserControl
             }
 
         }
+
         public SearchResultControl(VideoModel videoModel)
         {
             InitializeComponent();

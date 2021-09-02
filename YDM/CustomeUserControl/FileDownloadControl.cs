@@ -9,6 +9,7 @@ using YDM.Pages;
 
 namespace YDM.CustomeUserControl
 {
+    //TODO: on initialized i know the file size use that
     public partial class FileDownloadControl : UserControl
     {
         public DownloadState State;

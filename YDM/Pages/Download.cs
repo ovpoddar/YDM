@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using YDM.Concept.Models;
 using YDM.CustomeUserControl;
+using YDM.Helper;
 using YDM.Model;
 
 namespace YDM.Pages
@@ -16,7 +17,18 @@ namespace YDM.Pages
         public Download()
         {
             InitializeComponent();
-            _queue = new Dictionary<int, FileDownloadControl>();
+
+            _queue = SettingHelper.Lists();
+
+            var i = 0;
+            while (i < _queue.Count)
+            {
+                _queue[i].DownloadState_Change_UpperLayer += DownloadState_Change;
+                _queue[i].Interaction_Happend += UserInteraction_Occered;
+
+                flowLayoutPanel1.Controls.Add(_queue[i]);
+                i++;
+            }
         }
 
         public void BtnResumeAll_Click(object sender, EventArgs e)
@@ -74,6 +86,9 @@ namespace YDM.Pages
             {
                 downloaders[i].DownloadState_Change_UpperLayer += DownloadState_Change;
                 downloaders[i].Interaction_Happend += UserInteraction_Occered;
+
+                SettingHelper.AddItem(downloaders[i].Downloader.FinalFile, downloaders[i].Downloader.Files);
+
                 _queue.Add(_queue.Count, downloaders[i]);
                 flowLayoutPanel1.Controls.Add(downloaders[i]);
                 i++;

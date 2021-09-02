@@ -34,5 +34,17 @@ namespace YDM.Properties {
                 this["DownloadPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Queue {
+            get {
+                return ((string)(this["Queue"]));
+            }
+            set {
+                this["Queue"] = value;
+            }
+        }
     }
 }

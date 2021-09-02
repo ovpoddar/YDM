@@ -71,7 +71,7 @@ namespace YDM.Concept.Helper
                 }
                 catch
                 {
-                    continue;
+                    result.FileSizes.Add(0);
                 }
             }
 

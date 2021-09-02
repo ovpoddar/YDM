@@ -18,6 +18,7 @@ namespace YDM.Concept
         public string FinalFileName { get; set; }
         public DownloadingFileDetails RemoteFile { get; set; }
         public DownloadingFileDetails LocalFile { get; set; }
+        public List<FileInformation> Files = new List<FileInformation>();
 
         private DownloadState _downloadState;
         public DownloadState DownloadState
@@ -34,7 +35,6 @@ namespace YDM.Concept
         public EventHandler<ProcessingModel> processing;
         public EventHandler<DownloadState> DownloadstateChange;
 
-        private readonly List<FileInformation> _files = new List<FileInformation>();
         private readonly List<string> _fileOutputDirectory = new List<string>();
         private readonly CancellationTokenSource _cancellationTokenSorce;
         private readonly CancellationToken _cancellationToken;
@@ -59,7 +59,7 @@ namespace YDM.Concept
 
             _cancellationTokenSorce = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSorce.Token;
-            _files.Add(audio);
+            Files.Add(audio);
             DownloadState = DownloadState.Initialized;
 
             LocalFile = Request.GetLocalFileDetails(_fileOutputDirectory);
@@ -67,7 +67,7 @@ namespace YDM.Concept
 
             try
             {
-                RemoteFile = Request.GetFileDetails(_files);
+                RemoteFile = Request.GetFileDetails(Files);
             }
             catch
             {
@@ -93,8 +93,8 @@ namespace YDM.Concept
 
             _cancellationTokenSorce = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSorce.Token;
-            _files.Add(video);
-            _files.Add(audio);
+            Files.Add(video);
+            Files.Add(audio);
 
             DownloadState = DownloadState.Initialized;
 
@@ -102,7 +102,7 @@ namespace YDM.Concept
 
             try
             {
-                RemoteFile = Request.GetFileDetails(_files);
+                RemoteFile = Request.GetFileDetails(Files);
             }
             catch
             {
@@ -165,13 +165,13 @@ namespace YDM.Concept
             DownloadState = DownloadState.GettingHeaders;
 
             if (RemoteFile == null)
-                RemoteFile = Request.GetFileDetails(_files);
+                RemoteFile = Request.GetFileDetails(Files);
 
             PerProcessing.Raise(this, RemoteFile);
 
 
 
-            for (var i = 0; i < _files.Count; i++)
+            for (var i = 0; i < Files.Count; i++)
             {
                 var file = new FileOutputProcesser(_fileOutputDirectory[i]);
                 if (RemoteFile.FileSizes[i] <= LocalFile.FileSizes[i])
@@ -182,7 +182,7 @@ namespace YDM.Concept
                 try
                 {
                     var filesize = LocalFile.FileSizes[i];
-                    var request = Request.CreateHttpRequest(_files[i].Uri, filesize);
+                    var request = Request.CreateHttpRequest(Files[i].Uri, filesize);
                     var bytesRead = 0;
                     var buffer = new byte[4 * 1024];
                     using var responce = await request.GetResponseAsync();
