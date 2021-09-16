@@ -18,10 +18,11 @@ namespace YDM.Helper
             var result = new Dictionary<int, FileDownloadControl>();
             foreach (var item in _lists)
             {
+                var name = item.FileName.Remove(item.FileName.LastIndexOf("."));
                 if (item.Files.Count == 1)
-                    result.Add(result.Count, new FileDownloadControl(new YDMDownloader(item.Files[0], item.FilePath, item.FileName)));
+                    result.Add(result.Count, new FileDownloadControl(new YDMDownloader(item.Files[0], item.FilePath, name)));
                 else
-                    result.Add(result.Count, new FileDownloadControl(new YDMDownloader(item.Files[0], item.Files[1], item.FilePath, item.FileName)));
+                    result.Add(result.Count, new FileDownloadControl(new YDMDownloader(item.Files[0], item.Files[1], item.FilePath, name)));
             }
             return result;
         }
