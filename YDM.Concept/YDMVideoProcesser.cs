@@ -10,6 +10,13 @@ using YDM.Concept.Processer;
 
 namespace YDM.Concept
 {
+    // TODO: need a better peocessing pipeline
+    // TODO: work on setting tab
+    // TODO: what happend when link expire
+    // TODO: make some kind of ranging system to download video
+    // TODO: fix navagiation on the application
+    // TODO: Asyncs adding in download
+
     public class YDMVideoProcesser
     {
         public EventHandler StartProcess;

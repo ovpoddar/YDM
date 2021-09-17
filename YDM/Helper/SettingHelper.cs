@@ -15,6 +15,7 @@ namespace YDM.Helper
     {
         public static Dictionary<int, FileDownloadControl> Lists()
         {
+
             var result = new Dictionary<int, FileDownloadControl>();
             foreach (var item in _lists)
             {
@@ -24,6 +25,9 @@ namespace YDM.Helper
                 else
                     result.Add(result.Count, new FileDownloadControl(new YDMDownloader(item.Files[0], item.Files[1], item.FilePath, name)));
             }
+
+            //Properties.Settings.Default.Reset();
+
             return result;
         }
 

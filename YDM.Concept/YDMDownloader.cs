@@ -69,7 +69,6 @@ namespace YDM.Concept
             }
             catch
             {
-
             }
 
         }
@@ -82,7 +81,7 @@ namespace YDM.Concept
             title = FixFileNameIfRequired(title);
 
             var path = Path.Combine(output, title + "." + video.FileExtenction.Split(";")[0]);
-            var tempPath = Path.Combine(Path.GetTempPath(), title + "." + audio.FileExtenction.Split(";")[0]);
+            var tempPath = Path.Combine(Path.GetTempPath(), "C++", title + "." + audio.FileExtenction.Split(";")[0]);
 
             _fileOutputDirectory.Add(path);
             _fileOutputDirectory.Add(tempPath);

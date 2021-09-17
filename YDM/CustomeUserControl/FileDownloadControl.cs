@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using YDM.Concept;
 using YDM.Concept.Models;
+using YDM.Helper;
 using YDM.Model;
 using YDM.Pages;
 
@@ -20,6 +21,7 @@ namespace YDM.CustomeUserControl
 
         public FileDownloadControl(YDMDownloader downloader)
         {
+           
             InitializeComponent();
             Downloader = downloader;
             LblName.Text = Downloader.FinalFileName;
