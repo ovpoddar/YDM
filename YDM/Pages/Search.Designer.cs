@@ -39,6 +39,7 @@ namespace YDM.Pages
             this.GlobalSelectionVideoFile = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.BtnStartDownload = new System.Windows.Forms.Button();
+            this.LblStatusCount = new System.Windows.Forms.Label();
             this.panelTextBox.SuspendLayout();
             this.panelSearch.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -79,9 +80,9 @@ namespace YDM.Pages
             this.panelSearchResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelSearchResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
-            this.panelSearchResult.Location = new System.Drawing.Point(0, 196);
+            this.panelSearchResult.Location = new System.Drawing.Point(0, 210);
             this.panelSearchResult.Name = "panelSearchResult";
-            this.panelSearchResult.Size = new System.Drawing.Size(1208, 245);
+            this.panelSearchResult.Size = new System.Drawing.Size(1208, 231);
             this.panelSearchResult.TabIndex = 3;
             // 
             // panelSearch
@@ -108,12 +109,13 @@ namespace YDM.Pages
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
+            this.panel2.Controls.Add(this.LblStatusCount);
             this.panel2.Controls.Add(this.GlobalSelectionAudioFiles);
             this.panel2.Controls.Add(this.GlobalSelectionVideoFile);
             this.panel2.Location = new System.Drawing.Point(3, 165);
             this.panel2.Margin = new System.Windows.Forms.Padding(0, 0, 0, 23);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1205, 25);
+            this.panel2.Size = new System.Drawing.Size(1205, 43);
             this.panel2.TabIndex = 5;
             this.panel2.Visible = false;
             // 
@@ -162,6 +164,14 @@ namespace YDM.Pages
             this.BtnStartDownload.Visible = false;
             this.BtnStartDownload.Click += new System.EventHandler(this.BtnStartDownload_Click);
             // 
+            // LblStatusCount
+            // 
+            this.LblStatusCount.AutoSize = true;
+            this.LblStatusCount.Location = new System.Drawing.Point(586, 26);
+            this.LblStatusCount.Name = "LblStatusCount";
+            this.LblStatusCount.Size = new System.Drawing.Size(0, 15);
+            this.LblStatusCount.TabIndex = 2;
+            // 
             // Search
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -180,6 +190,7 @@ namespace YDM.Pages
             this.panelSearch.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -196,6 +207,7 @@ namespace YDM.Pages
         private System.Windows.Forms.Button BtnStartDownload;
         private System.Windows.Forms.ComboBox GlobalSelectionVideoFile;
         private System.Windows.Forms.ComboBox GlobalSelectionAudioFiles;
+        private System.Windows.Forms.Label LblStatusCount;
     }
 }
 

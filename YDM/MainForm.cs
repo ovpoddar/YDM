@@ -14,12 +14,15 @@ namespace YDM
         public MainForm()
         {
             InitializeComponent();
-            var DownloadFolderGuid = new Guid("374DE290-123F-4565-9164-39C4925E467B");
-            string downloads;
-            SHGetKnownFolderPath(DownloadFolderGuid, 0, IntPtr.Zero, out downloads);
 
-            Properties.Settings.Default.DownloadPath = downloads;
-            Properties.Settings.Default.Save();
+            if (Properties.Settings.Default.DownloadPath is null)
+            {
+                var DownloadFolderGuid = new Guid("374DE290-123F-4565-9164-39C4925E467B");
+                SHGetKnownFolderPath(DownloadFolderGuid, 0, IntPtr.Zero, out string downloads);
+
+                Properties.Settings.Default.DownloadPath = downloads;
+                Properties.Settings.Default.Save();
+            }
         }
 
         [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
@@ -37,7 +40,7 @@ namespace YDM
 
         private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            OpenChildForm(new Settings(), true);
         }
 
         private void HomeToolStripMenuItem_Click(object sender, EventArgs e)

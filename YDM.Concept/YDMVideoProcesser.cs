@@ -10,13 +10,12 @@ using YDM.Concept.Processer;
 
 namespace YDM.Concept
 {
-    // TODO: need a better peocessing pipeline
     // TODO: work on setting tab
     // TODO: what happend when link expire
     // TODO: make some kind of ranging system to download video
     // TODO: fix navagiation on the application
-    // TODO: Asyncs adding in download
 
+    // TODO: need a better processing pipeline
     public class YDMVideoProcesser
     {
         public EventHandler StartProcess;
@@ -25,7 +24,7 @@ namespace YDM.Concept
         private readonly string _uri;
         private readonly EventHandler<Exception> _errorFound;
         private readonly EventHandler<VideoModel> _videoFound;
-
+        private object _isProcessHasStart;
         public YDMVideoProcesser(string uri, EventHandler<VideoModel> videoHandler, EventHandler<Exception> exctptionHandler)
         {
             _uri = uri;
@@ -33,12 +32,15 @@ namespace YDM.Concept
             _errorFound += exctptionHandler;
         }
 
-        public async ValueTask<IEnumerable<UriAnalyzer>> GetTaskAsync(CancellationToken token)
+        /// <summary>
+        /// Start the processing to raised videofound event
+        /// </summary>
+        /// <param name="token">calcenation token to stop the opration in any moment</param>
+        public async ValueTask StartTaskAsync(CancellationToken token)
         {
-            StartProcess.Raise(this, EventArgs.Empty);
+            _isProcessHasStart = StartProcess.Raise(this, EventArgs.Empty);
             var ids = await GetIDsAsync(token);
             GetVideos(ids, token);
-            return ids;
         }
 
         private async Task<VideoModel> GetVideoAsync(UriAnalyzer videoUri, CancellationToken token)
@@ -58,8 +60,15 @@ namespace YDM.Concept
             return new VideoModel();
         }
 
-        private async ValueTask<IEnumerable<UriAnalyzer>> GetIDsAsync(CancellationToken token)
+        /// <summary>
+        /// it will return all the ids of the link or playlist
+        /// </summary>
+        /// <param name="token">calcenation token to stop the opration in any moment</param>
+        /// <returns>ValueTask<IEnumerable<UriAnalyzer>> which inclue every thing the ydm need to process the link</returns>
+        public async ValueTask<IEnumerable<UriAnalyzer>> GetIDsAsync(CancellationToken token)
         {
+            if (_isProcessHasStart is null)
+                _isProcessHasStart = StartProcess.Raise(this, EventArgs.Empty);
             var uri = new UriAnalyzer(_uri);
             if (uri.IsProcessable || uri.Exception == null)
             {
@@ -91,7 +100,12 @@ namespace YDM.Concept
             }
         }
 
-        private void GetVideos(IEnumerable<UriAnalyzer> uris, CancellationToken token)
+        /// <summary>
+        /// this method will raised on every time when the video link will be processed
+        /// </summary>
+        /// <param name="uris">details about uri which you want to download</param>
+        /// <param name="token">calcenation token to stop the opration in any moment</param>
+        public void GetVideos(IEnumerable<UriAnalyzer> uris, CancellationToken token)
         {
             Task.Run(async () =>
             {

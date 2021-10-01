@@ -11,7 +11,7 @@ namespace YDM.Pages
 {
     public partial class Download : Form
     {
-        private const int _maxDownload = 2;
+        private int _maxDownload = Properties.Settings.Default.MaxDownload;
 
         public Dictionary<int, FileDownloadControl> _queue;
 

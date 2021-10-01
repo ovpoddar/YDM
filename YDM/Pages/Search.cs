@@ -9,6 +9,7 @@ using YDM.Concept.Models;
 using YDM.CustomeUserControl;
 
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace YDM.Pages
 {
@@ -16,6 +17,9 @@ namespace YDM.Pages
     {
         private CancellationTokenSource _cancellationTokenSource;
         private Button _cancellationBtn;
+        private int _processVideo;
+        private int _totalVideo;
+
         public EventHandler<List<FileDownloadControl>> FoundFileToDownload;
 
         public Search()
@@ -28,19 +32,21 @@ namespace YDM.Pages
             panelSearchResult.AutoScroll = true;
         }
 
-        private void TextBox1_MouseEnter(object sender, EventArgs e) => panelTextBox.BackColor = Color.FromArgb(215, 36, 36);
+        private void TextBox1_MouseEnter(object sender, EventArgs e) =>
+            panelTextBox.BackColor = Color.FromArgb(215, 36, 36);
 
-        private void TextBox1_MouseLeave(object sender, EventArgs e) => panelTextBox.BackColor = Color.FromArgb(49, 57, 66);
+        private void TextBox1_MouseLeave(object sender, EventArgs e) =>
+            panelTextBox.BackColor = Color.FromArgb(49, 57, 66);
 
         private async void TextBox1_KeyDownAsync(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
+                _processVideo = 0;
                 panelSearch.Dock = DockStyle.Top;
                 panel2.Dock = DockStyle.Top;
                 panelSearchResult.Dock = DockStyle.Fill;
                 panel3.Dock = DockStyle.Bottom;
-
 
                 var text = txtSearchBox.Text;
 
@@ -48,14 +54,18 @@ namespace YDM.Pages
 
                 _ydm.StartProcess += Starthandler;
                 _cancellationTokenSource = new CancellationTokenSource();
-                var ids = await _ydm.GetTaskAsync(_cancellationTokenSource.Token);
-
+                var ids = await _ydm.GetIDsAsync(_cancellationTokenSource.Token);
+                _totalVideo = ids.Count();
+                _ydm.GetVideos(ids, _cancellationTokenSource.Token);
                 _ydm.EndProcess += Endhandler;
+                return;
             }
         }
 
         private void FoundVideo(object sender, VideoModel e)
         {
+            _processVideo++;
+            LblStatusCount.Text = $"{_processVideo} of {_totalVideo}";
             var result = new SearchResultControl(e);
 
             panelSearchResult.Controls.Add(result);
@@ -89,6 +99,7 @@ namespace YDM.Pages
 
         private void Endhandler(object sender, EventArgs e)
         {
+            LblStatusCount.Text = string.Empty;
             _cancellationBtn.Dispose();
             _cancellationTokenSource.Dispose();
         }
@@ -121,15 +132,19 @@ namespace YDM.Pages
 
         private void BtnStartDownload_Click(object sender, EventArgs e)
         {
-            var result = panelSearchResult
+            // TODO: Asyncs adding in download
+            Task.Run(() =>
+            {
+                var result = panelSearchResult
                 .Controls
                 .OfType<SearchResultControl>()
                 .Select(downloader => downloader.DownloadControl)
                 .ToList();
 
-            FoundFileToDownload.Raise(this, result);
+                FoundFileToDownload.Raise(this, result);
 
-            panelSearchResult.Controls.Clear();
+                panelSearchResult.Controls.Clear();
+            });            
         }
 
         private void GlobalSelection_SelectedIndexChanged(object sender, EventArgs e)
