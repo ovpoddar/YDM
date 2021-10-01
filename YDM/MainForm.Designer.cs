@@ -1,5 +1,4 @@
-﻿
-namespace YDM
+﻿namespace YDM
 {
     partial class MainForm
     {
