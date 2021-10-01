@@ -11,42 +11,42 @@ namespace YDM.Pages
 {
     public partial class Download : Form
     {
-        private int _maxDownload = Properties.Settings.Default.MaxDownload;
+        private readonly int _maxDownload = Properties.Settings.Default.MaxDownload;
 
-        public Dictionary<int, FileDownloadControl> _queue;
+        public Dictionary<int, FileDownloadControl> queue;
 
         public Download()
         {
             InitializeComponent();
 
-            _queue = SettingHelper.Lists();
+            queue = SettingHelper.Lists();
 
             var i = 0;
-            while (i < _queue.Count)
+            while (i < queue.Count)
             {
-                _queue[i].DownloadState_Change_UpperLayer += DownloadState_Change;
-                _queue[i].Interaction_Happend += UserInteraction_Occered;
+                queue[i].DownloadState_Change_UpperLayer += DownloadState_Change;
+                queue[i].Interaction_Happend += UserInteraction_Occered;
 
-                flowLayoutPanel1.Controls.Add(_queue[i]);
+                flowLayoutPanel1.Controls.Add(queue[i]);
                 i++;
             }
         }
 
         public void BtnResumeAll_Click(object sender, EventArgs e)
         {
-            for (var i = 0; i < _queue.Count; i++)
+            for (var i = 0; i < queue.Count; i++)
             {
-                if (i < _maxDownload && _queue[i].State != DownloadState.Completed && _queue[i].State == DownloadState.Initialized)
+                if (i < _maxDownload && queue[i].State != DownloadState.Completed && queue[i].State == DownloadState.Initialized)
                 {
-                    _queue[i].Downloader.Start();
-                    _queue[i].BtnChangeState.Text = "Paused";
+                    queue[i].Downloader.Start();
+                    queue[i].BtnChangeState.Text = "Paused";
                 }
                 else
                 {
                     try
                     {
-                        _queue[i].Downloader.Pause();
-                        _queue[i].BtnChangeState.Text = "Resume";
+                        queue[i].Downloader.Pause();
+                        queue[i].BtnChangeState.Text = "Resume";
                     }
                     catch { }
                 }
@@ -55,12 +55,12 @@ namespace YDM.Pages
 
         private void BtnPauseAll_Click(object sender, EventArgs e)
         {
-            for (var i = 0; i < _queue.Count; i++)
+            for (var i = 0; i < queue.Count; i++)
             {
                 try
                 {
-                    _queue[i].Downloader.Pause();
-                    _queue[i].BtnChangeState.Text = "Resume";
+                    queue[i].Downloader.Pause();
+                    queue[i].BtnChangeState.Text = "Resume";
                 }
                 catch { }
             }
@@ -70,7 +70,7 @@ namespace YDM.Pages
         {
             downloader.DownloadState_Change_UpperLayer += DownloadState_Change;
             downloader.Interaction_Happend += UserInteraction_Occered;
-            _queue.Add(_queue.Count, downloader);
+            queue.Add(queue.Count, downloader);
             flowLayoutPanel1.Controls.Add(downloader);
         }
 
@@ -80,7 +80,7 @@ namespace YDM.Pages
                 MakeSureTheDownloadStateDousNotExid();
             else if (e == UserInteraction.Dispose)
             {
-                SettingHelper.DeleteItem(_queue.FirstOrDefault(a => a.Value == sender).Key);
+                SettingHelper.DeleteItem(queue.FirstOrDefault(a => a.Value == sender).Key);
                 // remove files;
                 var downloade = sender as FileDownloadControl;
                 downloade.Downloader.Dispose();
@@ -98,7 +98,7 @@ namespace YDM.Pages
 
                 SettingHelper.AddItem(downloaders[i].Downloader.FinalFile, downloaders[i].Downloader.Files);
 
-                _queue.Add(_queue.Count, downloaders[i]);
+                queue.Add(queue.Count, downloaders[i]);
                 flowLayoutPanel1.Controls.Add(downloaders[i]);
                 i++;
             }
@@ -108,12 +108,12 @@ namespace YDM.Pages
         {
             if (e == DownloadState.Completed || e == DownloadState.Paused || e == DownloadState.Stopped)
             {
-                for (var i = 0; i < _queue.Count; i++)
+                for (var i = 0; i < queue.Count; i++)
                 {
-                    if (_queue[i].State == DownloadState.Initialized)
+                    if (queue[i].State == DownloadState.Initialized)
                     {
-                        _queue[i].Downloader.Start();
-                        _queue[i].BtnChangeState.Text = "Paused";
+                        queue[i].Downloader.Start();
+                        queue[i].BtnChangeState.Text = "Paused";
                         break;
                     }
                 }
@@ -127,10 +127,10 @@ namespace YDM.Pages
         private void MakeSureTheDownloadStateDousNotExid()
         {
             var tempQueue = new List<FileDownloadControl>();
-            for (var i = 0; i < _queue.Count; i++)
+            for (var i = 0; i < queue.Count; i++)
             {
-                if (_queue[i].State == DownloadState.Downloading)
-                    tempQueue.Add(_queue[i]);
+                if (queue[i].State == DownloadState.Downloading)
+                    tempQueue.Add(queue[i]);
             }
 
             if (tempQueue.Count > _maxDownload)

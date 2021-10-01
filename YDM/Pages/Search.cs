@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace YDM.Pages
 {
+    // TODO: make some kind of ranging system to download video
     public partial class Search : Form
     {
         private CancellationTokenSource _cancellationTokenSource;
@@ -138,6 +139,7 @@ namespace YDM.Pages
                 var result = panelSearchResult
                 .Controls
                 .OfType<SearchResultControl>()
+                .Where(a => a.IsChecked == true)
                 .Select(downloader => downloader.DownloadControl)
                 .ToList();
 

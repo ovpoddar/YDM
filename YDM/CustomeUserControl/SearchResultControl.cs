@@ -10,7 +10,7 @@ namespace YDM.CustomeUserControl
 {
     public partial class SearchResultControl : UserControl
     {
-
+        public bool IsChecked;
         private FileInformation[] _selectedItem { get; set; } = new FileInformation[2];
         private List<FileInformation> _videoLists { get; set; } = new List<FileInformation>();
         private List<FileInformation> _audioLists { get; set; } = new List<FileInformation>();
@@ -30,7 +30,7 @@ namespace YDM.CustomeUserControl
         public SearchResultControl(VideoModel videoModel)
         {
             InitializeComponent();
-
+            IsChecked = checkBox1.Checked;
             LblTitle.Text = videoModel.Detais["title"].ToString();
             LblAuthor.Text = videoModel.Detais["author"].ToString();
             if (videoModel.Detais["status"].ToString().ToLower() != "ok")

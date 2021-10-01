@@ -7,9 +7,10 @@ using YDM.Pages;
 
 namespace YDM
 {
+    // TODO: fix navagiation on the application
     public partial class MainForm : Form
     {
-        private Form _currentChildForm = new Form();
+        private Form[] _currentChildForm = new Form[2];
         private Download _download = new Download();
         public MainForm()
         {
@@ -58,15 +59,13 @@ namespace YDM
         private void OpenChildForm(object form, bool dispose)
         {
             var childForm = form as Form;
-            //open only form
-            if (_currentChildForm != null)
+            if (dispose)
+                _currentChildForm.SetValue(childForm, 0);
+            else
             {
-                if (dispose)
-                    _currentChildForm.Close();
-                else
-                    _currentChildForm.Hide();
+                _currentChildForm.SetValue(null, 0);
+                _currentChildForm.SetValue(childForm, 1);
             }
-            _currentChildForm = childForm;
             //End
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
