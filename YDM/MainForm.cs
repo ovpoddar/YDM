@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using YDM.CustomeUserControl;
@@ -22,6 +23,11 @@ namespace YDM
                 SHGetKnownFolderPath(DownloadFolderGuid, 0, IntPtr.Zero, out string downloads);
 
                 Properties.Settings.Default.DownloadPath = downloads;
+                Properties.Settings.Default.Save();
+            }
+            if(Properties.Settings.Default.TempDownloadPath is null)
+            {
+                Properties.Settings.Default.DownloadPath = Path.GetTempPath();
                 Properties.Settings.Default.Save();
             }
         }

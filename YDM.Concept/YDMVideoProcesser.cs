@@ -10,7 +10,7 @@ using YDM.Concept.Processer;
 
 namespace YDM.Concept
 {
-    // TODO: what happend when link expire
+    //// TODO: what happend when link expire
 
     // TODO: need a better processing pipeline
     public class YDMVideoProcesser
@@ -22,6 +22,7 @@ namespace YDM.Concept
         private readonly EventHandler<Exception> _errorFound;
         private readonly EventHandler<VideoModel> _videoFound;
         private object _isProcessHasStart;
+
         public YDMVideoProcesser(string uri, EventHandler<VideoModel> videoHandler, EventHandler<Exception> exctptionHandler)
         {
             _uri = uri;

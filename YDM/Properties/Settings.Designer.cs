@@ -58,5 +58,17 @@ namespace YDM.Properties {
                 this["MaxDownload"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TempDownloadPath {
+            get {
+                return ((string)(this["TempDownloadPath"]));
+            }
+            set {
+                this["TempDownloadPath"] = value;
+            }
+        }
     }
 }

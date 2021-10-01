@@ -22,7 +22,7 @@ namespace YDM.CustomeUserControl
                 if (_selectedItem[0] == null)
                     return new FileDownloadControl(new Concept.YDMDownloader(_selectedItem[1], Properties.Settings.Default.DownloadPath, LblTitle.Text));
                 else
-                    return new FileDownloadControl(new Concept.YDMDownloader(_selectedItem[0],_selectedItem[1], Properties.Settings.Default.DownloadPath, LblTitle.Text));
+                    return new FileDownloadControl(new Concept.YDMDownloader(_selectedItem[0],_selectedItem[1], Properties.Settings.Default.DownloadPath, LblTitle.Text, Properties.Settings.Default.TempDownloadPath));
             }
 
         }
@@ -31,6 +31,7 @@ namespace YDM.CustomeUserControl
         {
             InitializeComponent();
             IsChecked = checkBox1.Checked;
+            checkBox1.CheckedChanged += CheckBox1_CheckedChanged;
             LblTitle.Text = videoModel.Detais["title"].ToString();
             LblAuthor.Text = videoModel.Detais["author"].ToString();
             if (videoModel.Detais["status"].ToString().ToLower() != "ok")
@@ -50,6 +51,23 @@ namespace YDM.CustomeUserControl
                     AudioComboBox.Items.Add($"{item.Format} {item.FileExtenction}");
                     _audioLists.Add(item);
                 }
+            }
+        }
+
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            var state = checkBox1.CheckState;
+            if(state == CheckState.Unchecked)
+            {
+                this.BackColor = Color.Gray;
+                VideoComboBox.Enabled = false;
+                AudioComboBox.Enabled = false;
+            }
+            else
+            {
+                this.BackColor = default;
+                VideoComboBox.Enabled = true;
+                AudioComboBox.Enabled = true;
             }
         }
 
@@ -90,6 +108,8 @@ namespace YDM.CustomeUserControl
 
         public void SelectAudio(ComboBox element)
         {
+            if (!IsAccessible)
+                return;
             var mappedIndex = Map(element.SelectedIndex, 0, element.Items.Count - 1, 0, _audioLists.Count - 1, false);
             var roundedIndex = (int)Math.Round(mappedIndex, MidpointRounding.AwayFromZero);
             AudioComboBox.SelectedIndex = roundedIndex;
@@ -97,6 +117,8 @@ namespace YDM.CustomeUserControl
 
         public void SelectVideo(ComboBox element)
         {
+            if (!IsAccessible)
+                return;
             var mappedIndex = Map(element.SelectedIndex, 0, element.Items.Count - 1, 0, _videoLists.Count - 1, false);
             var roundedIndex = (int)Math.Round(mappedIndex, MidpointRounding.AwayFromZero);
             VideoComboBox.SelectedIndex = roundedIndex;

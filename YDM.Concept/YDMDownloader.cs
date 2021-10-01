@@ -73,7 +73,7 @@ namespace YDM.Concept
 
         }
 
-        public YDMDownloader(FileInformation video, FileInformation audio, string output, string title)
+        public YDMDownloader(FileInformation video, FileInformation audio, string output, string title, string tempOutput)
         {
             if (!Directory.Exists(output))
                 throw new ArgumentException(null, nameof(output));
@@ -81,7 +81,7 @@ namespace YDM.Concept
             title = FixFileNameIfRequired(title);
 
             var path = Path.Combine(output, title + "." + video.FileExtenction.Split(";")[0]);
-            var tempPath = Path.Combine(Path.GetTempPath(), "C++", title + "." + audio.FileExtenction.Split(";")[0]);
+            var tempPath = Path.Combine(tempOutput, title + "." + audio.FileExtenction.Split(";")[0]);
 
             _fileOutputDirectory.Add(path);
             _fileOutputDirectory.Add(tempPath);
