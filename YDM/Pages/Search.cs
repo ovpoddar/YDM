@@ -50,7 +50,9 @@ namespace YDM.Pages
 
                 var text = txtSearchBox.Text;
 
-                var _ydm = new YDMVideoProcesser(text, FoundVideo, ErrorFound);
+                var _ydm = new YDMVideoProcesser(text);
+                _ydm.VideoFound += FoundVideo;
+                _ydm.ErrorOccered += ErrorFound;
 
                 _ydm.StartProcess += Starthandler;
                 _cancellationTokenSource = new CancellationTokenSource();
