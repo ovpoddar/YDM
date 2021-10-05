@@ -35,11 +35,11 @@ namespace YDM.Pages
             this.panelSearch = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.LblStatusCount = new System.Windows.Forms.Label();
             this.GlobalSelectionAudioFiles = new System.Windows.Forms.ComboBox();
             this.GlobalSelectionVideoFile = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.BtnStartDownload = new System.Windows.Forms.Button();
-            this.LblStatusCount = new System.Windows.Forms.Label();
             this.panelTextBox.SuspendLayout();
             this.panelSearch.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -80,9 +80,9 @@ namespace YDM.Pages
             this.panelSearchResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelSearchResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
-            this.panelSearchResult.Location = new System.Drawing.Point(0, 210);
+            this.panelSearchResult.Location = new System.Drawing.Point(0, 209);
             this.panelSearchResult.Name = "panelSearchResult";
-            this.panelSearchResult.Size = new System.Drawing.Size(1208, 231);
+            this.panelSearchResult.Size = new System.Drawing.Size(1183, 232);
             this.panelSearchResult.TabIndex = 3;
             // 
             // panelSearch
@@ -92,7 +92,7 @@ namespace YDM.Pages
             this.panelSearch.Controls.Add(this.panel1);
             this.panelSearch.Location = new System.Drawing.Point(0, 122);
             this.panelSearch.Name = "panelSearch";
-            this.panelSearch.Size = new System.Drawing.Size(1208, 37);
+            this.panelSearch.Size = new System.Drawing.Size(1183, 37);
             this.panelSearch.TabIndex = 4;
             // 
             // panel1
@@ -108,16 +108,27 @@ namespace YDM.Pages
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.Controls.Add(this.LblStatusCount);
             this.panel2.Controls.Add(this.GlobalSelectionAudioFiles);
             this.panel2.Controls.Add(this.GlobalSelectionVideoFile);
             this.panel2.Location = new System.Drawing.Point(3, 165);
             this.panel2.Margin = new System.Windows.Forms.Padding(0, 0, 0, 23);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1205, 43);
+            this.panel2.Size = new System.Drawing.Size(1180, 43);
             this.panel2.TabIndex = 5;
             this.panel2.Visible = false;
+            // 
+            // LblStatusCount
+            // 
+            this.LblStatusCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LblStatusCount.AutoSize = true;
+            this.LblStatusCount.Location = new System.Drawing.Point(578, 28);
+            this.LblStatusCount.Name = "LblStatusCount";
+            this.LblStatusCount.Size = new System.Drawing.Size(27, 15);
+            this.LblStatusCount.TabIndex = 2;
+            this.LblStatusCount.Text = "text";
             // 
             // GlobalSelectionAudioFiles
             // 
@@ -137,7 +148,7 @@ namespace YDM.Pages
             this.GlobalSelectionVideoFile.Dock = System.Windows.Forms.DockStyle.Right;
             this.GlobalSelectionVideoFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GlobalSelectionVideoFile.FormattingEnabled = true;
-            this.GlobalSelectionVideoFile.Location = new System.Drawing.Point(623, 0);
+            this.GlobalSelectionVideoFile.Location = new System.Drawing.Point(598, 0);
             this.GlobalSelectionVideoFile.Name = "GlobalSelectionVideoFile";
             this.GlobalSelectionVideoFile.Size = new System.Drawing.Size(582, 23);
             this.GlobalSelectionVideoFile.TabIndex = 0;
@@ -150,7 +161,7 @@ namespace YDM.Pages
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel3.Location = new System.Drawing.Point(0, 447);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1208, 33);
+            this.panel3.Size = new System.Drawing.Size(1183, 33);
             this.panel3.TabIndex = 6;
             // 
             // BtnStartDownload
@@ -164,20 +175,12 @@ namespace YDM.Pages
             this.BtnStartDownload.Visible = false;
             this.BtnStartDownload.Click += new System.EventHandler(this.BtnStartDownload_Click);
             // 
-            // LblStatusCount
-            // 
-            this.LblStatusCount.AutoSize = true;
-            this.LblStatusCount.Location = new System.Drawing.Point(586, 26);
-            this.LblStatusCount.Name = "LblStatusCount";
-            this.LblStatusCount.Size = new System.Drawing.Size(0, 15);
-            this.LblStatusCount.TabIndex = 2;
-            // 
             // Search
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
-            this.ClientSize = new System.Drawing.Size(1208, 480);
+            this.ClientSize = new System.Drawing.Size(1183, 480);
             this.Controls.Add(this.panelSearchResult);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);

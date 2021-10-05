@@ -10,9 +10,8 @@ using YDM.Concept.Processer;
 
 namespace YDM.Concept
 {
-    //// TODO: what happend when link expire
-
-    // TODO: need a better processing pipeline
+    // TODO: what happend when link expire
+    // TODO: Better Libary approtch with Interface and settings object
     public class YDMVideoProcesser
     {
         public EventHandler StartProcess;

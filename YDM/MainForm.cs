@@ -8,7 +8,6 @@ using YDM.Pages;
 
 namespace YDM
 {
-    // TODO: fix navagiation on the application
     public partial class MainForm : Form
     {
         private Form[] _currentChildForm = new Form[2];
@@ -19,15 +18,14 @@ namespace YDM
 
             if (Properties.Settings.Default.DownloadPath is null)
             {
-                var DownloadFolderGuid = new Guid("374DE290-123F-4565-9164-39C4925E467B");
-                SHGetKnownFolderPath(DownloadFolderGuid, 0, IntPtr.Zero, out string downloads);
+                SHGetKnownFolderPath(new Guid("374DE290-123F-4565-9164-39C4925E467B"), 0, IntPtr.Zero, out string downloads);
 
                 Properties.Settings.Default.DownloadPath = downloads;
                 Properties.Settings.Default.Save();
             }
             if(Properties.Settings.Default.TempDownloadPath is null)
             {
-                Properties.Settings.Default.DownloadPath = Path.GetTempPath();
+                Properties.Settings.Default.TempDownloadPath = Path.GetTempPath();
                 Properties.Settings.Default.Save();
             }
         }

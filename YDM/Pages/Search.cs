@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace YDM.Pages
 {
-    // TODO: make some kind of ranging system to download video
     public partial class Search : Form
     {
         private CancellationTokenSource _cancellationTokenSource;
@@ -129,11 +128,11 @@ namespace YDM.Pages
             txtSearchBox.LostFocus += TxtSearchBox_LostFocus;
         }
 
-        private void TxtSearchBox_LostFocus(object sender, EventArgs e) => txtSearchBox.MouseLeave += TextBox1_MouseLeave;
+        private void TxtSearchBox_LostFocus(object sender, EventArgs e) =>
+            txtSearchBox.MouseLeave += TextBox1_MouseLeave;
 
         private void BtnStartDownload_Click(object sender, EventArgs e)
         {
-            // TODO: Asyncs adding in download
             Task.Run(() =>
             {
                 var result = panelSearchResult
@@ -142,10 +141,12 @@ namespace YDM.Pages
                 .Where(a => a.IsChecked == true)
                 .Select(downloader => downloader.DownloadControl)
                 .ToList();
-
-                FoundFileToDownload.Raise(this, result);
-
-                panelSearchResult.Controls.Clear();
+                if (result.Count is not 0)
+                {
+                    FoundFileToDownload.Raise(this, result);
+                    panelSearchResult.Controls.Clear();
+                }
+                return;
             });            
         }
 
@@ -166,6 +167,7 @@ namespace YDM.Pages
         }
 
     }
+
     static class Entand
     {
 

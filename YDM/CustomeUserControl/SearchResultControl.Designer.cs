@@ -180,6 +180,7 @@ namespace YDM.CustomeUserControl
             this.VideoStatus.Name = "VideoStatus";
             this.VideoStatus.Size = new System.Drawing.Size(24, 24);
             this.VideoStatus.TabIndex = 1;
+            this.VideoStatus.Visible = false;
             // 
             // LblAuthor
             // 

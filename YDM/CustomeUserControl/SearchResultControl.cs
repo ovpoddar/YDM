@@ -34,6 +34,7 @@ namespace YDM.CustomeUserControl
             checkBox1.CheckedChanged += CheckBox1_CheckedChanged;
             LblTitle.Text = videoModel.Detais["title"].ToString();
             LblAuthor.Text = videoModel.Detais["author"].ToString();
+            var c = videoModel.Detais["status"].ToString().ToLower();
             if (videoModel.Detais["status"].ToString().ToLower() != "ok")
                 VideoStatus.Visible = true;
 
@@ -56,8 +57,8 @@ namespace YDM.CustomeUserControl
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
-            var state = checkBox1.CheckState;
-            if(state == CheckState.Unchecked)
+            IsChecked = checkBox1.Checked;
+            if (checkBox1.CheckState == CheckState.Unchecked)
             {
                 this.BackColor = Color.Gray;
                 VideoComboBox.Enabled = false;

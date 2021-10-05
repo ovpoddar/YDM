@@ -10,7 +10,6 @@ using YDM.CustomeUserControl;
 
 namespace YDM.Pages
 {
-    // TODO: work on setting tab
     public partial class Settings : Form
     {
         public Settings()
