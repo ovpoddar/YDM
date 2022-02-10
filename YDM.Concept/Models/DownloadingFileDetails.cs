@@ -11,7 +11,7 @@ namespace YDM.Concept.Models
         {
             get { return _fileSize; }
             set { _fileSize = value;
-                ReadableFileSize = _fileSize.ToString().HumanReadAbleLong();
+                ReadableFileSize = _fileSize.ToString().HumanReadAbleLong() ?? "Unknown";
             }
         }
 
