@@ -12,6 +12,7 @@ namespace YDM
             try
             {
                 var path = new Uri(url);
+                return null;
             }
             catch(Exception exception)
             {

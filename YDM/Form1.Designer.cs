@@ -1,7 +1,7 @@
 ﻿
 namespace YDM
 {
-    partial class Form1
+    partial class YDMForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,48 +29,81 @@ namespace YDM
         /// </summary>
         private void InitializeComponent()
         {
-            this.URL = new System.Windows.Forms.TextBox();
-            this.Search = new System.Windows.Forms.Button();
-            this.Output = new System.Windows.Forms.RichTextBox();
+            this.MenuBar = new System.Windows.Forms.MenuStrip();
+            this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelDesktop = new System.Windows.Forms.Panel();
+            this.MenuBar.SuspendLayout();
             this.SuspendLayout();
             // 
-            // URL
+            // MenuBar
             // 
-            this.URL.Location = new System.Drawing.Point(75, 30);
-            this.URL.Name = "URL";
-            this.URL.Size = new System.Drawing.Size(499, 23);
-            this.URL.TabIndex = 0;
+            this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.homeToolStripMenuItem,
+            this.downloadsToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.MenuBar.Location = new System.Drawing.Point(0, 0);
+            this.MenuBar.Name = "MenuBar";
+            this.MenuBar.Size = new System.Drawing.Size(1267, 24);
+            this.MenuBar.TabIndex = 0;
+            this.MenuBar.Text = "menuStrip1";
+            this.MenuBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MenuStrip1_MouseDown);
             // 
-            // Search
+            // homeToolStripMenuItem
             // 
-            this.Search.Location = new System.Drawing.Point(603, 29);
-            this.Search.Name = "Search";
-            this.Search.Size = new System.Drawing.Size(75, 23);
-            this.Search.TabIndex = 1;
-            this.Search.Text = "button1";
-            this.Search.UseVisualStyleBackColor = true;
-            this.Search.Click += new System.EventHandler(this.Search_Click);
+            this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.homeToolStripMenuItem.Text = "Home";
             // 
-            // Output
+            // downloadsToolStripMenuItem
             // 
-            this.Output.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Output.Location = new System.Drawing.Point(75, 107);
-            this.Output.Name = "Output";
-            this.Output.Size = new System.Drawing.Size(669, 317);
-            this.Output.TabIndex = 2;
-            this.Output.Text = "";
+            this.downloadsToolStripMenuItem.Name = "downloadsToolStripMenuItem";
+            this.downloadsToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.downloadsToolStripMenuItem.Text = "Downloads";
             // 
-            // Form1
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // panelDesktop
+            // 
+            this.panelDesktop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDesktop.Location = new System.Drawing.Point(0, 24);
+            this.panelDesktop.Name = "panelDesktop";
+            this.panelDesktop.Size = new System.Drawing.Size(1267, 472);
+            this.panelDesktop.TabIndex = 1;
+            // 
+            // YDMForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.Output);
-            this.Controls.Add(this.Search);
-            this.Controls.Add(this.URL);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(57)))), ((int)(((byte)(66)))));
+            this.ClientSize = new System.Drawing.Size(1267, 496);
+            this.ControlBox = false;
+            this.Controls.Add(this.panelDesktop);
+            this.Controls.Add(this.MenuBar);
+            this.DoubleBuffered = true;
+            this.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.MainMenuStrip = this.MenuBar;
+            this.Name = "YDMForm";
+            this.Opacity = 0.9D;
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.TopMost = true;
+            this.MenuBar.ResumeLayout(false);
+            this.MenuBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -78,9 +111,12 @@ namespace YDM
 
         #endregion
 
-        private System.Windows.Forms.TextBox URL;
-        private System.Windows.Forms.Button Search;
-        private System.Windows.Forms.RichTextBox Output;
+        private System.Windows.Forms.MenuStrip MenuBar;
+        private System.Windows.Forms.ToolStripMenuItem homeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.Panel panelDesktop;
     }
 }
 
