@@ -60,13 +60,13 @@ namespace YDM.CustomeUserControl
             IsChecked = checkBox1.Checked;
             if (checkBox1.CheckState == CheckState.Unchecked)
             {
-                this.BackColor = Color.Gray;
+                this.BackColor = default;
                 VideoComboBox.Enabled = false;
                 AudioComboBox.Enabled = false;
             }
             else
             {
-                this.BackColor = default;
+                this.BackColor = Color.Gray;
                 VideoComboBox.Enabled = true;
                 AudioComboBox.Enabled = true;
             }
@@ -74,7 +74,6 @@ namespace YDM.CustomeUserControl
 
         private void SetImage(Thumbnail thumbnail)
         {
-
             var request = WebRequest.Create(thumbnail.Uri.Split("?")[0]);
 
             using (var response = request.GetResponse())
@@ -109,7 +108,7 @@ namespace YDM.CustomeUserControl
 
         public void SelectAudio(ComboBox element)
         {
-            if (!IsAccessible)
+            if (!IsChecked)
                 return;
             var mappedIndex = Map(element.SelectedIndex, 0, element.Items.Count - 1, 0, _audioLists.Count - 1, false);
             var roundedIndex = (int)Math.Round(mappedIndex, MidpointRounding.AwayFromZero);
@@ -118,7 +117,7 @@ namespace YDM.CustomeUserControl
 
         public void SelectVideo(ComboBox element)
         {
-            if (!IsAccessible)
+            if (!IsChecked)
                 return;
             var mappedIndex = Map(element.SelectedIndex, 0, element.Items.Count - 1, 0, _videoLists.Count - 1, false);
             var roundedIndex = (int)Math.Round(mappedIndex, MidpointRounding.AwayFromZero);

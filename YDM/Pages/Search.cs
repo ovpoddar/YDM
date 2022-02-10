@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using YDM.Concept;
 using YDM.Concept.Models;
 using YDM.CustomeUserControl;
-
 using System.ComponentModel;
 using System.Threading.Tasks;
 
