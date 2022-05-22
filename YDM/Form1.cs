@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YDM.CustomeUserControl;
 
 namespace YDM
 {
@@ -17,6 +18,7 @@ namespace YDM
         public YDMForm()
         {
             InitializeComponent();
+            panelDesktop.Controls.Add(new YDMYoutubeVideos());
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
