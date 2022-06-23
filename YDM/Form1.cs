@@ -18,7 +18,11 @@ namespace YDM
         public YDMForm()
         {
             InitializeComponent();
-            panelDesktop.Controls.Add(new YDMYoutubeVideos());
+            var thumbnail = new YDMYoutubeVideos()
+            {
+            };
+
+            panelDesktop.Controls.Add(thumbnail);
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]

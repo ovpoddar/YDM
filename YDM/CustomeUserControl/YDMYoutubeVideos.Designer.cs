@@ -31,12 +31,17 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.PanelImage = new System.Windows.Forms.Panel();
+            this.PicThumbnail = new System.Windows.Forms.PictureBox();
+            this.PanelSelect = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.PanelImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicThumbnail)).BeginInit();
+            this.PanelSelect.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,8 +49,8 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Controls.Add(this.panel5);
-            this.panel1.Controls.Add(this.panel4);
-            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.PanelImage);
+            this.panel1.Controls.Add(this.PanelSelect);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -64,30 +69,55 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(506, 20);
+            this.button1.Location = new System.Drawing.Point(1035, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(26, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // panel4
+            // PanelImage
             // 
-            this.panel4.BackColor = System.Drawing.Color.Silver;
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel4.Location = new System.Drawing.Point(34, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(169, 150);
-            this.panel4.TabIndex = 1;
+            this.PanelImage.BackColor = System.Drawing.Color.Transparent;
+            this.PanelImage.Controls.Add(this.PicThumbnail);
+            this.PanelImage.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PanelImage.Location = new System.Drawing.Point(34, 0);
+            this.PanelImage.Name = "PanelImage";
+            this.PanelImage.Padding = new System.Windows.Forms.Padding(5);
+            this.PanelImage.Size = new System.Drawing.Size(169, 150);
+            this.PanelImage.TabIndex = 1;
             // 
-            // panel3
+            // PicThumbnail
             // 
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(34, 150);
-            this.panel3.TabIndex = 0;
+            this.PicThumbnail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PicThumbnail.ImageLocation = "";
+            this.PicThumbnail.Location = new System.Drawing.Point(5, 5);
+            this.PicThumbnail.Name = "PicThumbnail";
+            this.PicThumbnail.Size = new System.Drawing.Size(159, 140);
+            this.PicThumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicThumbnail.TabIndex = 0;
+            this.PicThumbnail.TabStop = false;
+            // 
+            // PanelSelect
+            // 
+            this.PanelSelect.Controls.Add(this.checkBox1);
+            this.PanelSelect.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PanelSelect.Location = new System.Drawing.Point(0, 0);
+            this.PanelSelect.Name = "PanelSelect";
+            this.PanelSelect.Size = new System.Drawing.Size(34, 150);
+            this.PanelSelect.TabIndex = 0;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(10, 68);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -119,6 +149,10 @@
             this.Size = new System.Drawing.Size(1267, 150);
             this.panel1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
+            this.PanelImage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PicThumbnail)).EndInit();
+            this.PanelSelect.ResumeLayout(false);
+            this.PanelSelect.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -128,10 +162,12 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel PanelImage;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Panel PanelSelect;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.PictureBox PicThumbnail;
     }
 }
