@@ -47,6 +47,5 @@ namespace YDM.CustomeUserControl
                 Stage = Stage.Preview;
         }
 
-        
     }
 }
