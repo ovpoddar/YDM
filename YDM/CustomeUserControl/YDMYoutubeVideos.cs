@@ -11,6 +11,7 @@ namespace YDM.CustomeUserControl
 {
     public partial class YDMYoutubeVideos : UserControl
     {
+        #region Search Section
         const int _width = 1267;
 
         private Stage _stage;
@@ -32,6 +33,8 @@ namespace YDM.CustomeUserControl
         {
             InitializeComponent();
             this.OnStageChange += YDMYoutubeVideos_OnStageChange;
+            
+            Stage = Stage.Downloading;
         }
 
         private void YDMYoutubeVideos_OnStageChange(object sender, EventArgs e)
@@ -46,6 +49,14 @@ namespace YDM.CustomeUserControl
             else
                 Stage = Stage.Preview;
         }
+        #endregion
 
+        #region Downloading Work
+        private void Remove_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        #endregion
     }
 }
