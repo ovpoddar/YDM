@@ -49,8 +49,14 @@
             this.PanelSelect = new System.Windows.Forms.Panel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.Remove = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.LblFileName = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.PanelDetails.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -65,6 +71,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicThumbnail)).BeginInit();
             this.PanelSelect.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel11.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -273,34 +282,92 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel2.Controls.Add(this.Remove);
-            this.panel2.Controls.Add(this.button2);
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.Controls.Add(this.panel12);
+            this.panel2.Controls.Add(this.panel11);
+            this.panel2.Controls.Add(this.panel10);
+            this.panel2.Controls.Add(this.panel5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1267, 150);
             this.panel2.TabIndex = 1;
             // 
-            // Remove
+            // panel12
             // 
-            this.Remove.Location = new System.Drawing.Point(1147, 9);
-            this.Remove.Name = "Remove";
-            this.Remove.Size = new System.Drawing.Size(62, 31);
-            this.Remove.TabIndex = 2;
-            this.Remove.Text = "button1";
-            this.Remove.UseVisualStyleBackColor = true;
-            this.Remove.Click += new System.EventHandler(this.Remove_Click);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel12.Location = new System.Drawing.Point(0, 105);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(1267, 37);
+            this.panel12.TabIndex = 6;
             // 
-            // button2
+            // panel11
             // 
-            this.button2.Location = new System.Drawing.Point(150, 53);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button1_Click);
+            this.panel11.Controls.Add(this.progressBar1);
+            this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel11.Location = new System.Drawing.Point(0, 68);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(1267, 37);
+            this.panel11.TabIndex = 5;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar1.Location = new System.Drawing.Point(0, 27);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(1267, 10);
+            this.progressBar1.TabIndex = 0;
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.label1);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel10.Location = new System.Drawing.Point(0, 37);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(1267, 31);
+            this.panel10.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(1267, 31);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "label1";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.button1);
+            this.panel5.Controls.Add(this.LblFileName);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(1267, 37);
+            this.panel5.TabIndex = 3;
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(1206, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(61, 37);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "X";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Remove_Click);
+            // 
+            // LblFileName
+            // 
+            this.LblFileName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LblFileName.Location = new System.Drawing.Point(0, 0);
+            this.LblFileName.Name = "LblFileName";
+            this.LblFileName.Size = new System.Drawing.Size(1206, 37);
+            this.LblFileName.TabIndex = 1;
+            this.LblFileName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // YDMYoutubeVideos
             // 
@@ -325,6 +392,9 @@
             this.PanelSelect.ResumeLayout(false);
             this.PanelSelect.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel11.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -335,7 +405,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel PanelImage;
         private System.Windows.Forms.Panel PanelDetails;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel PanelSelect;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.PictureBox PicThumbnail;
@@ -353,6 +422,13 @@
         private System.Windows.Forms.ComboBox VideoComboBox;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Button Remove;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Label LblFileName;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
