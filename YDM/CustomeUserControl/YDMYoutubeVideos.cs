@@ -34,8 +34,12 @@ namespace YDM.CustomeUserControl
             InitializeComponent();
             this.OnStageChange += YDMYoutubeVideos_OnStageChange;
             
-            Stage = Stage.Downloading;
-            progressBar1.Value = 50;
+            // Stage = Stage.Downloading;
+        }
+
+        public YDMYoutubeVideos(Uri link)
+        {
+
         }
 
         private void YDMYoutubeVideos_OnStageChange(object sender, EventArgs e)

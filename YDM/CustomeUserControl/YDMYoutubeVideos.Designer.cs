@@ -85,7 +85,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(0, 150);
+            this.panel1.Size = new System.Drawing.Size(1267, 150);
             this.panel1.TabIndex = 0;
             // 
             // PanelDetails
@@ -98,7 +98,7 @@
             this.PanelDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelDetails.Location = new System.Drawing.Point(203, 0);
             this.PanelDetails.Name = "PanelDetails";
-            this.PanelDetails.Size = new System.Drawing.Size(0, 150);
+            this.PanelDetails.Size = new System.Drawing.Size(1064, 150);
             this.PanelDetails.TabIndex = 2;
             // 
             // panel7
@@ -108,7 +108,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 111);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(0, 37);
+            this.panel7.Size = new System.Drawing.Size(1064, 37);
             this.panel7.TabIndex = 4;
             // 
             // panel9
@@ -118,7 +118,7 @@
             this.panel9.Location = new System.Drawing.Point(200, 0);
             this.panel9.Name = "panel9";
             this.panel9.Padding = new System.Windows.Forms.Padding(7);
-            this.panel9.Size = new System.Drawing.Size(0, 37);
+            this.panel9.Size = new System.Drawing.Size(864, 37);
             this.panel9.TabIndex = 2;
             // 
             // AudioComboBox
@@ -129,7 +129,7 @@
             this.AudioComboBox.FormattingEnabled = true;
             this.AudioComboBox.Location = new System.Drawing.Point(7, 7);
             this.AudioComboBox.Name = "AudioComboBox";
-            this.AudioComboBox.Size = new System.Drawing.Size(0, 23);
+            this.AudioComboBox.Size = new System.Drawing.Size(850, 23);
             this.AudioComboBox.TabIndex = 1;
             // 
             // panel4
@@ -158,7 +158,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 74);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(0, 37);
+            this.panel6.Size = new System.Drawing.Size(1064, 37);
             this.panel6.TabIndex = 3;
             // 
             // panel8
@@ -168,7 +168,7 @@
             this.panel8.Location = new System.Drawing.Point(200, 0);
             this.panel8.Name = "panel8";
             this.panel8.Padding = new System.Windows.Forms.Padding(7);
-            this.panel8.Size = new System.Drawing.Size(0, 37);
+            this.panel8.Size = new System.Drawing.Size(864, 37);
             this.panel8.TabIndex = 3;
             // 
             // VideoComboBox
@@ -179,7 +179,7 @@
             this.VideoComboBox.FormattingEnabled = true;
             this.VideoComboBox.Location = new System.Drawing.Point(7, 7);
             this.VideoComboBox.Name = "VideoComboBox";
-            this.VideoComboBox.Size = new System.Drawing.Size(0, 23);
+            this.VideoComboBox.Size = new System.Drawing.Size(850, 23);
             this.VideoComboBox.TabIndex = 2;
             // 
             // panel3
@@ -208,7 +208,7 @@
             this.PanelAuthor.Location = new System.Drawing.Point(0, 37);
             this.PanelAuthor.Name = "PanelAuthor";
             this.PanelAuthor.Padding = new System.Windows.Forms.Padding(10);
-            this.PanelAuthor.Size = new System.Drawing.Size(0, 37);
+            this.PanelAuthor.Size = new System.Drawing.Size(1064, 37);
             this.PanelAuthor.TabIndex = 2;
             // 
             // LblAuthor
@@ -216,7 +216,7 @@
             this.LblAuthor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LblAuthor.Location = new System.Drawing.Point(10, 10);
             this.LblAuthor.Name = "LblAuthor";
-            this.LblAuthor.Size = new System.Drawing.Size(0, 17);
+            this.LblAuthor.Size = new System.Drawing.Size(1044, 17);
             this.LblAuthor.TabIndex = 0;
             // 
             // PanelTitle
@@ -226,7 +226,7 @@
             this.PanelTitle.Location = new System.Drawing.Point(0, 0);
             this.PanelTitle.Name = "PanelTitle";
             this.PanelTitle.Padding = new System.Windows.Forms.Padding(10);
-            this.PanelTitle.Size = new System.Drawing.Size(0, 37);
+            this.PanelTitle.Size = new System.Drawing.Size(1064, 37);
             this.PanelTitle.TabIndex = 1;
             // 
             // LblTitle
@@ -234,7 +234,7 @@
             this.LblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LblTitle.Location = new System.Drawing.Point(10, 10);
             this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(0, 17);
+            this.LblTitle.Size = new System.Drawing.Size(1044, 17);
             this.LblTitle.TabIndex = 0;
             // 
             // PanelImage
@@ -288,9 +288,9 @@
             this.panel2.Controls.Add(this.panel10);
             this.panel2.Controls.Add(this.panel5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Location = new System.Drawing.Point(1267, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1267, 150);
+            this.panel2.Size = new System.Drawing.Size(0, 150);
             this.panel2.TabIndex = 1;
             // 
             // panel12
@@ -298,7 +298,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(0, 105);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(1267, 37);
+            this.panel12.Size = new System.Drawing.Size(0, 37);
             this.panel12.TabIndex = 6;
             // 
             // panel11
@@ -307,16 +307,17 @@
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 68);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(1267, 37);
+            this.panel11.Size = new System.Drawing.Size(0, 37);
             this.panel11.TabIndex = 5;
             // 
             // progressBar1
             // 
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(0, 27);
+            this.progressBar1.Location = new System.Drawing.Point(0, 32);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(1267, 10);
+            this.progressBar1.Size = new System.Drawing.Size(0, 5);
             this.progressBar1.TabIndex = 0;
+            this.progressBar1.Value = 50;
             // 
             // panel10
             // 
@@ -324,7 +325,7 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(0, 37);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(1267, 31);
+            this.panel10.Size = new System.Drawing.Size(0, 31);
             this.panel10.TabIndex = 4;
             // 
             // label1
@@ -332,7 +333,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1267, 31);
+            this.label1.Size = new System.Drawing.Size(0, 31);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -344,7 +345,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1267, 37);
+            this.panel5.Size = new System.Drawing.Size(0, 37);
             this.panel5.TabIndex = 3;
             // 
             // button1
@@ -354,7 +355,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Location = new System.Drawing.Point(1206, 0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(61, 37);
+            this.button1.Size = new System.Drawing.Size(0, 37);
             this.button1.TabIndex = 2;
             this.button1.Text = "X";
             this.button1.UseVisualStyleBackColor = true;
