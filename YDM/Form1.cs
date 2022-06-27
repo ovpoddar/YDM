@@ -18,7 +18,7 @@ namespace YDM
         public YDMForm()
         {
             InitializeComponent();
-            var thumbnail = new YDMYoutubeVideos()
+            var thumbnail = new YDMYoutubeVideos(new System.Uri("https://www.youtube.com/watch?v=1_p9Qu8Jgz0"));
             {
             };
 

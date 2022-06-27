@@ -29,17 +29,17 @@ namespace YDM.CustomeUserControl
             }
         }
 
-        public YDMYoutubeVideos()
+        private YDMYoutubeVideos()
+        {
+            InitializeComponent();
+        }
+
+        public YDMYoutubeVideos(Uri link)
         {
             InitializeComponent();
             this.OnStageChange += YDMYoutubeVideos_OnStageChange;
             
             // Stage = Stage.Downloading;
-        }
-
-        public YDMYoutubeVideos(Uri link)
-        {
-
         }
 
         private void YDMYoutubeVideos_OnStageChange(object sender, EventArgs e)
