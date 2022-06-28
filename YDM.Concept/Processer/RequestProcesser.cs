@@ -5,7 +5,7 @@ using YDM.Concept.Helper;
 
 namespace YDM.Concept.Processer
 {
-    internal class RequestProcesser
+    public class RequestProcesser
     {
         private readonly Uri _uri;
         public RequestProcesser(Uri uri) =>

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YDM.CustomeUserControl;
+using YDM.Pages;
 
 namespace YDM
 {
@@ -18,11 +19,7 @@ namespace YDM
         public YDMForm()
         {
             InitializeComponent();
-            var thumbnail = new YDMYoutubeVideos(new System.Uri("https://www.youtube.com/watch?v=1_p9Qu8Jgz0"));
-            {
-            };
-
-            panelDesktop.Controls.Add(thumbnail);
+            OpenChildForm(new Search(), true);
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]

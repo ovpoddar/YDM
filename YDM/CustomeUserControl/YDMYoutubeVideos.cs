@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using YDM.Concept.Helper;
 using YDM.Models;
 
 namespace YDM.CustomeUserControl
@@ -34,7 +35,7 @@ namespace YDM.CustomeUserControl
             InitializeComponent();
         }
 
-        public YDMYoutubeVideos(Uri link)
+        public YDMYoutubeVideos(UriAnalyzer link)
         {
             InitializeComponent();
             this.OnStageChange += YDMYoutubeVideos_OnStageChange;
