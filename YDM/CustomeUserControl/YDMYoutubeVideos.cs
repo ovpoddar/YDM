@@ -61,6 +61,7 @@ namespace YDM.CustomeUserControl
         #region Downloading Work
         private void Remove_Click(object sender, EventArgs e)
         {
+            GC.Collect();
             this.Dispose();
         }
 

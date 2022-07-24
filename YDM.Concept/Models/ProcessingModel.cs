@@ -4,8 +4,8 @@ namespace YDM.Concept.Models
 {
     public class ProcessingModel
     {
-        public string ReadableFilesize { get; private set; }
-        public int Percentage { get; set; }
+        public string ReadableFilesize { get; }
+        public int Percentage { get; }
         public ProcessingModel(double filesize, double totalFileSize)
         {
             string[] sizes = { "Bytes", "Kb", "Mb", "Gb", "Tb" };
