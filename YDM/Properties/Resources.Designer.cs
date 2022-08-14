@@ -59,5 +59,15 @@ namespace YDM.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IMG20220719211828 {
+            get {
+                object obj = ResourceManager.GetObject("IMG20220719211828", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

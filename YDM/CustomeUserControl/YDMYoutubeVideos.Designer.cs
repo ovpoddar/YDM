@@ -97,7 +97,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1267, 150);
+            this.panel1.Size = new System.Drawing.Size(0, 150);
             this.panel1.TabIndex = 0;
             // 
             // PanelDetails
@@ -110,7 +110,7 @@
             this.PanelDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelDetails.Location = new System.Drawing.Point(203, 0);
             this.PanelDetails.Name = "PanelDetails";
-            this.PanelDetails.Size = new System.Drawing.Size(1064, 150);
+            this.PanelDetails.Size = new System.Drawing.Size(0, 150);
             this.PanelDetails.TabIndex = 2;
             // 
             // panel7
@@ -120,7 +120,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 111);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1064, 37);
+            this.panel7.Size = new System.Drawing.Size(0, 37);
             this.panel7.TabIndex = 4;
             // 
             // panel9
@@ -130,7 +130,7 @@
             this.panel9.Location = new System.Drawing.Point(200, 0);
             this.panel9.Name = "panel9";
             this.panel9.Padding = new System.Windows.Forms.Padding(7);
-            this.panel9.Size = new System.Drawing.Size(864, 37);
+            this.panel9.Size = new System.Drawing.Size(0, 37);
             this.panel9.TabIndex = 2;
             // 
             // AudioComboBox
@@ -141,7 +141,7 @@
             this.AudioComboBox.FormattingEnabled = true;
             this.AudioComboBox.Location = new System.Drawing.Point(7, 7);
             this.AudioComboBox.Name = "AudioComboBox";
-            this.AudioComboBox.Size = new System.Drawing.Size(850, 23);
+            this.AudioComboBox.Size = new System.Drawing.Size(0, 23);
             this.AudioComboBox.TabIndex = 1;
             // 
             // panel4
@@ -170,7 +170,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 74);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1064, 37);
+            this.panel6.Size = new System.Drawing.Size(0, 37);
             this.panel6.TabIndex = 3;
             // 
             // panel8
@@ -180,7 +180,7 @@
             this.panel8.Location = new System.Drawing.Point(200, 0);
             this.panel8.Name = "panel8";
             this.panel8.Padding = new System.Windows.Forms.Padding(7);
-            this.panel8.Size = new System.Drawing.Size(864, 37);
+            this.panel8.Size = new System.Drawing.Size(0, 37);
             this.panel8.TabIndex = 3;
             // 
             // VideoComboBox
@@ -191,7 +191,7 @@
             this.VideoComboBox.FormattingEnabled = true;
             this.VideoComboBox.Location = new System.Drawing.Point(7, 7);
             this.VideoComboBox.Name = "VideoComboBox";
-            this.VideoComboBox.Size = new System.Drawing.Size(850, 23);
+            this.VideoComboBox.Size = new System.Drawing.Size(0, 23);
             this.VideoComboBox.TabIndex = 2;
             // 
             // panel3
@@ -220,7 +220,7 @@
             this.PanelAuthor.Location = new System.Drawing.Point(0, 37);
             this.PanelAuthor.Name = "PanelAuthor";
             this.PanelAuthor.Padding = new System.Windows.Forms.Padding(10);
-            this.PanelAuthor.Size = new System.Drawing.Size(1064, 37);
+            this.PanelAuthor.Size = new System.Drawing.Size(0, 37);
             this.PanelAuthor.TabIndex = 2;
             // 
             // LblAuthor
@@ -228,7 +228,7 @@
             this.LblAuthor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LblAuthor.Location = new System.Drawing.Point(10, 10);
             this.LblAuthor.Name = "LblAuthor";
-            this.LblAuthor.Size = new System.Drawing.Size(1044, 17);
+            this.LblAuthor.Size = new System.Drawing.Size(0, 17);
             this.LblAuthor.TabIndex = 0;
             // 
             // PanelTitle
@@ -238,7 +238,7 @@
             this.PanelTitle.Location = new System.Drawing.Point(0, 0);
             this.PanelTitle.Name = "PanelTitle";
             this.PanelTitle.Padding = new System.Windows.Forms.Padding(10);
-            this.PanelTitle.Size = new System.Drawing.Size(1064, 37);
+            this.PanelTitle.Size = new System.Drawing.Size(0, 37);
             this.PanelTitle.TabIndex = 1;
             // 
             // LblTitle
@@ -246,7 +246,7 @@
             this.LblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LblTitle.Location = new System.Drawing.Point(10, 10);
             this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(1044, 17);
+            this.LblTitle.Size = new System.Drawing.Size(0, 17);
             this.LblTitle.TabIndex = 0;
             // 
             // PanelImage
@@ -303,9 +303,9 @@
             this.panel2.Controls.Add(this.panel10);
             this.panel2.Controls.Add(this.panel5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(1267, 0);
+            this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(0, 150);
+            this.panel2.Size = new System.Drawing.Size(1267, 150);
             this.panel2.TabIndex = 1;
             // 
             // panel15
@@ -315,7 +315,7 @@
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(75, 114);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(0, 36);
+            this.panel15.Size = new System.Drawing.Size(1117, 36);
             this.panel15.TabIndex = 6;
             // 
             // Cancel
@@ -345,7 +345,7 @@
             this.panel14.Location = new System.Drawing.Point(75, 104);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.panel14.Size = new System.Drawing.Size(0, 10);
+            this.panel14.Size = new System.Drawing.Size(1117, 10);
             this.panel14.TabIndex = 5;
             // 
             // progressBar1
@@ -354,7 +354,7 @@
             this.progressBar1.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.progressBar1.Location = new System.Drawing.Point(10, 0);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(0, 10);
+            this.progressBar1.Size = new System.Drawing.Size(1097, 10);
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Value = 10;
             // 
@@ -368,7 +368,7 @@
             this.panel13.Location = new System.Drawing.Point(75, 72);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(10);
-            this.panel13.Size = new System.Drawing.Size(0, 32);
+            this.panel13.Size = new System.Drawing.Size(1117, 32);
             this.panel13.TabIndex = 4;
             // 
             // LblPercentage
@@ -419,7 +419,7 @@
             this.panel12.Location = new System.Drawing.Point(75, 36);
             this.panel12.Name = "panel12";
             this.panel12.Padding = new System.Windows.Forms.Padding(10);
-            this.panel12.Size = new System.Drawing.Size(0, 36);
+            this.panel12.Size = new System.Drawing.Size(1117, 36);
             this.panel12.TabIndex = 3;
             // 
             // LBLPath
@@ -428,7 +428,7 @@
             this.LBLPath.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LBLPath.Location = new System.Drawing.Point(10, 10);
             this.LBLPath.Name = "LBLPath";
-            this.LBLPath.Size = new System.Drawing.Size(0, 16);
+            this.LBLPath.Size = new System.Drawing.Size(1097, 16);
             this.LBLPath.TabIndex = 0;
             this.LBLPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -439,7 +439,7 @@
             this.panel11.Location = new System.Drawing.Point(75, 0);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(10);
-            this.panel11.Size = new System.Drawing.Size(0, 36);
+            this.panel11.Size = new System.Drawing.Size(1117, 36);
             this.panel11.TabIndex = 2;
             // 
             // LblFileName
@@ -447,14 +447,14 @@
             this.LblFileName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LblFileName.Location = new System.Drawing.Point(10, 10);
             this.LblFileName.Name = "LblFileName";
-            this.LblFileName.Size = new System.Drawing.Size(0, 16);
+            this.LblFileName.Size = new System.Drawing.Size(1097, 16);
             this.LblFileName.TabIndex = 0;
             // 
             // panel10
             // 
             this.panel10.Controls.Add(this.Remove);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel10.Location = new System.Drawing.Point(-75, 0);
+            this.panel10.Location = new System.Drawing.Point(1192, 0);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.panel10.Size = new System.Drawing.Size(75, 150);

@@ -49,5 +49,11 @@ namespace YDM.Pages
                 MessageBox.Show(uri.Exception.Message);
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var c = new YDMYoutubeVideo(new UriAnalyzer("https://www.youtube.com/watch?v=R3u4Gb7mazE"));
+            flowLayoutPanel1.Controls.Add(c);
+        }
     }
 }

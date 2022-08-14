@@ -39,8 +39,7 @@ namespace YDM.CustomeUserControl
         {
             InitializeComponent();
             this.OnStageChange += YDMYoutubeVideos_OnStageChange;
-            
-            // Stage = Stage.Downloading;
+
         }
 
         private void YDMYoutubeVideos_OnStageChange(object sender, EventArgs e)
