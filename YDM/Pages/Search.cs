@@ -26,7 +26,7 @@ namespace YDM.Pages
             {
 
                 if (!uri.IsList)
-                    flowLayoutPanel1.Controls.Add(new YDMYoutubeVideo(uri));
+                    flowLayoutPanel1.Controls.Add(new YDMYoutubeVideo(uri, uri.IsList));
                 else
                 {
                     try
