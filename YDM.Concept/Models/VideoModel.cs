@@ -8,7 +8,7 @@ namespace YDM.Concept.Models
         /// <summary>
         /// the details tab has title, author, live video and status
         /// </summary>
-        public Hashtable Details { get; private set; } = new Hashtable();
+        public Hashtable Details { get; set; } = new Hashtable();
         /// <summary>
         /// Links of the video
         /// </summary>

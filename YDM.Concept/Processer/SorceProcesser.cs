@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -66,6 +67,36 @@ namespace YDM.Concept.Processer
             }
         }
 
+        public async ValueTask<VideoProcessModel> ParseVideoCode(string sorce, CancellationToken cancellationToken, bool singelVideo = false)
+        {
+            var model = new VideoProcessModel();
+            try
+            {
+                var playerResponse = GetPlayerResponse(sorce, Configuration.VideoScript);
+                var js = GetBaseJS(sorce);
+
+                model = GetVideoDetails(sorce, playerResponse, Configuration.VideoTitle, model);
+                model = GetThumbnails(playerResponse, model);
+
+                if (!string.IsNullOrWhiteSpace(model.Details[Configuration.LiveVideo.Path] as string) || model.Details[Configuration.LiveVideo.Path] as string == "true")
+                {
+                    model.Exception = new Exception("Video is not valid or it's live");
+                    model.Success = false;
+                    return model;
+                }
+
+                model.Success = true;
+                model.Streans = await ProcessPlayerResponseAsync(playerResponse, js, cancellationToken);
+                return model;
+            }
+            catch (Exception ex)
+            {
+                model.Success = true;
+                model.Exception = ex;
+                return model;
+            }
+        }
+
         private VideoProcessModel GetThumbnails(JsonDocument playerResponse, VideoProcessModel result)
         {
             var value = playerResponse.RootElement.GetProperty(Configuration.Thumbnails).ToString();
@@ -85,6 +116,30 @@ namespace YDM.Concept.Processer
                 yield return new UriAnalyzer(tokens.Value.ToString());
             }
 
+        }
+
+        private async Task<List<FileInformation>> ProcessPlayerResponseAsync(JsonDocument playerResponse, Uri js, CancellationToken cancellationToken)
+        {
+            var format = playerResponse.RootElement.FindElement(Configuration.Format.Path);
+            var adaptiveFormats = playerResponse.RootElement.FindElement(Configuration.AdaptiveFormats.Path);
+
+            if (format.ValueKind == JsonValueKind.Undefined || adaptiveFormats.ValueKind == JsonValueKind.Undefined)
+            {
+                format = playerResponse.RootElement.GetProperty(Configuration.Format);
+                adaptiveFormats = playerResponse.RootElement.GetProperty(Configuration.AdaptiveFormats);
+            }
+
+            var Lists = LinkProcesser.GetFormatsStream(format.EnumerateArray()).Aggregate(LinkProcesser.GetAdaptiveFormatsStream(adaptiveFormats.EnumerateArray()), (list, item) =>
+            {
+                list.Append(item);
+                return list;
+            });
+
+            var requestProcesser = new RequestProcesser(js);
+
+            var baseJs = await requestProcesser.DownloadString(true, cancellationToken);
+
+            return LinkProcesser.FilterUrls(Lists, baseJs);
         }
 
         private JsonDocument GetPlayerResponse(ReadOnlySpan<char> source, HTMLElementModel script)
@@ -115,7 +170,7 @@ namespace YDM.Concept.Processer
                 if (match.Success)
                     js = match.Groups[1].Value.Replace(@"\/", "/");
                 else
-                    throw new Exception($"{ Configuration.BaseJsToken } is not Updated");
+                    throw new Exception($"{Configuration.BaseJsToken} is not Updated");
             }
             return new Uri(string.Concat(Configuration.Scheme, Configuration.Host, js));
         }

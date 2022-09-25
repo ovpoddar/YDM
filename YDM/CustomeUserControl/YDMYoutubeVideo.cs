@@ -53,32 +53,17 @@ namespace YDM.CustomeUserControl
             var processer = new SorceProcesser();
             var responseFromServer = await new RequestProcesser(link.Url)
                 .DownloadString(false, _processToken.Token);
-            processer.ProcessedVideo += Processer_ProcessedVideo;
-            // need to handle list and single differently
-            // for a single video use the normal processing
-            // but for list fall back to event base approach
-            // which is also good for a library perspective
-            await processer.ParseVideoCode(responseFromServer, _processToken.Token);
-
-            //if(success)
-            //{
-            //    LBLName.Text = processer.Details["title"].ToString();
-            //    LblAuthor.Text = processer.Details["author"].ToString();
-            //    SetImage(processer.Thumbnails.First());
-            //    foreach (var item in processer.Streans)
-            //    {
-            //        if (item.FileType == FileTypeEnum.video)
-            //        {
-            //            VideoComboBox.Items.Add($"{item.Format} {item.FileExtenction}");
-            //        }
-            //        else
-            //        {
-            //            AudioComboBox.Items.Add($"{item.Format} {item.FileExtenction}");
-            //        }
-            //    }
-            //}
-
-
+            if (isList)
+            {
+                processer.ProcessedVideo += Processer_ProcessedVideo;
+                await processer.ParseVideoCode(responseFromServer, _processToken.Token);
+            }
+            else
+            {
+                var responce = await processer.ParseVideoCode(responseFromServer, _processToken.Token, true);
+                Processer_ProcessedVideo(this, responce);
+            }
+            
         }
 
         private async void Processer_ProcessedVideo(object sender, VideoProcessModel e)
