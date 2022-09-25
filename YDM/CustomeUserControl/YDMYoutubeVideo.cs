@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,21 +45,50 @@ namespace YDM.CustomeUserControl
         {
             InitializeComponent();
             this.OnStageChange += YDMYoutubeVideos_OnStageChange;
-            _ = PrepareYDMYoutubeVideo(link);
+            PrepareYDMYoutubeVideo(link);
         }
 
-        async Task PrepareYDMYoutubeVideo(UriAnalyzer link)
+        async void PrepareYDMYoutubeVideo(UriAnalyzer link)
         {
             var processer = new SorceProcesser();
-            var responseFromServer = await new RequestProcesser(link.Url).DownloadString(false, _processToken.Token);
+            var responseFromServer = await new RequestProcesser(link.Url)
+                .DownloadString(false, _processToken.Token);
+            processer.ProcessedVideo += Processer_ProcessedVideo;
+            // need to handle list and single differently
+            // for a single video use the normal processing
+            // but for list fall back to event base approach
+            // which is also good for a library perspective
+            await processer.ParseVideoCode(responseFromServer, _processToken.Token);
 
-            var success = await processer.ParseVideoCode(responseFromServer, _processToken.Token);
-            
-            if(success)
+            //if(success)
+            //{
+            //    LBLName.Text = processer.Details["title"].ToString();
+            //    LblAuthor.Text = processer.Details["author"].ToString();
+            //    SetImage(processer.Thumbnails.First());
+            //    foreach (var item in processer.Streans)
+            //    {
+            //        if (item.FileType == FileTypeEnum.video)
+            //        {
+            //            VideoComboBox.Items.Add($"{item.Format} {item.FileExtenction}");
+            //        }
+            //        else
+            //        {
+            //            AudioComboBox.Items.Add($"{item.Format} {item.FileExtenction}");
+            //        }
+            //    }
+            //}
+
+
+        }
+
+        private async void Processer_ProcessedVideo(object sender, VideoProcessModel e)
+        {
+            if (e.Success)
             {
-                LBLName.Text = processer.Details["title"].ToString();
-                LblAuthor.Text = processer.Details["author"].ToString();
-                foreach (var item in processer.Streans)
+                await this.SetImage(e.Thumbnails.First());
+                LBLName.Text = e.Details["title"].ToString();
+                LblAuthor.Text = e.Details["author"].ToString();
+                foreach (var item in e.Streans)
                 {
                     if (item.FileType == FileTypeEnum.video)
                     {
@@ -70,7 +102,18 @@ namespace YDM.CustomeUserControl
             }
         }
 
-        private void YDMYoutubeVideos_OnStageChange(object sender, EventArgs e)
+        async Task SetImage(Thumbnail thumbnail)
+        {
+            var request = WebRequest.Create(thumbnail.Uri.Split("?")[0]);
+
+            using (var response = await request.GetResponseAsync())
+            using (var stream = response.GetResponseStream())
+            {
+                pictureBox1.Image = Image.FromStream(stream);
+            }
+        }
+
+        void YDMYoutubeVideos_OnStageChange(object sender, EventArgs e)
         {
             panel1.Width = Stage == Stage.Preview ? 0 : _width;
         }
@@ -84,6 +127,8 @@ namespace YDM.CustomeUserControl
         private void Remove_Click(object sender, EventArgs e)
         {
             GC.Collect();
+            _processToken.Cancel();
+            _processToken.Dispose();
             this.Dispose();
         }
 

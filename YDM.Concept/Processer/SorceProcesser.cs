@@ -15,41 +15,62 @@ namespace YDM.Concept.Processer
 {
     public class SorceProcesser
     {
-        public Hashtable Details { get; private set; } = new Hashtable();
-        public List<FileInformation> Streans { get; set; }
-        public List<Thumbnail> Thumbnails { get; set; }
+        public event EventHandler<VideoProcessModel> ProcessedVideo;
         public Exception Exception { get; set; }
 
-        public async ValueTask<bool> ParseVideoCode(string sorce, CancellationToken cancellationToken)
+        public async ValueTask ParseVideoCode(string sorce, CancellationToken cancellationToken)
         {
+            var result = new VideoProcessModel();
             try
             {
                 var playerResponse = GetPlayerResponse(sorce, Configuration.VideoScript);
                 var js = GetBaseJS(sorce);
 
-                GetVideoDetails(sorce, playerResponse, Configuration.VideoTitle);
-                GetThumbnails(playerResponse);
+                result = GetVideoDetails(sorce, playerResponse, Configuration.VideoTitle, result);
+                result = GetThumbnails(playerResponse, result);
 
-                if (!string.IsNullOrWhiteSpace(Details[Configuration.LiveVideo.Path] as string) || Details[Configuration.LiveVideo.Path] as string == "true")
+                if (!string.IsNullOrWhiteSpace(result.Details[Configuration.LiveVideo.Path] as string) || result.Details[Configuration.LiveVideo.Path] as string == "true")
                 {
-                    Exception = new Exception("Video is not valid or it's live");
-                    return false;
+                    result.Exception = new Exception("Video is not valid or it's live");
+                    result.Success = false;
                 }
 
-                await ProcessPlayerResponseAsync(playerResponse, js, cancellationToken);
-                return true;
+                var format = playerResponse.RootElement.FindElement(Configuration.Format.Path);
+                var adaptiveFormats = playerResponse.RootElement.FindElement(Configuration.AdaptiveFormats.Path);
+
+                if (format.ValueKind == JsonValueKind.Undefined || adaptiveFormats.ValueKind == JsonValueKind.Undefined)
+                {
+                    format = playerResponse.RootElement.GetProperty(Configuration.Format);
+                    adaptiveFormats = playerResponse.RootElement.GetProperty(Configuration.AdaptiveFormats);
+                }
+
+                var Lists = LinkProcesser.GetFormatsStream(format.EnumerateArray()).Aggregate(LinkProcesser.GetAdaptiveFormatsStream(adaptiveFormats.EnumerateArray()), (list, item) =>
+                {
+                    list.Append(item);
+                    return list;
+                });
+
+                var requestProcesser = new RequestProcesser(js);
+
+                var baseJs = await requestProcesser.DownloadString(true, cancellationToken);
+
+                result.Streans = LinkProcesser.FilterUrls(Lists, baseJs);
+                result.Success = true;
+                ProcessedVideo.Raise(this, result);
             }
             catch (Exception ex)
             {
-                Exception = ex;
-                return false;
+                result.Exception = ex;
+                result.Success = false;
+                ProcessedVideo.Raise(this, result);
             }
         }
 
-        private void GetThumbnails(JsonDocument playerResponse)
+        private VideoProcessModel GetThumbnails(JsonDocument playerResponse, VideoProcessModel result)
         {
             var value = playerResponse.RootElement.GetProperty(Configuration.Thumbnails).ToString();
-            Thumbnails = JsonSerializer.Deserialize<List<Thumbnail>>(value);
+            result.Thumbnails = JsonSerializer.Deserialize<List<Thumbnail>>(value);
+            return result;
         }
 
         public IEnumerable<UriAnalyzer> ParseListCode(string sorce)
@@ -64,30 +85,6 @@ namespace YDM.Concept.Processer
                 yield return new UriAnalyzer(tokens.Value.ToString());
             }
 
-        }
-
-        private async Task ProcessPlayerResponseAsync(JsonDocument playerResponse, Uri js, CancellationToken cancellationToken)
-        {
-            var format = playerResponse.RootElement.FindElement(Configuration.Format.Path);
-            var adaptiveFormats = playerResponse.RootElement.FindElement(Configuration.AdaptiveFormats.Path);
-
-            if (format.ValueKind == JsonValueKind.Undefined || adaptiveFormats.ValueKind == JsonValueKind.Undefined)
-            {
-                format = playerResponse.RootElement.GetProperty(Configuration.Format);
-                adaptiveFormats = playerResponse.RootElement.GetProperty(Configuration.AdaptiveFormats);
-            }
-
-            var Lists = LinkProcesser.GetFormatsStream(format.EnumerateArray()).Aggregate(LinkProcesser.GetAdaptiveFormatsStream(adaptiveFormats.EnumerateArray()), (list, item) =>
-            {
-                list.Append(item);
-                return list;
-            });
-
-            var requestProcesser = new RequestProcesser(js);
-
-            var baseJs = await requestProcesser.DownloadString(true, cancellationToken);
-
-            Streans = LinkProcesser.FilterUrls(Lists, baseJs);
         }
 
         private JsonDocument GetPlayerResponse(ReadOnlySpan<char> source, HTMLElementModel script)
@@ -123,17 +120,18 @@ namespace YDM.Concept.Processer
             return new Uri(string.Concat(Configuration.Scheme, Configuration.Host, js));
         }
 
-        private void GetVideoDetails(ReadOnlySpan<char> source, JsonDocument playerResponse, HTMLElementModel titleElement)
+        private VideoProcessModel GetVideoDetails(ReadOnlySpan<char> source, JsonDocument playerResponse, HTMLElementModel titleElement, VideoProcessModel result)
         {
             var beginIndex = source.IndexOf(titleElement.Begin) + titleElement.Begin.Length;
             var endIndex = source.IndexOf(titleElement.End);
 
-            Details.Add(Configuration.Title.Path, beginIndex == -1 || endIndex == -1
+            result.Details.Add(Configuration.Title.Path, beginIndex == -1 || endIndex == -1
                 ? playerResponse.RootElement.GetProperty(Configuration.Title).GetString()
                 : source.Slice(beginIndex, endIndex - beginIndex).ToString());
-            Details.Add(Configuration.Author.Path, playerResponse.RootElement.GetProperty(Configuration.Author).ToString());
-            Details.Add(Configuration.Status.Path, playerResponse.RootElement.GetProperty(Configuration.Status).ToString());
-            Details.Add(Configuration.LiveVideo.Path, playerResponse.RootElement.GetProperty(Configuration.LiveVideo).ToString());
+            result.Details.Add(Configuration.Author.Path, playerResponse.RootElement.GetProperty(Configuration.Author).ToString());
+            result.Details.Add(Configuration.Status.Path, playerResponse.RootElement.GetProperty(Configuration.Status).ToString());
+            result.Details.Add(Configuration.LiveVideo.Path, playerResponse.RootElement.GetProperty(Configuration.LiveVideo).ToString());
+            return result;
         }
     }
 }

@@ -20,11 +20,13 @@ namespace YDM.Pages
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            flowLayoutPanel1.Controls.Clear();
             var uri = new UriAnalyzer(textBox1.Text);
             if (uri.IsProcessable || uri.Exception == null)
             {
+
                 if (!uri.IsList)
-                    flowLayoutPanel1.Controls.Add(new YDMYoutubeVideos(uri));
+                    flowLayoutPanel1.Controls.Add(new YDMYoutubeVideo(uri));
                 else
                 {
                     try
@@ -35,7 +37,7 @@ namespace YDM.Pages
 
                         foreach (var item in tokens)
                         {
-                            flowLayoutPanel1.Controls.Add(new YDMYoutubeVideos(item));
+                            flowLayoutPanel1.Controls.Add(new YDMYoutubeVideo(item));
                         }
                     }
                     catch (Exception ex)
@@ -50,10 +52,5 @@ namespace YDM.Pages
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            var c = new YDMYoutubeVideo(new UriAnalyzer("https://www.youtube.com/watch?v=R3u4Gb7mazE"));
-            flowLayoutPanel1.Controls.Add(c);
-        }
     }
 }
