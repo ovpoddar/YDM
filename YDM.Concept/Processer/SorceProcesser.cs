@@ -96,12 +96,12 @@ namespace YDM.Concept.Processer
             if (beginIndex == -1)
                 throw new Exception($"{script.Begin} is not Updated");
 
-            var endIndex = source.IndexOf(script.End);
-            if (endIndex == -1)
+            var responce = source.Slice(beginIndex);
+            var endIndex = responce.IndexOf(script.End) + beginIndex;
+            if (endIndex < beginIndex)
                 throw new Exception($"{script.End} is not Updated");
 
-            var responce = source[beginIndex..endIndex];
-
+            responce = source[beginIndex..endIndex];
             return JsonDocument.Parse(responce.ToString(), new JsonDocumentOptions
             {
                 MaxDepth = 64,
