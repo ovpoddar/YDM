@@ -1,6 +1,6 @@
 ﻿namespace YDM.Concept.Models
 {
-    public class FileInformationInternal
+    public struct FileInformationInternal
     {
         public int Id { get; set; }
         public string TypeOfContent { get; set; }

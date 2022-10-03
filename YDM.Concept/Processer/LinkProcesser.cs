@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using YDM.Concept.ConfigurationsString;
 using YDM.Concept.ExtendClasses;
@@ -48,7 +49,7 @@ namespace YDM.Concept.Processer
             return result;
         }
 
-        public static List<FileInformation> FilterUrls(List<FileInformationInternal> information, string js)
+        public static List<FileInformation> FilterUrls(List<FileInformationInternal> information, string js, StringBuilder stringBuilder)
         {
             var results = new List<FileInformation>();
             foreach (var info in information)
@@ -70,7 +71,7 @@ namespace YDM.Concept.Processer
                     var result = new FileInformation
                     {
                         FileExtenction = info.TypeOfContent.Split('/')[1],
-                        Uri = new Uri(YouTubeVideo.Decrypt(info.Uri, js)),
+                        Uri = new Uri(YouTubeVideo.Decrypt(info.Uri, js, stringBuilder)),
                         FileType = (FileTypeEnum)Enum.Parse(typeof(FileTypeEnum), info.TypeOfContent.Split('/')[0], true),
                         Id = info.Id,
                         Format = info.Format

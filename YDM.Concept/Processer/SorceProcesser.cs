@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -18,6 +19,11 @@ namespace YDM.Concept.Processer
     {
         public event EventHandler<VideoProcessModel> ProcessedVideo;
         public Exception Exception { get; set; }
+
+        private readonly StringBuilder _stringBuilder;
+
+        public SorceProcesser() =>
+            _stringBuilder = new StringBuilder();
 
         public async ValueTask ParseVideoCode(string sorce, CancellationToken cancellationToken)
         {
@@ -54,8 +60,8 @@ namespace YDM.Concept.Processer
                 var requestProcesser = new RequestProcesser(js);
 
                 var baseJs = await requestProcesser.DownloadString(true, cancellationToken);
-
-                result.Streans = LinkProcesser.FilterUrls(Lists, baseJs);
+                _stringBuilder.Clear();
+                result.Streans = LinkProcesser.FilterUrls(Lists, baseJs, _stringBuilder);
                 result.Success = true;
                 ProcessedVideo.Raise(this, result);
             }
@@ -138,8 +144,8 @@ namespace YDM.Concept.Processer
             var requestProcesser = new RequestProcesser(js);
 
             var baseJs = await requestProcesser.DownloadString(true, cancellationToken);
-
-            return LinkProcesser.FilterUrls(Lists, baseJs);
+            _stringBuilder.Clear();
+            return LinkProcesser.FilterUrls(Lists, baseJs, _stringBuilder);
         }
 
         private JsonDocument GetPlayerResponse(ReadOnlySpan<char> source, HTMLElementModel script)

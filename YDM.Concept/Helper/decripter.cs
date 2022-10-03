@@ -8,10 +8,10 @@ namespace YDM.Concept.Helper
 {
     public static class YouTubeVideo
     {
-        public static string Decrypt(Uri uri, string js) =>
-            Decrypt(uri.AbsoluteUri, js);
+        public static string Decrypt(Uri uri, string js, StringBuilder stringBuilder) =>
+            Decrypt(uri.AbsoluteUri, js, stringBuilder);
 
-        public static string Decrypt(string uri, string js)
+        public static string Decrypt(string uri, string js, StringBuilder stringBuilder)
         {
             var signature = string.Empty;
             var paths = string.Empty;
@@ -23,7 +23,7 @@ namespace YDM.Concept.Helper
                 var key = pair.Split('=');
                 if (key[0] == "s")
                 {
-                    signature = DecryptSignature(js, Uri.UnescapeDataString(key[1]));
+                    signature = DecryptSignature(js, Uri.UnescapeDataString(key[1]), stringBuilder);
                 }
                 else if (key[0] == "url")
                 {
@@ -38,7 +38,7 @@ namespace YDM.Concept.Helper
             return $"{paths}&{sp}={signature}";
         }
 
-        private static string DecryptSignature(string js, string signature)
+        private static string DecryptSignature(string js, string signature, StringBuilder stringBuilder)
         {
             var functionNameRegex = new Regex(@"\w+(?:.|\[)(\""?\w+(?:\"")?)\]?\(");
             var functionLines = GetDecryptionFunctionLines(js);
@@ -73,7 +73,7 @@ namespace YDM.Concept.Helper
                 var match = functionNameRegex.Match(functionLine);
                 if (match.Success)
                 {
-                    signature = decryptor.ExecuteFunction(signature, functionLine, match.Groups[1].Value);
+                    signature = decryptor.ExecuteFunction(signature, functionLine, match.Groups[1].Value, stringBuilder);
                 }
             }
 
@@ -90,7 +90,6 @@ namespace YDM.Concept.Helper
             private static readonly Regex ParametersRegex = new Regex(@"\(\w+,(\d+)\)");
 
             private readonly Dictionary<string, FunctionType> _functionTypes = new Dictionary<string, FunctionType>();
-            private readonly StringBuilder _stringBuilder = new StringBuilder();
 
             public bool IsComplete =>
                 _functionTypes.Count == Enum.GetValues(typeof(FunctionType)).Length;
@@ -118,7 +117,7 @@ namespace YDM.Concept.Helper
                 }
             }
 
-            public string ExecuteFunction(string signature, string line, string function)
+            public string ExecuteFunction(string signature, string line, string function, StringBuilder stringBuilder)
             {
                 if (!_functionTypes.TryGetValue(function, out var type))
                 {
@@ -128,7 +127,7 @@ namespace YDM.Concept.Helper
                 switch (type)
                 {
                     case FunctionType.Reverse:
-                        return Reverse(signature);
+                        return Reverse(signature, stringBuilder);
                     case FunctionType.Slice:
                     case FunctionType.Swap:
                         var index =
@@ -139,33 +138,33 @@ namespace YDM.Concept.Helper
                         return
                             type == FunctionType.Slice
                                 ? Slice(signature, index)
-                                : Swap(signature, index);
+                                : Swap(signature, index, stringBuilder);
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type));
                 }
             }
 
-            private string Reverse(string signature)
+            private string Reverse(string signature, StringBuilder stringBuilder)
             {
-                _stringBuilder.Clear();
+                stringBuilder.Clear();
                 for (var index = signature.Length - 1; index >= 0; index--)
                 {
-                    _stringBuilder.Append(signature[index]);
+                    stringBuilder.Append(signature[index]);
                 }
 
-                return _stringBuilder.ToString();
+                return stringBuilder.ToString();
             }
 
             private string Slice(string signature, int index) =>
                 signature.Substring(index);
 
-            private string Swap(string signature, int index)
+            private string Swap(string signature, int index, StringBuilder stringBuilder)
             {
-                _stringBuilder.Clear();
-                _stringBuilder.Append(signature);
-                _stringBuilder[0] = _stringBuilder[index % _stringBuilder.Length];
-                _stringBuilder[index % _stringBuilder.Length] = signature[0];
-                return _stringBuilder.ToString();
+                stringBuilder.Clear();
+                stringBuilder.Append(signature);
+                stringBuilder[0] = stringBuilder[index % stringBuilder.Length];
+                stringBuilder[index % stringBuilder.Length] = signature[0];
+                return stringBuilder.ToString();
             }
 
             private enum FunctionType
