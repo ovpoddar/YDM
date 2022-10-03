@@ -19,7 +19,7 @@ namespace YDM.Pages
         private int _processVideo;
         private int _totalVideo;
 
-        public EventHandler<List<FileDownloadControl>> FoundFileToDownload;
+        public EventHandler<FileDownloadControl> FoundFileToDownload;
 
         public Search()
         {
@@ -132,23 +132,32 @@ namespace YDM.Pages
         private void TxtSearchBox_LostFocus(object sender, EventArgs e) =>
             txtSearchBox.MouseLeave += TextBox1_MouseLeave;
 
-        private void BtnStartDownload_Click(object sender, EventArgs e)
+        private async void BtnStartDownload_Click(object sender, EventArgs e)
         {
-            Task.Run(() =>
-            {
-                var result = panelSearchResult
+            var controls = panelSearchResult
                 .Controls
                 .OfType<SearchResultControl>()
-                .Where(a => a.IsChecked == true)
-                .Select(downloader => downloader.DownloadControl)
-                .ToList();
-                if (result.Count is not 0)
-                {
-                    FoundFileToDownload.Raise(this, result);
-                    panelSearchResult.Controls.Clear();
-                }
+                .Where(a => a.IsChecked == true);
+
+            if (!controls.Any())
                 return;
-            });            
+
+            if (controls.Any(a => a.AudioComboBox.SelectedIndex == -1))
+            {
+                MessageBox.Show("Select the audio to download");
+                return;
+            }
+
+
+            foreach (var item in controls.Reverse())
+            {
+                FoundFileToDownload.Raise(this, item.DownloadControl);
+                panelSearchResult.Controls.Remove(item);
+                item.Visible = false;
+                item.Dispose();
+                await Task.Delay(500);
+            }
+
         }
 
         private void GlobalSelection_SelectedIndexChanged(object sender, EventArgs e)

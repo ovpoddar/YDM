@@ -235,10 +235,10 @@ namespace YDM.CustomeUserControl
         private System.Windows.Forms.Panel VideoStatus;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox VideoComboBox;
+        public System.Windows.Forms.ComboBox VideoComboBox;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox AudioComboBox;
+        public System.Windows.Forms.ComboBox AudioComboBox;
         private System.Windows.Forms.CheckBox checkBox1;
     }
 }

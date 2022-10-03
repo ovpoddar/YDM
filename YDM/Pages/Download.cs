@@ -70,6 +70,9 @@ namespace YDM.Pages
         {
             downloader.DownloadState_Change_UpperLayer += DownloadState_Change;
             downloader.Interaction_Happend += UserInteraction_Occered;
+
+            SettingHelper.AddItem(downloader.Downloader.FinalFile, downloader.Downloader.Files);
+
             queue.Add(queue.Count, downloader);
             flowLayoutPanel1.Controls.Add(downloader);
         }
@@ -82,25 +85,15 @@ namespace YDM.Pages
             {
                 SettingHelper.DeleteItem(queue.FirstOrDefault(a => a.Value == sender).Key);
                 // remove files;
+
                 var downloade = sender as FileDownloadControl;
+                var index = (downloade.Parent as FlowLayoutPanel)
+                    .Controls
+                    .IndexOf(downloade);
+
+                flowLayoutPanel1.Controls.RemoveAt(index);
                 downloade.Downloader.Dispose();
                 downloade.Dispose();
-            }
-        }
-
-        public void Add(List<FileDownloadControl> downloaders)
-        {
-            var i = 0;
-            while (i < downloaders.Count)
-            {
-                downloaders[i].DownloadState_Change_UpperLayer += DownloadState_Change;
-                downloaders[i].Interaction_Happend += UserInteraction_Occered;
-
-                SettingHelper.AddItem(downloaders[i].Downloader.FinalFile, downloaders[i].Downloader.Files);
-
-                queue.Add(queue.Count, downloaders[i]);
-                flowLayoutPanel1.Controls.Add(downloaders[i]);
-                i++;
             }
         }
 

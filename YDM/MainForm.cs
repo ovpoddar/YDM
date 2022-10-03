@@ -55,7 +55,7 @@ namespace YDM
             OpenChildForm(form, true);
         }
 
-        private void AddToDownload(object sender, List<FileDownloadControl> e)
+        private void AddToDownload(object sender, FileDownloadControl e)
         {
             _download.Add(e);
         }

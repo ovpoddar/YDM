@@ -21,7 +21,7 @@ namespace YDM.CustomeUserControl
 
         public FileDownloadControl(YDMDownloader downloader)
         {
-           
+
             InitializeComponent();
             Downloader = downloader;
             LblName.Text = Downloader.FinalFileName;
@@ -61,8 +61,8 @@ namespace YDM.CustomeUserControl
         {
             if (Downloader.DownloadState != DownloadState.Stopped)
                 Downloader.Stop();
-            else
-                Interaction_Happend.Raise(this, UserInteraction.Dispose);
+
+            Interaction_Happend.Raise(this, UserInteraction.Dispose);
         }
 
         private void BtnOpenFolder_Click(object sender, EventArgs e)
