@@ -37,10 +37,7 @@ namespace YDM.Concept.Helper
 
         public static DownloadingFileDetails GetFileDetails(List<FileInformation> files)
         {
-            var result = new DownloadingFileDetails()
-            {
-                FileSizes = new List<long>()
-            };
+            var result = new DownloadingFileDetails();
 
             foreach (var file in files)
             {
@@ -57,10 +54,7 @@ namespace YDM.Concept.Helper
 
         public static DownloadingFileDetails GetLocalFileDetails(List<string> paths)
         {
-            var result = new DownloadingFileDetails()
-            {
-                FileSizes = new List<long>()
-            };
+            var result = new DownloadingFileDetails();
 
             foreach (var path in paths)
             {

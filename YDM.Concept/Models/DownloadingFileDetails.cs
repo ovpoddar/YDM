@@ -16,6 +16,6 @@ namespace YDM.Concept.Models
         }
 
         public string ReadableFileSize { get; private set; }
-        public List<long> FileSizes { get; set; }
+        public List<long> FileSizes { get; set; } = new List<long>();
     }
 }

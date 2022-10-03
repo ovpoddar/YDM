@@ -148,7 +148,6 @@ namespace YDM.Pages
                 return;
             }
 
-
             foreach (var item in controls.Reverse())
             {
                 FoundFileToDownload.Raise(this, item.DownloadControl);
