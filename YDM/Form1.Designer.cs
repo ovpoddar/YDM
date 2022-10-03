@@ -101,7 +101,6 @@ namespace YDM
             this.Opacity = 0.9D;
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.TopMost = true;
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.ResumeLayout(false);

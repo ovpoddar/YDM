@@ -108,12 +108,13 @@ namespace YDM.Concept.Helper
                     if (ex.GetType().Name == "HttpRequestException")
                     {
                         retries--;
+                        await Task.Delay(2000);
                         if (retries == 0)
                             throw;
                     }
                     else
                     {
-                        if (ex.GetType().Name == "WebException")
+                        if (ex?.InnerException.Message == "No such host is known.")
                             throw new Exception("no Internet");
                         throw ex;
                     }

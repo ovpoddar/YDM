@@ -39,18 +39,25 @@ namespace YDM.Concept
         private async Task<VideoModel> GetVideoAsync(UriAnalyzer videoUri, CancellationToken token)
         {
             var process = new SorceProcesser();
-            var responseFromServer = await new RequestProcesser(videoUri.Url).DownloadString(false, token);
-
-            var result = await process.ParseVideoCode(responseFromServer, token, true);
-            if (result.Success)
-                return new VideoModel
-                {
-                    Details = result.Details,
-                    Streans = result.Streans,
-                    Thumbnails = result.Thumbnails
-                };
-            ErrorOccered.Raise(this, process.Exception);
-            return new VideoModel();
+            try
+            {
+                var responseFromServer = await new RequestProcesser(videoUri.Url).DownloadString(false, token);
+                var result = await process.ParseVideoCode(responseFromServer, token, true);
+                if (result.Success)
+                    return new VideoModel
+                    {
+                        Details = result.Details,
+                        Streans = result.Streans,
+                        Thumbnails = result.Thumbnails
+                    };
+                ErrorOccered.Raise(this, process.Exception);
+                return new VideoModel();
+            }
+            catch
+            {
+                ErrorOccered.Raise(this, process.Exception);
+                return new VideoModel();
+            }
         }
 
         /// <summary>

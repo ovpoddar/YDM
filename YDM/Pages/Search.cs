@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using YDM.Concept.Helper;
 using YDM.Concept.Processer;
@@ -33,12 +36,24 @@ namespace YDM.Pages
                     {
                         var responseFromServer = await new RequestProcesser(uri.Url).DownloadString(false, new System.Threading.CancellationToken());
                         var process = new SorceProcesser();
-                        var tokens =  process.ParseListCode(responseFromServer);
+                        var tokens = process.ParseListCode(responseFromServer);
+                        var controls = from item in tokens
+                                       select new YDMYoutubeVideo(item);
 
-                        foreach (var item in tokens)
+                        var index = 0;
+                        while (true)
                         {
-                            flowLayoutPanel1.Controls.Add(new YDMYoutubeVideo(item));
+                            var tempItems = controls.Skip(index * 10).Take(10).ToArray();
+                            if (tempItems.Length < 10)
+                            {
+                                flowLayoutPanel1.Controls.AddRange(tempItems);
+                                break;
+                            }
+                            flowLayoutPanel1.Controls.AddRange(tempItems);
+                            index++;
+                            await Task.Delay(500);
                         }
+
                     }
                     catch (Exception ex)
                     {

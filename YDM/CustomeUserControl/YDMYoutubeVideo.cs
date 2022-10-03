@@ -63,7 +63,6 @@ namespace YDM.CustomeUserControl
                 var responce = await processer.ParseVideoCode(responseFromServer, _processToken.Token, true);
                 Processer_ProcessedVideo(this, responce);
             }
-            
         }
 
         private async void Processer_ProcessedVideo(object sender, VideoProcessModel e)
