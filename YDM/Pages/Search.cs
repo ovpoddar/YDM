@@ -40,17 +40,23 @@ namespace YDM.Pages
                         var controls = from item in tokens
                                        select new YDMYoutubeVideo(item);
 
-                        var index = 0;
-                        while (true)
+                        //var index = 0;
+                        //while (true)
+                        //{
+                        //    var tempItems = controls.Skip(index * 10).Take(10).ToArray();
+                        //    if (tempItems.Length < 10)
+                        //    {
+                        //        flowLayoutPanel1.Controls.AddRange(tempItems);
+                        //        break;
+                        //    }
+                        //    flowLayoutPanel1.Controls.AddRange(tempItems);
+                        //    index++;
+                        //    await Task.Delay(500);
+                        //}
+
+                        foreach (var item in controls)
                         {
-                            var tempItems = controls.Skip(index * 10).Take(10).ToArray();
-                            if (tempItems.Length < 10)
-                            {
-                                flowLayoutPanel1.Controls.AddRange(tempItems);
-                                break;
-                            }
-                            flowLayoutPanel1.Controls.AddRange(tempItems);
-                            index++;
+                            flowLayoutPanel1.Controls.Add(item);
                             await Task.Delay(500);
                         }
 
