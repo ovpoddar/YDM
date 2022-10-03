@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using YDM.Concept.Models;
 
@@ -38,7 +39,7 @@ namespace YDM.CustomeUserControl
             if (videoModel.Detais["status"].ToString().ToLower() != "ok")
                 VideoStatus.Visible = true;
 
-            SetImage(videoModel.Thumbnails.FirstOrDefault());
+            _ = SetImage(videoModel.Thumbnails.FirstOrDefault());
 
             foreach (var item in videoModel.Lists)
             {
@@ -72,11 +73,11 @@ namespace YDM.CustomeUserControl
             }
         }
 
-        private void SetImage(Thumbnail thumbnail)
+        private async Task SetImage(Thumbnail thumbnail)
         {
             var request = WebRequest.Create(thumbnail.Uri.Split("?")[0]);
 
-            using (var response = request.GetResponse())
+            using (var response = await request.GetResponseAsync())
             using (var stream = response.GetResponseStream())
             {
                 PicThumbnail.Image = Image.FromStream(stream);
