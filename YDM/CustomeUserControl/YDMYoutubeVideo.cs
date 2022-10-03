@@ -41,16 +41,15 @@ namespace YDM.CustomeUserControl
             InitializeComponent();
         }
 
-        public YDMYoutubeVideo(UriAnalyzer link, bool isList = true)
+        public YDMYoutubeVideo(SorceProcesser processer, UriAnalyzer link, bool isList = true)
         {
             InitializeComponent();
             this.OnStageChange += YDMYoutubeVideos_OnStageChange;
-            PrepareYDMYoutubeVideo(link, isList);
+            PrepareYDMYoutubeVideo(processer, link, isList);
         }
 
-        async void PrepareYDMYoutubeVideo(UriAnalyzer link, bool isList)
+        async void PrepareYDMYoutubeVideo(SorceProcesser processer, UriAnalyzer link, bool isList)
         {
-            var processer = new SorceProcesser();
             var responseFromServer = await new RequestProcesser(link.Url)
                 .DownloadString(false, _processToken.Token);
             if (isList)
