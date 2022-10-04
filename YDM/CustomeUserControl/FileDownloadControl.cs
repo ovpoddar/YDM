@@ -32,7 +32,7 @@ namespace YDM.CustomeUserControl
             Downloader.DownloadstateChange += DownloadState_change;
             State = Downloader.DownloadState;
             LblSizeMoniter.Text = $"{downloader.LocalFile.ReadableFileSize} of {downloader.RemoteFile?.ReadableFileSize}";
-            var percentage = Convert.ToInt16(100 / downloader.RemoteFile.FileSize * downloader.LocalFile.FileSize);
+            var percentage = Convert.ToInt16(100 / downloader.RemoteFile?.FileSize * downloader.LocalFile.FileSize);
             LblPercentage.Text = percentage.ToString() + "%";
             ProgressBar.Value = percentage;
         }

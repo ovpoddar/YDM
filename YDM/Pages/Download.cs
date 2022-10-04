@@ -83,14 +83,12 @@ namespace YDM.Pages
                 MakeSureTheDownloadStateDousNotExid();
             else if (e == UserInteraction.Dispose)
             {
-                SettingHelper.DeleteItem(queue.FirstOrDefault(a => a.Value == sender).Key);
-                // remove files;
-
                 var downloade = sender as FileDownloadControl;
                 var index = (downloade.Parent as FlowLayoutPanel)
                     .Controls
                     .IndexOf(downloade);
 
+                SettingHelper.DeleteItem(index);
                 flowLayoutPanel1.Controls.RemoveAt(index);
                 downloade.Downloader.Dispose();
                 downloade.Dispose();
