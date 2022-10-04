@@ -147,7 +147,7 @@ namespace YDM.Pages
                 MessageBox.Show("Select the audio to download");
                 return;
             }
-
+            BtnStartDownload.Enabled = false;
             foreach (var item in controls.Reverse())
             {
                 FoundFileToDownload.Raise(this, item.DownloadControl);
@@ -156,7 +156,7 @@ namespace YDM.Pages
                 item.Dispose();
                 await Task.Delay(500);
             }
-
+            BtnStartDownload.Enabled = true;
         }
 
         private void GlobalSelection_SelectedIndexChanged(object sender, EventArgs e)
