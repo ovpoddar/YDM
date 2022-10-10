@@ -14,7 +14,16 @@ namespace YDM
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            try
+            {
+                Application.Run(new MainForm());
+            }
+            catch
+            {
+                // need a button to clear the code
+                Properties.Settings.Default.Reset();
+                Application.Run(new MainForm());
+            }
         }
     }
 }
