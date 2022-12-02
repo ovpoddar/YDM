@@ -15,7 +15,7 @@ namespace YDM
 {
     public partial class YDMForm : Form
     {
-        private Form[] _currentChildForm = new Form[2];
+        public Form[] _currentChildForm = new Form[2];
         public YDMForm()
         {
             InitializeComponent();
@@ -58,6 +58,11 @@ namespace YDM
             panelDesktop.Tag = childForm;
             childForm.BringToFront();
             childForm.Show();
+        }
+
+        private void downloadsToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+
         }
     }
 }

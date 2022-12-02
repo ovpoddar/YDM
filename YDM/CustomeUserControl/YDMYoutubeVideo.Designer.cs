@@ -357,6 +357,7 @@
             this.Remove.TabIndex = 0;
             this.Remove.Text = "X";
             this.Remove.UseVisualStyleBackColor = true;
+            this.Remove.Click += new System.EventHandler(this.Remove_Click);
             // 
             // panel8
             // 

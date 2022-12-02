@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,14 +30,13 @@ namespace YDM.Pages
             var process = new SorceProcesser();
             if (uri.IsProcessable || uri.Exception == null)
             {
-
                 if (!uri.IsList)
                     flowLayoutPanel1.Controls.Add(new YDMYoutubeVideo(process, uri, uri.IsList));
                 else
                 {
                     try
                     {
-                        var responseFromServer = await new RequestProcesser(uri.Url).DownloadString(false, new System.Threading.CancellationToken());
+                        var responseFromServer = await new RequestProcesser(ref uri).DownloadString(false, new System.Threading.CancellationToken());
 
                         var tokens = process.ParseListCode(responseFromServer);
                         var controls = from item in tokens
@@ -60,5 +61,16 @@ namespace YDM.Pages
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var controls = flowLayoutPanel1.Controls.OfType<YDMYoutubeVideo>().Where(a => a.IsSelected);
+            if(controls.Any())
+            {
+                var from  = (YDMForm)this.Parent;
+                var download = (Download)from._currentChildForm[1];
+                download.flowLayoutPanel1.Controls.AddRange(controls.ToArray());
+            }
+
+        }
     }
 }

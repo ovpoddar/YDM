@@ -26,6 +26,7 @@ namespace YDM.CustomeUserControl
 
         public event EventHandler OnStageChange;
 
+
         public Stage Stage
         {
             get => _stage;
@@ -35,14 +36,16 @@ namespace YDM.CustomeUserControl
                 _stage = value;
             }
         }
+        public bool IsSelected { get; private set; }
 
         private YDMYoutubeVideo()
         {
             InitializeComponent();
         }
 
-        public YDMYoutubeVideo(SorceProcesser processer, UriAnalyzer link, bool isList = true)
+        public YDMYoutubeVideo(SorceProcesser processer,in UriAnalyzer link, bool isList = true)
         {
+            this.Visible = false;
             InitializeComponent();
             this.OnStageChange += YDMYoutubeVideos_OnStageChange;
             PrepareYDMYoutubeVideo(processer, link, isList);
@@ -50,17 +53,27 @@ namespace YDM.CustomeUserControl
 
         async void PrepareYDMYoutubeVideo(SorceProcesser processer, UriAnalyzer link, bool isList)
         {
-            var responseFromServer = await new RequestProcesser(link.Url)
-                .DownloadString(false, _processToken.Token);
-            if (isList)
+            try
             {
-                processer.ProcessedVideo += Processer_ProcessedVideo;
-                await processer.ParseVideoCode(responseFromServer, _processToken.Token);
+                var responseFromServer = await new RequestProcesser(ref link)
+                        .DownloadString(false, _processToken.Token);
+                if (isList)
+                {
+                    processer.ProcessedVideo += Processer_ProcessedVideo;
+                    await processer.ParseVideoCode(responseFromServer, _processToken.Token);
+                }
+                else
+                {
+                    var responce = await processer.ParseVideoCode(responseFromServer, _processToken.Token, true);
+                    Processer_ProcessedVideo(this, responce);
+                }
+
+                this.Visible = true;
             }
-            else
+            catch (Exception ex)
             {
-                var responce = await processer.ParseVideoCode(responseFromServer, _processToken.Token, true);
-                Processer_ProcessedVideo(this, responce);
+                this.Dispose();
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -103,16 +116,17 @@ namespace YDM.CustomeUserControl
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
+            //IsSelected = checkBox1.Checked;
+            //Stage = Stage.Downloading;
         }
 
         #region Downloading Work
         private void Remove_Click(object sender, EventArgs e)
         {
-            GC.Collect();
             _processToken.Cancel();
             _processToken.Dispose();
             this.Dispose();
+            GC.Collect();
         }
 
         #endregion

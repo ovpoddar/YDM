@@ -41,7 +41,7 @@ namespace YDM.Concept
             var process = new SorceProcesser();
             try
             {
-                var responseFromServer = await new RequestProcesser(videoUri.Url).DownloadString(false, token);
+                var responseFromServer = await new RequestProcesser(ref videoUri).DownloadString(false, token);
                 var result = await process.ParseVideoCode(responseFromServer, token, true);
                 if (result.Success)
                     return new VideoModel
@@ -63,8 +63,8 @@ namespace YDM.Concept
         /// <summary>
         /// it will process the link and return a process version of the link 
         /// </summary>
-        /// <param name="token">calcenation token to stop the opration in any moment</param>
-        /// <returns>ValueTask<IEnumerable<UriAnalyzer>> which inclue every thing the ydm need to process the link</returns>
+        /// <param name="token">Cancellation token to stop the operation in any moment</param>
+        /// <returns>ValueTask<IEnumerable<UriAnalyzer>> which include every thing the ydm need to process the link</returns>
         public async ValueTask<IEnumerable<UriAnalyzer>> GetIDsAsync(CancellationToken token)
         {
             if (_isProcessHasStart is null)

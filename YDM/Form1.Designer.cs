@@ -63,6 +63,7 @@ namespace YDM
             this.downloadsToolStripMenuItem.Name = "downloadsToolStripMenuItem";
             this.downloadsToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.downloadsToolStripMenuItem.Text = "Downloads";
+            this.downloadsToolStripMenuItem.Click += new System.EventHandler(this.downloadsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 

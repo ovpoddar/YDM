@@ -8,7 +8,10 @@ namespace YDM.Concept.Processer
     public class RequestProcesser
     {
         private readonly Uri _uri;
-        public RequestProcesser(Uri uri) =>
+        public RequestProcesser(ref UriAnalyzer uri) =>
+            _uri = uri.Url ?? throw new ArgumentNullException(nameof(uri));
+
+        public RequestProcesser(in Uri uri) =>
             _uri = uri ?? throw new ArgumentNullException(nameof(uri));
 
         public async ValueTask<string> DownloadString(bool cache, CancellationToken cancelatontoken)

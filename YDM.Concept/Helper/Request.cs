@@ -116,7 +116,8 @@ namespace YDM.Concept.Helper
                     {
                         if (ex?.InnerException.Message == "No such host is known.")
                             throw new Exception("no Internet");
-                        throw ex;
+                        else
+                            throw ex;
                     }
                 }
             }
